@@ -1,0 +1,170 @@
+﻿{
+   "CodeGenerationMode": 4,
+   "ContextClassName": "CecchettoLogicaContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "IrregularWords": null,
+   "MinimumProductVersion": "2.6.1777",
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PluralRules": null,
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "TrabajoPracticoIntegrador___Programación_2",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "SingularRules": null,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[Barrios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Baterias]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Ciudades]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Clientes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Contactos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Cuotas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Detalles_Facturas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Detalles_Servicio]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Direcciones]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Empleados]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Estados_Servicio]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Facturas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Facturas_X_Medios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Marcas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Medios_pagos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Movimientos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Servicios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Stocks]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Sucursales]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Tamanios_Bateria]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Tipos_Baterias]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Tipos_Clientes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Tipos_Contactos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Tipos_Empleados]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Tipos_Facturas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Tipos_Servicios]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Tipos_Vehiculos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Vehiculos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[vehiculos_sucursales]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Voltajes]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDatabaseNamesForRoutines": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseInternalAccessModifiersForSprocsAndFunctions": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false,
+   "UseT4Split": false,
+   "UseTypedTvpParameters": true
+}
