@@ -15,6 +15,10 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             this._serv = _serv;
         }
 
+
+
+        //GET
+        //1. GetServicioContratadoAll
         [HttpGet]
         public async Task<IActionResult> GetSCAll()
         {
@@ -30,6 +34,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
         }
 
+
+        //2. GetServicioContratadoById
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetSCById([FromRoute] int id)
@@ -46,6 +52,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
         }
 
+
+        //3. GetServicioContratadoByFecha
         [HttpGet]
         [Route("ByFecha/{fechaInicio}")]
         public async Task<IActionResult> GetSCByFecha([FromRoute] DateTime fechaInicio, [FromQuery] DateTime? fechaFin)
@@ -63,6 +71,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         }
 
 
+        //4. GetServicioContratadoByCLiente
         [HttpGet]
         [Route("ByDocCliente/{docCliente}")]
         public async Task<IActionResult> GetSCByCliente([FromRoute] int docCliente)
@@ -79,5 +88,27 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
         }
 
+
+        //5. GetServicioContratadoByDNIEmpleado
+
+
+        //6. GetServicioContratadoBySucursal
+
+
+        //7. GetServicioContratadoByEstado
+
+
+        //8. GetDetalleServicioContratadoByIdServicioContratado
+
+
+        //POST
+        //9. NuevoServicio(con detalle)
+
+
+        //PUT
+        //10. ModificarExistente
+
+
+        //11. CambioEstado
     }
 }
