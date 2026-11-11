@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class Cuota
+public partial class Cuotas
 {
     public int IdCuota { get; set; }
 
-    public int? Cuota1 { get; set; }
+    public int? Cuota { get; set; }
 
     public int? Recargo { get; set; }
 
-    public virtual ICollection<FacturasXMedio> FacturasXMedios { get; set; } = new List<FacturasXMedio>();
+    public virtual ICollection<FacturasXMedios> FacturasXMedios { get; set; } = new List<FacturasXMedios>();
 }

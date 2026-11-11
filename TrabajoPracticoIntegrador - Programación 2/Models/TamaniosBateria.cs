@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class TamaniosBaterium
+public partial class TamaniosBateria
 {
     public int IdTamanio { get; set; }
 
@@ -13,5 +13,5 @@ public partial class TamaniosBaterium
 
     public string Grupo { get; set; }
 
-    public virtual ICollection<Bateria> Bateria { get; set; } = new List<Bateria>();
+    public virtual ICollection<Baterias> Baterias { get; set; } = new List<Baterias>();
 }

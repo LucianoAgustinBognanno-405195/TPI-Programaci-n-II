@@ -13,77 +13,80 @@ public partial class CecchettoLogicaContext : DbContext
     {
     }
 
-    public virtual DbSet<Barrio> Barrios { get; set; }
+    public virtual DbSet<Barrios> Barrios { get; set; }
 
-    public virtual DbSet<Bateria> Baterias { get; set; }
+    public virtual DbSet<Baterias> Baterias { get; set; }
 
-    public virtual DbSet<Ciudade> Ciudades { get; set; }
+    public virtual DbSet<Ciudades> Ciudades { get; set; }
 
-    public virtual DbSet<Cliente> Clientes { get; set; }
+    public virtual DbSet<Clientes> Clientes { get; set; }
 
-    public virtual DbSet<Contacto> Contactos { get; set; }
+    public virtual DbSet<Contactos> Contactos { get; set; }
 
-    public virtual DbSet<Cuota> Cuotas { get; set; }
+    public virtual DbSet<Cuotas> Cuotas { get; set; }
 
-    public virtual DbSet<DetallesFactura> DetallesFacturas { get; set; }
+    public virtual DbSet<DetallesFacturas> DetallesFacturas { get; set; }
 
-    public virtual DbSet<DetallesServicio> DetallesServicios { get; set; }
+    public virtual DbSet<DetallesServicio> DetallesServicio { get; set; }
 
-    public virtual DbSet<Direccione> Direcciones { get; set; }
+    public virtual DbSet<Direcciones> Direcciones { get; set; }
 
-    public virtual DbSet<Empleado> Empleados { get; set; }
+    public virtual DbSet<Documentos> Documentos { get; set; }
 
-    public virtual DbSet<EstadosServicio> EstadosServicios { get; set; }
+    public virtual DbSet<Empleados> Empleados { get; set; }
 
-    public virtual DbSet<Factura> Facturas { get; set; }
+    public virtual DbSet<EstadosServicio> EstadosServicio { get; set; }
 
-    public virtual DbSet<FacturasXMedio> FacturasXMedios { get; set; }
+    public virtual DbSet<Facturas> Facturas { get; set; }
 
-    public virtual DbSet<Marca> Marcas { get; set; }
+    public virtual DbSet<FacturasXMedios> FacturasXMedios { get; set; }
 
-    public virtual DbSet<MediosPago> MediosPagos { get; set; }
+    public virtual DbSet<Marcas> Marcas { get; set; }
 
-    public virtual DbSet<Movimiento> Movimientos { get; set; }
+    public virtual DbSet<MediosPagos> MediosPagos { get; set; }
 
-    public virtual DbSet<Servicio> Servicios { get; set; }
+    public virtual DbSet<Movimientos> Movimientos { get; set; }
 
-    public virtual DbSet<Stock> Stocks { get; set; }
+    public virtual DbSet<Servicios> Servicios { get; set; }
 
-    public virtual DbSet<Sucursale> Sucursales { get; set; }
+    public virtual DbSet<Stocks> Stocks { get; set; }
 
-    public virtual DbSet<TamaniosBaterium> TamaniosBateria { get; set; }
+    public virtual DbSet<Sucursales> Sucursales { get; set; }
 
-    public virtual DbSet<TiposBateria> TiposBaterias { get; set; }
+    public virtual DbSet<TamaniosBateria> TamaniosBateria { get; set; }
 
-    public virtual DbSet<TiposCliente> TiposClientes { get; set; }
+    public virtual DbSet<TiposBaterias> TiposBaterias { get; set; }
 
-    public virtual DbSet<TiposContacto> TiposContactos { get; set; }
+    public virtual DbSet<TiposClientes> TiposClientes { get; set; }
 
-    public virtual DbSet<TiposEmpleado> TiposEmpleados { get; set; }
+    public virtual DbSet<TiposContactos> TiposContactos { get; set; }
 
-    public virtual DbSet<TiposFactura> TiposFacturas { get; set; }
+    public virtual DbSet<TiposDocumentos> TiposDocumentos { get; set; }
 
-    public virtual DbSet<TiposServicio> TiposServicios { get; set; }
+    public virtual DbSet<TiposEmpleados> TiposEmpleados { get; set; }
 
-    public virtual DbSet<TiposVehiculo> TiposVehiculos { get; set; }
+    public virtual DbSet<TiposFacturas> TiposFacturas { get; set; }
 
-    public virtual DbSet<Vehiculo> Vehiculos { get; set; }
+    public virtual DbSet<TiposServicios> TiposServicios { get; set; }
 
-    public virtual DbSet<VehiculosSucursale> VehiculosSucursales { get; set; }
+    public virtual DbSet<TiposVehiculos> TiposVehiculos { get; set; }
 
-    public virtual DbSet<Voltaje> Voltajes { get; set; }
+    public virtual DbSet<Vehiculos> Vehiculos { get; set; }
+
+    public virtual DbSet<VehiculosSucursales> VehiculosSucursales { get; set; }
+
+    public virtual DbSet<Voltajes> Voltajes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Barrio>(entity =>
+        modelBuilder.Entity<Barrios>(entity =>
         {
             entity.HasKey(e => e.IdBarrio).HasName("Pk_Barrio");
 
             entity.Property(e => e.IdBarrio).HasColumnName("Id_Barrio");
-            entity.Property(e => e.Barrio1)
+            entity.Property(e => e.Barrio)
                 .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("Barrio");
+                .IsUnicode(false);
             entity.Property(e => e.IdCiudad).HasColumnName("Id_Ciudad");
 
             entity.HasOne(d => d.IdCiudadNavigation).WithMany(p => p.Barrios)
@@ -91,7 +94,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasConstraintName("Fk_Ciudad");
         });
 
-        modelBuilder.Entity<Bateria>(entity =>
+        modelBuilder.Entity<Baterias>(entity =>
         {
             entity.HasKey(e => e.IdBateria);
 
@@ -101,24 +104,24 @@ public partial class CecchettoLogicaContext : DbContext
             entity.Property(e => e.IdTipoBateria).HasColumnName("Id_Tipo_Bateria");
             entity.Property(e => e.IdVoltaje).HasColumnName("Id_Voltaje");
 
-            entity.HasOne(d => d.IdMarcaNavigation).WithMany(p => p.Bateria)
+            entity.HasOne(d => d.IdMarcaNavigation).WithMany(p => p.Baterias)
                 .HasForeignKey(d => d.IdMarca)
                 .HasConstraintName("FK_Baterias_Marca");
 
-            entity.HasOne(d => d.IdTamanioBateriaNavigation).WithMany(p => p.Bateria)
+            entity.HasOne(d => d.IdTamanioBateriaNavigation).WithMany(p => p.Baterias)
                 .HasForeignKey(d => d.IdTamanioBateria)
                 .HasConstraintName("FK_Baterias_Tamanio");
 
-            entity.HasOne(d => d.IdTipoBateriaNavigation).WithMany(p => p.Bateria)
+            entity.HasOne(d => d.IdTipoBateriaNavigation).WithMany(p => p.Baterias)
                 .HasForeignKey(d => d.IdTipoBateria)
                 .HasConstraintName("FK_Baterias_Tipo");
 
-            entity.HasOne(d => d.IdVoltajeNavigation).WithMany(p => p.Bateria)
+            entity.HasOne(d => d.IdVoltajeNavigation).WithMany(p => p.Baterias)
                 .HasForeignKey(d => d.IdVoltaje)
                 .HasConstraintName("FK_Baterias_Voltaje");
         });
 
-        modelBuilder.Entity<Ciudade>(entity =>
+        modelBuilder.Entity<Ciudades>(entity =>
         {
             entity.HasKey(e => e.IdCiudad).HasName("PK_Ciudad");
 
@@ -128,7 +131,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Cliente>(entity =>
+        modelBuilder.Entity<Clientes>(entity =>
         {
             entity.HasKey(e => e.IdCliente).HasName("Pk_Cliente");
 
@@ -137,6 +140,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.IdDireccion).HasColumnName("Id_Direccion");
+            entity.Property(e => e.IdDocumento).HasColumnName("Id_Documento");
             entity.Property(e => e.IdTipoCliente).HasColumnName("Id_Tipo_Cliente");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
@@ -146,37 +150,45 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasForeignKey(d => d.IdDireccion)
                 .HasConstraintName("Fk_Id_Direccion");
 
+            entity.HasOne(d => d.IdDocumentoNavigation).WithMany(p => p.Clientes)
+                .HasForeignKey(d => d.IdDocumento)
+                .HasConstraintName("FK_Id_Documento");
+
             entity.HasOne(d => d.IdTipoClienteNavigation).WithMany(p => p.Clientes)
                 .HasForeignKey(d => d.IdTipoCliente)
                 .HasConstraintName("Fk_Tipo_Cliente");
         });
 
-        modelBuilder.Entity<Contacto>(entity =>
+        modelBuilder.Entity<Contactos>(entity =>
         {
             entity.HasKey(e => e.IdContacto).HasName("PK_Contacto");
 
             entity.Property(e => e.IdContacto).HasColumnName("Id_Contacto");
             entity.Property(e => e.IdCliente).HasColumnName("Id_Cliente");
+            entity.Property(e => e.IdEmpleado).HasColumnName("Id_Empleado");
             entity.Property(e => e.IdTipoContacto).HasColumnName("Id_Tipo_Contacto");
 
             entity.HasOne(d => d.IdClienteNavigation).WithMany(p => p.Contactos)
                 .HasForeignKey(d => d.IdCliente)
                 .HasConstraintName("Fk_Cliente");
 
+            entity.HasOne(d => d.IdEmpleadoNavigation).WithMany(p => p.Contactos)
+                .HasForeignKey(d => d.IdEmpleado)
+                .HasConstraintName("Fk_empleado");
+
             entity.HasOne(d => d.IdTipoContactoNavigation).WithMany(p => p.Contactos)
                 .HasForeignKey(d => d.IdTipoContacto)
                 .HasConstraintName("Fk_Tipo_Contacto");
         });
 
-        modelBuilder.Entity<Cuota>(entity =>
+        modelBuilder.Entity<Cuotas>(entity =>
         {
             entity.HasKey(e => e.IdCuota).HasName("PK_Cuota");
 
             entity.Property(e => e.IdCuota).HasColumnName("Id_Cuota");
-            entity.Property(e => e.Cuota1).HasColumnName("Cuota");
         });
 
-        modelBuilder.Entity<DetallesFactura>(entity =>
+        modelBuilder.Entity<DetallesFacturas>(entity =>
         {
             entity.HasKey(e => e.IdDetalleFactura).HasName("Pk_Detalle_Factura");
 
@@ -209,20 +221,20 @@ public partial class CecchettoLogicaContext : DbContext
             entity.Property(e => e.IdServicio).HasColumnName("Id_Servicio");
             entity.Property(e => e.IdVehiculo).HasColumnName("Id_Vehiculo");
 
-            entity.HasOne(d => d.IdBateriaNavigation).WithMany(p => p.DetallesServicios)
+            entity.HasOne(d => d.IdBateriaNavigation).WithMany(p => p.DetallesServicio)
                 .HasForeignKey(d => d.IdBateria)
                 .HasConstraintName("Fk_Detalles_Pedidos_Baterias");
 
-            entity.HasOne(d => d.IdServicioNavigation).WithMany(p => p.DetallesServicios)
+            entity.HasOne(d => d.IdServicioNavigation).WithMany(p => p.DetallesServicio)
                 .HasForeignKey(d => d.IdServicio)
                 .HasConstraintName("Fk_Detalles_Pedidos_Servicios");
 
-            entity.HasOne(d => d.IdVehiculoNavigation).WithMany(p => p.DetallesServicios)
+            entity.HasOne(d => d.IdVehiculoNavigation).WithMany(p => p.DetallesServicio)
                 .HasForeignKey(d => d.IdVehiculo)
                 .HasConstraintName("FK_Servicios_Vehiculo");
         });
 
-        modelBuilder.Entity<Direccione>(entity =>
+        modelBuilder.Entity<Direcciones>(entity =>
         {
             entity.HasKey(e => e.IdDireccion).HasName("Pk_Direccion");
 
@@ -237,7 +249,19 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasConstraintName("Fk_Barrio");
         });
 
-        modelBuilder.Entity<Empleado>(entity =>
+        modelBuilder.Entity<Documentos>(entity =>
+        {
+            entity.HasKey(e => e.IdDocumento).HasName("PK_Id_Documento");
+
+            entity.Property(e => e.IdDocumento).HasColumnName("Id_Documento");
+            entity.Property(e => e.IdTipoDocumento).HasColumnName("Id_Tipo_Documento");
+
+            entity.HasOne(d => d.IdTipoDocumentoNavigation).WithMany(p => p.Documentos)
+                .HasForeignKey(d => d.IdTipoDocumento)
+                .HasConstraintName("FK_Id_Tipo_Documento");
+        });
+
+        modelBuilder.Entity<Empleados>(entity =>
         {
             entity.HasKey(e => e.IdEmpleado).HasName("Pk_Empleados");
 
@@ -246,17 +270,30 @@ public partial class CecchettoLogicaContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Contrasenia)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("contrasenia");
             entity.Property(e => e.IdDireccion).HasColumnName("Id_Direccion");
+            entity.Property(e => e.IdDocumento).HasColumnName("Id_Documento");
             entity.Property(e => e.IdSucursal).HasColumnName("Id_Sucursal");
             entity.Property(e => e.IdTipoEmpleado).HasColumnName("Id_tipo_Empleado");
             entity.Property(e => e.Nombre)
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Usuario)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("usuario");
 
             entity.HasOne(d => d.IdDireccionNavigation).WithMany(p => p.Empleados)
                 .HasForeignKey(d => d.IdDireccion)
                 .HasConstraintName("Fk_Empleados_Direcciones");
+
+            entity.HasOne(d => d.IdDocumentoNavigation).WithMany(p => p.Empleados)
+                .HasForeignKey(d => d.IdDocumento)
+                .HasConstraintName("Fk_Dni");
 
             entity.HasOne(d => d.IdSucursalNavigation).WithMany(p => p.Empleados)
                 .HasForeignKey(d => d.IdSucursal)
@@ -280,7 +317,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Factura>(entity =>
+        modelBuilder.Entity<Facturas>(entity =>
         {
             entity.HasKey(e => e.IdFactura).HasName("Pk_Facturas");
 
@@ -297,7 +334,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasConstraintName("Fk_Facturas_TiposFactura");
         });
 
-        modelBuilder.Entity<FacturasXMedio>(entity =>
+        modelBuilder.Entity<FacturasXMedios>(entity =>
         {
             entity.HasKey(e => e.IdFacturaMedio).HasName("Pk_Facturas_X_Medios");
 
@@ -322,7 +359,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasConstraintName("Fk_Medio_Pago");
         });
 
-        modelBuilder.Entity<Marca>(entity =>
+        modelBuilder.Entity<Marcas>(entity =>
         {
             entity.HasKey(e => e.IdMarca).HasName("Pk_marca");
 
@@ -332,7 +369,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<MediosPago>(entity =>
+        modelBuilder.Entity<MediosPagos>(entity =>
         {
             entity.HasKey(e => e.IdMedioPago).HasName("PK_Medio_Pago");
 
@@ -344,18 +381,17 @@ public partial class CecchettoLogicaContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Movimiento>(entity =>
+        modelBuilder.Entity<Movimientos>(entity =>
         {
             entity.HasKey(e => e.IdMovimiento).HasName("Pk_Moviemieto");
 
             entity.Property(e => e.IdMovimiento).HasColumnName("Id_Movimiento");
-            entity.Property(e => e.Movimiento1)
+            entity.Property(e => e.Movimiento)
                 .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("Movimiento");
+                .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Servicio>(entity =>
+        modelBuilder.Entity<Servicios>(entity =>
         {
             entity.HasKey(e => e.IdServicio);
 
@@ -391,7 +427,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasConstraintName("FK_Servicios_Tipo");
         });
 
-        modelBuilder.Entity<Stock>(entity =>
+        modelBuilder.Entity<Stocks>(entity =>
         {
             entity.HasKey(e => e.IdStock);
 
@@ -413,7 +449,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasConstraintName("FK_Stocks_Sucursal");
         });
 
-        modelBuilder.Entity<Sucursale>(entity =>
+        modelBuilder.Entity<Sucursales>(entity =>
         {
             entity.HasKey(e => e.IdSucursal).HasName("Pk_Sucursales");
 
@@ -433,7 +469,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasConstraintName("FK_vehiculo_Sucursal");
         });
 
-        modelBuilder.Entity<TamaniosBaterium>(entity =>
+        modelBuilder.Entity<TamaniosBateria>(entity =>
         {
             entity.HasKey(e => e.IdTamanio).HasName("Pk_Tamanio");
 
@@ -448,7 +484,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<TiposBateria>(entity =>
+        modelBuilder.Entity<TiposBaterias>(entity =>
         {
             entity.HasKey(e => e.IdTipoBateria).HasName("PK_Tipo_Bateria");
 
@@ -460,7 +496,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<TiposCliente>(entity =>
+        modelBuilder.Entity<TiposClientes>(entity =>
         {
             entity.HasKey(e => e.IdTipoCliente).HasName("PK_Tipo_Cliente");
 
@@ -472,7 +508,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<TiposContacto>(entity =>
+        modelBuilder.Entity<TiposContactos>(entity =>
         {
             entity.HasKey(e => e.IdTipoContacto).HasName("Pk_Tipos_contacto");
 
@@ -485,7 +521,19 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasColumnName("Tipo_Contacto");
         });
 
-        modelBuilder.Entity<TiposEmpleado>(entity =>
+        modelBuilder.Entity<TiposDocumentos>(entity =>
+        {
+            entity.HasKey(e => e.IdTipoDocumento).HasName("PK_Tipo_Documento");
+
+            entity.ToTable("Tipos_Documentos");
+
+            entity.Property(e => e.IdTipoDocumento).HasColumnName("Id_Tipo_Documento");
+            entity.Property(e => e.Tipos)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TiposEmpleados>(entity =>
         {
             entity.HasKey(e => e.IdTipoEmpleado).HasName("Pk_Tipos_Empleados");
 
@@ -498,7 +546,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasColumnName("Tipo_Empleado");
         });
 
-        modelBuilder.Entity<TiposFactura>(entity =>
+        modelBuilder.Entity<TiposFacturas>(entity =>
         {
             entity.HasKey(e => e.IdTipoFactura).HasName("PK_Tipo_Factura");
 
@@ -511,7 +559,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasColumnName("Tipo_Factura");
         });
 
-        modelBuilder.Entity<TiposServicio>(entity =>
+        modelBuilder.Entity<TiposServicios>(entity =>
         {
             entity.HasKey(e => e.IdTipoServicio);
 
@@ -523,7 +571,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<TiposVehiculo>(entity =>
+        modelBuilder.Entity<TiposVehiculos>(entity =>
         {
             entity.HasKey(e => e.IdTipoVehiculo).HasName("PK_Vehiculo");
 
@@ -535,7 +583,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Vehiculo>(entity =>
+        modelBuilder.Entity<Vehiculos>(entity =>
         {
             entity.HasKey(e => e.IdVehiculo).HasName("PK_Id_Vehiculo");
 
@@ -550,7 +598,7 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasConstraintName("Fk_Id_Vehiculo");
         });
 
-        modelBuilder.Entity<VehiculosSucursale>(entity =>
+        modelBuilder.Entity<VehiculosSucursales>(entity =>
         {
             entity.HasKey(e => e.IdVehiculoSucursal).HasName("PK_vehiculo_sucursal");
 
@@ -569,15 +617,14 @@ public partial class CecchettoLogicaContext : DbContext
                 .HasConstraintName("fk_id_vehiculo_sucursal");
         });
 
-        modelBuilder.Entity<Voltaje>(entity =>
+        modelBuilder.Entity<Voltajes>(entity =>
         {
             entity.HasKey(e => e.IdVoltaje).HasName("PK_Voltaje");
 
             entity.Property(e => e.IdVoltaje).HasColumnName("Id_Voltaje");
-            entity.Property(e => e.Voltaje1)
+            entity.Property(e => e.Voltaje)
                 .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("Voltaje");
+                .IsUnicode(false);
         });
 
         OnModelCreatingPartial(modelBuilder);

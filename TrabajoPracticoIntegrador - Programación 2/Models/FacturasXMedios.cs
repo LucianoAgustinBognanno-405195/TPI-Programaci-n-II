@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class FacturasXMedio
+public partial class FacturasXMedios
 {
     public int IdFacturaMedio { get; set; }
 
@@ -17,9 +17,9 @@ public partial class FacturasXMedio
 
     public decimal? Importe { get; set; }
 
-    public virtual Cuota IdCuotaNavigation { get; set; }
+    public virtual Cuotas IdCuotaNavigation { get; set; }
 
-    public virtual DetallesFactura IdDetalleFacturaNavigation { get; set; }
+    public virtual DetallesFacturas IdDetalleFacturaNavigation { get; set; }
 
-    public virtual MediosPago IdMedioPagoNavigation { get; set; }
+    public virtual MediosPagos IdMedioPagoNavigation { get; set; }
 }

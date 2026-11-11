@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class Factura
+public partial class Facturas
 {
     public int IdFactura { get; set; }
 
@@ -15,9 +15,9 @@ public partial class Factura
 
     public DateOnly? Fecha { get; set; }
 
-    public virtual ICollection<DetallesFactura> DetallesFacturas { get; set; } = new List<DetallesFactura>();
+    public virtual ICollection<DetallesFacturas> DetallesFacturas { get; set; } = new List<DetallesFacturas>();
 
-    public virtual Cliente IdClienteNavigation { get; set; }
+    public virtual Clientes IdClienteNavigation { get; set; }
 
-    public virtual TiposFactura IdTipoFacturaNavigation { get; set; }
+    public virtual TiposFacturas IdTipoFacturaNavigation { get; set; }
 }

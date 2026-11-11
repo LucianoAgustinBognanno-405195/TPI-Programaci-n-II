@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class Direccione
+public partial class Direcciones
 {
     public int IdDireccion { get; set; }
 
@@ -15,11 +15,11 @@ public partial class Direccione
 
     public int? IdBarrio { get; set; }
 
-    public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
+    public virtual ICollection<Clientes> Clientes { get; set; } = new List<Clientes>();
 
-    public virtual ICollection<Empleado> Empleados { get; set; } = new List<Empleado>();
+    public virtual ICollection<Empleados> Empleados { get; set; } = new List<Empleados>();
 
-    public virtual Barrio IdBarrioNavigation { get; set; }
+    public virtual Barrios IdBarrioNavigation { get; set; }
 
-    public virtual ICollection<Sucursale> Sucursales { get; set; } = new List<Sucursale>();
+    public virtual ICollection<Sucursales> Sucursales { get; set; } = new List<Sucursales>();
 }

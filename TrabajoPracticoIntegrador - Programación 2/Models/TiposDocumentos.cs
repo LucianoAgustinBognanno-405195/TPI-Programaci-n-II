@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class MediosPago
+public partial class TiposDocumentos
 {
-    public int IdMedioPago { get; set; }
+    public int IdTipoDocumento { get; set; }
 
-    public string Medio { get; set; }
+    public string Tipos { get; set; }
 
-    public virtual ICollection<FacturasXMedio> FacturasXMedios { get; set; } = new List<FacturasXMedio>();
+    public virtual ICollection<Documentos> Documentos { get; set; } = new List<Documentos>();
 }

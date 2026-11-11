@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class VehiculosSucursale
+public partial class VehiculosSucursales
 {
     public int IdVehiculoSucursal { get; set; }
 
@@ -13,7 +13,7 @@ public partial class VehiculosSucursale
 
     public int? IdSucursal { get; set; }
 
-    public virtual Sucursale IdSucursalNavigation { get; set; }
+    public virtual Sucursales IdSucursalNavigation { get; set; }
 
-    public virtual Vehiculo IdVehiculoNavigation { get; set; }
+    public virtual Vehiculos IdVehiculoNavigation { get; set; }
 }

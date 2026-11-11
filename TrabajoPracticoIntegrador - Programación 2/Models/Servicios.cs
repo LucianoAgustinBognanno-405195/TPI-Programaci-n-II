@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class Servicio
+public partial class Servicios
 {
     public int IdServicio { get; set; }
 
-    public DateOnly? FechaServicio { get; set; }
+    public DateTime? FechaServicio { get; set; }
 
     public int? IdCliente { get; set; }
 
@@ -23,17 +23,17 @@ public partial class Servicio
 
     public int? EstadoServicio { get; set; }
 
-    public virtual ICollection<DetallesFactura> DetallesFacturas { get; set; } = new List<DetallesFactura>();
+    public virtual ICollection<DetallesFacturas> DetallesFacturas { get; set; } = new List<DetallesFacturas>();
 
-    public virtual ICollection<DetallesServicio> DetallesServicios { get; set; } = new List<DetallesServicio>();
+    public virtual ICollection<DetallesServicio> DetallesServicio { get; set; } = new List<DetallesServicio>();
 
     public virtual EstadosServicio EstadoServicioNavigation { get; set; }
 
-    public virtual Cliente IdClienteNavigation { get; set; }
+    public virtual Clientes IdClienteNavigation { get; set; }
 
-    public virtual Empleado IdEmpleadoNavigation { get; set; }
+    public virtual Empleados IdEmpleadoNavigation { get; set; }
 
-    public virtual Sucursale IdSucursalNavigation { get; set; }
+    public virtual Sucursales IdSucursalNavigation { get; set; }
 
-    public virtual TiposServicio IdTipoServicioNavigation { get; set; }
+    public virtual TiposServicios IdTipoServicioNavigation { get; set; }
 }

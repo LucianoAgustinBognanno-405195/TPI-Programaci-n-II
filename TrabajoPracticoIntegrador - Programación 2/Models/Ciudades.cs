@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class TiposFactura
+public partial class Ciudades
 {
-    public int IdTipoFactura { get; set; }
+    public int IdCiudad { get; set; }
 
-    public string TipoFactura { get; set; }
+    public string Ciudad { get; set; }
 
-    public virtual ICollection<Factura> Facturas { get; set; } = new List<Factura>();
+    public virtual ICollection<Barrios> Barrios { get; set; } = new List<Barrios>();
 }

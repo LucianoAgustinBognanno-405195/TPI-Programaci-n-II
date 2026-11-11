@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class Voltaje
+public partial class TiposBaterias
 {
-    public int IdVoltaje { get; set; }
+    public int IdTipoBateria { get; set; }
 
-    public string Voltaje1 { get; set; }
+    public string Tipos { get; set; }
 
-    public virtual ICollection<Bateria> Bateria { get; set; } = new List<Bateria>();
+    public virtual ICollection<Baterias> Baterias { get; set; } = new List<Baterias>();
 }

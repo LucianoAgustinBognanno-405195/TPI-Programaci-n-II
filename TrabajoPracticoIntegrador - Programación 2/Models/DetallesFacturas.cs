@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class DetallesFactura
+public partial class DetallesFacturas
 {
     public int IdDetalleFactura { get; set; }
 
@@ -19,9 +19,9 @@ public partial class DetallesFactura
 
     public decimal? Subtotal { get; set; }
 
-    public virtual ICollection<FacturasXMedio> FacturasXMedios { get; set; } = new List<FacturasXMedio>();
+    public virtual ICollection<FacturasXMedios> FacturasXMedios { get; set; } = new List<FacturasXMedios>();
 
-    public virtual Factura IdFacturaNavigation { get; set; }
+    public virtual Facturas IdFacturaNavigation { get; set; }
 
-    public virtual Servicio IdServicioNavigation { get; set; }
+    public virtual Servicios IdServicioNavigation { get; set; }
 }

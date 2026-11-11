@@ -6,18 +6,18 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
     {
         //GET
         //1. GetEmpleadosAll
-        Task<List<Empleado>> GetEmpleadoAll();
+        Task<List<Empleados>> GetEmpleadoAll();
 
         //2. GetEmpleadoByIdDNI
-        Task<Empleado?> GetEmpleadoById(int idEmpl);
+        Task<Empleados?> GetEmpleadoById(int idEmpl);
 
         //POST
         //3. NuevoEmpleado
-        Task<bool> NuevEmpleado(Empleado nuevEmpl);
+        Task<bool> NuevEmpleado(Empleados nuevEmpl);
 
         //PUT
         //4. ModificarExistente
-        Task<Empleado> UpdtEmpleado(int idEmpl, Empleado nuevEmpl);
+        Task<Empleados> UpdtEmpleado(int idEmpl, Empleados nuevEmpl);
 
         //5. BajaLogica
         Task<bool> BajaLogicaEmpleado(int idEmpl);

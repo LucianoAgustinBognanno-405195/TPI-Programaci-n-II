@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class Contacto
+public partial class Contactos
 {
     public int IdContacto { get; set; }
 
@@ -13,7 +13,11 @@ public partial class Contacto
 
     public int? IdCliente { get; set; }
 
-    public virtual Cliente IdClienteNavigation { get; set; }
+    public int? IdEmpleado { get; set; }
 
-    public virtual TiposContacto IdTipoContactoNavigation { get; set; }
+    public virtual Clientes IdClienteNavigation { get; set; }
+
+    public virtual Empleados IdEmpleadoNavigation { get; set; }
+
+    public virtual TiposContactos IdTipoContactoNavigation { get; set; }
 }

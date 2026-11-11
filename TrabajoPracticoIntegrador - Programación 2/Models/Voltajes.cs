@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class Movimiento
+public partial class Voltajes
 {
-    public int IdMovimiento { get; set; }
+    public int IdVoltaje { get; set; }
 
-    public string Movimiento1 { get; set; }
+    public string Voltaje { get; set; }
 
-    public virtual ICollection<Stock> Stocks { get; set; } = new List<Stock>();
+    public virtual ICollection<Baterias> Baterias { get; set; } = new List<Baterias>();
 }

@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class Ciudade
+public partial class TiposVehiculos
 {
-    public int IdCiudad { get; set; }
+    public int IdTipoVehiculo { get; set; }
 
-    public string Ciudad { get; set; }
+    public string Vehiculo { get; set; }
 
-    public virtual ICollection<Barrio> Barrios { get; set; } = new List<Barrio>();
+    public virtual ICollection<Vehiculos> Vehiculos { get; set; } = new List<Vehiculos>();
 }

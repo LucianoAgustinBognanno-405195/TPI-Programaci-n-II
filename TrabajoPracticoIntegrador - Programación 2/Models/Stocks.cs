@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class Stock
+public partial class Stocks
 {
     public int IdStock { get; set; }
 
@@ -17,9 +17,9 @@ public partial class Stock
 
     public int? Cantidad { get; set; }
 
-    public virtual Bateria IdBateriaNavigation { get; set; }
+    public virtual Baterias IdBateriaNavigation { get; set; }
 
-    public virtual Movimiento IdMovimientoNavigation { get; set; }
+    public virtual Movimientos IdMovimientoNavigation { get; set; }
 
-    public virtual Sucursale IdSucursalNavigation { get; set; }
+    public virtual Sucursales IdSucursalNavigation { get; set; }
 }

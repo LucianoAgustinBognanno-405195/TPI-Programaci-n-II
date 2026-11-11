@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class TiposCliente
+public partial class Movimientos
 {
-    public int IdTipoCliente { get; set; }
+    public int IdMovimiento { get; set; }
 
-    public string Tipo { get; set; }
+    public string Movimiento { get; set; }
 
-    public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
+    public virtual ICollection<Stocks> Stocks { get; set; } = new List<Stocks>();
 }

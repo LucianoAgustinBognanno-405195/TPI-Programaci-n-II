@@ -15,9 +15,9 @@ public partial class DetallesServicio
 
     public int? IdVehiculo { get; set; }
 
-    public virtual Bateria IdBateriaNavigation { get; set; }
+    public virtual Baterias IdBateriaNavigation { get; set; }
 
-    public virtual Servicio IdServicioNavigation { get; set; }
+    public virtual Servicios IdServicioNavigation { get; set; }
 
-    public virtual Vehiculo IdVehiculoNavigation { get; set; }
+    public virtual Vehiculos IdVehiculoNavigation { get; set; }
 }

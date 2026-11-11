@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Models;
 
-public partial class Barrio
+public partial class Barrios
 {
     public int IdBarrio { get; set; }
 
-    public string Barrio1 { get; set; }
+    public string Barrio { get; set; }
 
     public int? IdCiudad { get; set; }
 
-    public virtual ICollection<Direccione> Direcciones { get; set; } = new List<Direccione>();
+    public virtual ICollection<Direcciones> Direcciones { get; set; } = new List<Direcciones>();
 
-    public virtual Ciudade IdCiudadNavigation { get; set; }
+    public virtual Ciudades IdCiudadNavigation { get; set; }
 }

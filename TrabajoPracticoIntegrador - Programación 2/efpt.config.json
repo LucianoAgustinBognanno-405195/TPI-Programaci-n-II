@@ -55,6 +55,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Documentos]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Empleados]",
          "ObjectType": 0
       },
@@ -111,6 +115,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[Tipos_Documentos]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Tipos_Empleados]",
          "ObjectType": 0
       },
@@ -151,7 +159,7 @@
    "UseFluentApiOnly": true,
    "UseHandleBars": false,
    "UseHierarchyId": false,
-   "UseInflector": true,
+   "UseInflector": false,
    "UseInternalAccessModifiersForSprocsAndFunctions": false,
    "UseLegacyPluralizer": false,
    "UseManyToManyEntity": false,

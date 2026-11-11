@@ -6,25 +6,25 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
     {
         //GET
         //1. GetServicioContratadoAll
-        Task<List<Servicio>> GetSCAll();
+        Task<List<Servicios>> GetSCAll();
 
         //2. GetServicioContratadoById
-        Servicio? GetSCById(int id);
+        Task<Servicios?> GetSCById(int id);
 
         //3. GetServicioContratadoByFecha
-        Task<List<Servicio>> GetSCByFecha(DateTime fecha);
+        Task<List<Servicios>> GetSCByFecha(DateTime fechaInicio, DateTime? fechFin);
 
-        //4. GetServicioContratadoByCLiente (agregar dni/cuil) (agregar tipo_dni)
-        Task<List<Servicio>> GetSCByCliente(int dniCliente);
+        //4. GetServicioContratadoByCLiente
+        Task<List<Servicios>> GetSCByCliente(int docCliente);
 
         //5. GetServicioContratadoByDNIEmpleado
-        Task<List<Servicio>> GetSCByEmpleado(int dniEmpleado);
+        Task<List<Servicios>> GetSCByEmpleado(int dniEmpleado);
 
         //6. GetServicioContratadoBySucursal
-        Task<List<Servicio>> GetSCBySucursal(string nombreSucursal);
+        Task<List<Servicios>> GetSCBySucursal(string nombreSucursal);
 
         //7. GetServicioContratadoByEstado
-        Task<List<Servicio>> GetSCByEstado(string estado);
+        Task<List<Servicios>> GetSCByEstado(string estado);
 
         //8. GetDetalleServicioContratadoByIdServicioContratado
         Task<List<DetallesServicio>> GetDSCByIdSC(int idSC);
@@ -32,12 +32,12 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
 
         //POST
         //9. NuevoServicio(con detalle)
-        Task<bool> NuevoSC(Servicio nuevSC);
+        Task<bool> NuevoSC(Servicios nuevSC);
 
 
         //PUT
         //10. ModificarExistente
-        Task<Servicio> UpdateSC(int idSC, Servicio updtSC);
+        Task<Servicios> UpdateSC(int idSC, Servicios updtSC);
 
         //11. CambioEstado
         Task<bool> CambioEstadoSC(int idSC, string nuevEstado);
