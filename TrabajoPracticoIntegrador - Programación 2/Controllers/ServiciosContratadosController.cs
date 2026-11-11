@@ -128,9 +128,42 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
 
         //7. GetServicioContratadoByEstado
+        [HttpGet]
+        [Route("ByEstado/{estado}")]
+        public async Task<IActionResult> GetSCByEstado([FromRoute] string estado)
+        {
+            try
+            {
+                List<Servicios> lst = await _serv.GetSCByEstado(estado);
+
+                return Ok(lst);
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(201, e.Message);
+            }
+        }
 
 
         //8. GetDetalleServicioContratadoByIdServicioContratado
+        [HttpGet]
+        [Route("ByIdServicio/{idSc}")]
+        public async Task<IActionResult> GetDSCByIdSC([FromRoute] int idSc)
+        {
+            try
+            {
+                List<DetallesServicio> lst = await _serv.GetDSCByIdSC(idSc);
+
+                return Ok(lst);
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(201, e.Message);
+            }
+        }
+
 
 
         //POST

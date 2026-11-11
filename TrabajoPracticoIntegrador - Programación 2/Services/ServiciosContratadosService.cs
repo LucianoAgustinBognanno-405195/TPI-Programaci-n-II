@@ -115,16 +115,34 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
 
         //7. GetServicioContratadoByEstado
-        public Task<List<Servicios>> GetSCByEstado(string estado)
+        public async Task<List<Servicios>> GetSCByEstado(string estado)
         {
-            throw new NotImplementedException();
+            List<Servicios> lst = await _repo.GetSCByEstado(estado);
+
+            if (lst != null && lst.Count > 0)
+            {
+                return lst;
+            }
+            else
+            {
+                throw new Exception($"No existen servicios contratados con estado {estado}.");
+            }
         }
 
 
         //8. GetDetalleServicioContratadoByIdServicioContratado
-        public Task<List<DetallesServicio>> GetDSCByIdSC(int idSC)
+        public async Task<List<DetallesServicio>> GetDSCByIdSC(int idSC)
         {
-            throw new NotImplementedException();
+            List<DetallesServicio> lst = await _repo.GetDSCByIdSC(idSC);
+
+            if (lst != null && lst.Count > 0)
+            {
+                return lst;
+            }
+            else
+            {
+                throw new Exception("No existen detalles asociados a este Servicio.");
+            }
         }
 
 

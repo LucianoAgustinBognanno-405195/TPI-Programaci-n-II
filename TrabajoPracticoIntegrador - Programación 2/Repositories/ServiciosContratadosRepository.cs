@@ -89,23 +89,27 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
 
         //7. GetServicioContratadoByEstado
-        public Task<List<Servicios>> GetSCByEstado(string estado)
+        public async Task<List<Servicios>> GetSCByEstado(string estado)
         {
-            throw new NotImplementedException();
+            List<Servicios> lst = await _dbContext.Servicios.Where(s => s.EstadoServicioNavigation.Estado == estado).ToListAsync();
+
+            return lst;
         }
 
 
         //8. GetDetalleServicioContratadoByIdServicioContratado
         public async Task<List<DetallesServicio>> GetDSCByIdSC(int idSC)
         {
-            throw new NotImplementedException();
+            List<DetallesServicio> lst = await _dbContext.DetallesServicio.Where(ds => ds.IdServicioNavigation.IdServicio == idSC).ToListAsync();
+
+            return lst;
         }
 
 
 
         //POST
         //9. NuevoServicio(con detalle)
-        public Task<bool> NuevoSC(Servicios nuevSC)
+        public async Task<bool> NuevoSC(Servicios nuevSC)
         {
             throw new NotImplementedException();
         }
