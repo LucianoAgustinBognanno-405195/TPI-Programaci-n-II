@@ -90,9 +90,41 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
 
         //5. GetServicioContratadoByDNIEmpleado
+        [HttpGet]
+        [Route("ByDocEmpleado/{docEmpleado}")]
+        public async Task<IActionResult> GetSCByEmpleado([FromRoute] int docEmpleado)
+        {
+            try
+            {
+                List<Servicios> lst = await _serv.GetSCByEmpleado(docEmpleado);
+
+                return Ok(lst);
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(201, e.Message);
+            }
+        }
 
 
         //6. GetServicioContratadoBySucursal
+        [HttpGet]
+        [Route("BySucursal/{nombreSucursal}")]
+        public async Task<IActionResult> GetSCBySucursal([FromRoute] string nombreSucursal)
+        {
+            try
+            {
+                List<Servicios> lst = await _serv.GetSCBySucursal(nombreSucursal);
+
+                return Ok(lst);
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(201, e.Message);
+            }
+        }
 
 
         //7. GetServicioContratadoByEstado

@@ -16,7 +16,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
         
 
-
         //GET
         //1. GetServicioContratadoAll
         public async Task<List<Servicios>> GetSCAll()
@@ -33,6 +32,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 throw new Exception("No existen servicios contratados");
             }
         }
+
 
         //2. GetServicioContratadoById
         public async Task<Servicios?> GetSCById(int id)
@@ -65,10 +65,11 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             }
         }
 
+
         //4. GetServicioContratadoByCLiente
-        public async Task<List<Servicios>> GetSCByCliente(int dniCliente)
+        public async Task<List<Servicios>> GetSCByCliente(int docCliente)
         {
-            List<Servicios> lst = await _repo.GetSCByCliente(dniCliente);
+            List<Servicios> lst = await _repo.GetSCByCliente(docCliente);
 
             if (lst != null && lst.Count > 0)
             {
@@ -81,44 +82,75 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
         }
 
 
-
-
-        public Task<List<Servicios>> GetSCByEmpleado(int dniEmpleado)
+        //5. GetServicioContratadoByDNIEmpleado
+        public async Task<List<Servicios>> GetSCByEmpleado(int docEmpleado)
         {
-            throw new NotImplementedException();
+            List<Servicios> lst = await _repo.GetSCByEmpleado(docEmpleado);
+
+            if (lst != null && lst.Count > 0)
+            {
+                return lst;
+            }
+            else
+            {
+                throw new Exception("No existen servicios contratados asociados a este empleado.");
+            }
         }
 
+
+        //6. GetServicioContratadoBySucursal
+        public async Task<List<Servicios>> GetSCBySucursal(string nombreSucursal)
+        {
+            List<Servicios> lst = await _repo.GetSCBySucursal(nombreSucursal);
+
+            if (lst != null && lst.Count > 0)
+            {
+                return lst;
+            }
+            else
+            {
+                throw new Exception("No existen servicios contratados asociados a esa sucursal.");
+            }
+        }
+
+
+        //7. GetServicioContratadoByEstado
         public Task<List<Servicios>> GetSCByEstado(string estado)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<Servicios>> GetSCBySucursal(string nombreSucursal)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<bool> NuevoSC(Servicios nuevSC)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> CambioEstadoSC(int idSC, string nuevEstado)
-        {
-            throw new NotImplementedException();
-        }
-
-        
+        //8. GetDetalleServicioContratadoByIdServicioContratado
         public Task<List<DetallesServicio>> GetDSCByIdSC(int idSC)
         {
             throw new NotImplementedException();
         }
 
+
+
+        //POST
+        //9. NuevoServicio(con detalle)
+        public Task<bool> NuevoSC(Servicios nuevSC)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        //PUT
+        //10. ModificarExistente
+        public Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        //11. CambioEstado
+        public Task<bool> CambioEstadoSC(int idSC, string nuevEstado)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

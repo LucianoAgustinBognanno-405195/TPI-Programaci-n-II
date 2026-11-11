@@ -14,6 +14,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             _dbContext = dbContext;
         }
 
+
+
         //GET
         //1. GetServicioContratadoAll
         public async Task<List<Servicios>> GetSCAll()
@@ -25,6 +27,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return lst;
         }
 
+
         //2. GetServicioContratadoById
         public async Task<Servicios?> GetSCById(int id)
         {
@@ -32,6 +35,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
             return serv;
         }
+
 
         //3. GetServicioContratadoByFecha
         public async Task<List<Servicios>> GetSCByFecha(DateTime fechaInicio, DateTime? fechaFin)
@@ -54,6 +58,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             }
         }
 
+
         //4. GetServicioContratadoByCLiente
         public async Task<List<Servicios>> GetSCByCliente(int docCliente)
         {
@@ -65,55 +70,61 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         }
 
 
-
-        public async Task<List<DetallesServicio>> GetDSCByIdSC(int idSC)
+        //5. GetServicioContratadoByDNIEmpleado
+        public async Task<List<Servicios>> GetSCByEmpleado(int docEmpleado)
         {
-            throw new NotImplementedException();
+            List<Servicios> lst = await _dbContext.Servicios.Where(s => s.IdEmpleadoNavigation.IdDocumentoNavigation.Documento == docEmpleado).ToListAsync();
+
+            return lst;
         }
 
 
-        public Task<bool> CambioEstadoSC(int idSC, string nuevEstado)
+        //6. GetServicioContratadoBySucursal
+        public async Task<List<Servicios>> GetSCBySucursal(string nombreSucursal)
         {
-            throw new NotImplementedException();
-        }
-        
+            List<Servicios> lst = await _dbContext.Servicios.Where(s => s.IdSucursalNavigation.Sucursal == nombreSucursal).ToListAsync();
 
-
-
-        public Task<List<Servicios>> GetSCByEmpleado(int dniEmpleado)
-        {
-            throw new NotImplementedException();
+            return lst;
         }
 
+
+        //7. GetServicioContratadoByEstado
         public Task<List<Servicios>> GetSCByEstado(string estado)
         {
             throw new NotImplementedException();
         }
 
 
-
- 
-
-        public Task<List<Servicios>> GetSCBySucursal(string nombreSucursal)
+        //8. GetDetalleServicioContratadoByIdServicioContratado
+        public async Task<List<DetallesServicio>> GetDSCByIdSC(int idSC)
         {
             throw new NotImplementedException();
         }
 
+
+
+        //POST
+        //9. NuevoServicio(con detalle)
         public Task<bool> NuevoSC(Servicios nuevSC)
         {
             throw new NotImplementedException();
         }
 
+
+
+        //PUT
+        //10. ModificarExistente
         public Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
         {
             throw new NotImplementedException();
         }
 
 
-
-
-
-
+        //11. CambioEstado
+        public Task<bool> CambioEstadoSC(int idSC, string nuevEstado)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
