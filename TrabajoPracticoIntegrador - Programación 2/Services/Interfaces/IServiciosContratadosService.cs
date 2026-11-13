@@ -1,4 +1,5 @@
-﻿using TrabajoPracticoIntegrador___Programación_2.Models;
+﻿using TrabajoPracticoIntegrador___Programación_2.DTOs;
+using TrabajoPracticoIntegrador___Programación_2.Models;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
 {
@@ -6,13 +7,13 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
     {
         //GET
         //1. GetServicioContratadoAll
-        Task<List<Servicios>> GetSCAll();
+        Task<List<ServicioListadoDTO>> GetSCAll();
 
         //2. GetServicioContratadoById
         Task<Servicios?> GetSCById(int id);
 
         //3. GetServicioContratadoByFecha
-        Task<List<Servicios>> GetSCByFecha(DateTime fechaInicio, DateTime? fechaFin);
+        Task<List<Servicios>> GetSCByFecha(DateOnly fechaInicio, DateOnly? fechaFin);
 
         //4. GetServicioContratadoByCLiente
         Task<List<Servicios>> GetSCByCliente(int docCliente);
@@ -27,7 +28,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
         Task<List<Servicios>> GetSCByEstado(string estado);
 
         //8. GetDetalleServicioContratadoByIdServicioContratado
-        Task<List<DetallesServicio>> GetDSCByIdSC(int idSC);
+        Task<List<DetallesServicioListadoDTO>> GetDSCByIdSC(int idSC);
 
 
         //POST
@@ -41,5 +42,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
 
         //11. CambioEstado
         Task<bool> CambioEstadoSC(int idSC, string nuevEstado);
+
+        //12. Modificar DetalleServicio
+        Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using TrabajoPracticoIntegrador___Programación_2.DTOs;
 using TrabajoPracticoIntegrador___Programación_2.Models;
 using TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces;
 
@@ -20,7 +21,12 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //1. GetServicioContratadoAll
         public async Task<List<Servicios>> GetSCAll()
         {
-            List<Servicios> lst = await _dbContext.Servicios.ToListAsync();
+            List<Servicios> lst = await _dbContext.Servicios.Include(s => s.IdClienteNavigation)
+                                                      .Include(s => s.IdEmpleadoNavigation)
+                                                      .Include(s =>s.IdSucursalNavigation)
+                                                      .Include(s => s.IdTipoServicioNavigation)
+                                                      .Include(s => s.EstadoServicioNavigation)
+                                                      .ToListAsync();
 
             //List<Servicio> lst = null;
 
@@ -38,12 +44,12 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
 
         //3. GetServicioContratadoByFecha
-        public async Task<List<Servicios>> GetSCByFecha(DateTime fechaInicio, DateTime? fechaFin)
+        public async Task<List<Servicios>> GetSCByFecha(DateOnly fechaInicio, DateOnly? fechaFin)
         {
             if (fechaFin == null)
             {
                 List<Servicios> lst = await _dbContext.Servicios.Where(s => s.FechaServicio >= fechaInicio &&
-                                                                        s.FechaServicio <= DateTime.UtcNow).
+                                                                        s.FechaServicio <= DateOnly.FromDateTime(DateTime.UtcNow)).
                                                                         ToListAsync();
 
                 return lst;
@@ -100,7 +106,12 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //8. GetDetalleServicioContratadoByIdServicioContratado
         public async Task<List<DetallesServicio>> GetDSCByIdSC(int idSC)
         {
-            List<DetallesServicio> lst = await _dbContext.DetallesServicio.Where(ds => ds.IdServicioNavigation.IdServicio == idSC).ToListAsync();
+            List<DetallesServicio> lst = await _dbContext.DetallesServicio.Where(ds => ds.IdServicioNavigation.IdServicio == idSC).
+                                                                           Include(s => s.IdBateriaNavigation).ThenInclude(d => d.IdTipoBateriaNavigation).
+                                                                           Include(s => s.IdBateriaNavigation).ThenInclude(v => v.IdVoltajeNavigation).                                
+                                                                           Include(s => s.IdServicioNavigation).
+                                                                           Include(s => s.IdVehiculoNavigation).ThenInclude(d => d.IdTipoVehiculoNavigation).
+                                                                           ToListAsync();
 
             return lst;
         }
@@ -111,24 +122,66 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //9. NuevoServicio(con detalle)
         public async Task<bool> NuevoSC(Servicios nuevSC)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _dbContext.Servicios.AddAsync(nuevSC);
+
+                await _dbContext.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+            
         }
 
 
 
         //PUT
         //10. ModificarExistente
-        public Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
+        public async Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
         {
             throw new NotImplementedException();
         }
 
 
         //11. CambioEstado
-        public Task<bool> CambioEstadoSC(int idSC, string nuevEstado)
+        public async Task<bool> CambioEstadoSC(int idSC, int nuevEstado)
+        {
+            Servicios? serv = await _dbContext.Servicios.Include(s => s.EstadoServicioNavigation).FirstOrDefaultAsync(s => s.IdServicio == idSC);
+
+            try
+            {
+                if (serv != null)
+                {
+                    serv.EstadoServicioNavigation.IdEstado = nuevEstado;
+
+                    int filas = await _dbContext.SaveChangesAsync();
+
+                    if (filas > 0)
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                {
+                    throw new Exception("No existe el servicio indicado con ese Id.");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("No se puedo modificar el nuevo estado.");
+            }
+        }
+
+        //12. Modificar DetalleServicio
+        public async Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio)
         {
             throw new NotImplementedException();
         }
-
     }
 }

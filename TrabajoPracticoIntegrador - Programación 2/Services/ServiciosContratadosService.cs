@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Endpoints.Infrastructure;
+using TrabajoPracticoIntegrador___Programación_2.DTOs;
 using TrabajoPracticoIntegrador___Programación_2.Models;
 using TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces;
 using TrabajoPracticoIntegrador___Programación_2.Services.Interfaces;
@@ -18,14 +19,24 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
         //GET
         //1. GetServicioContratadoAll
-        public async Task<List<Servicios>> GetSCAll()
+        public async Task<List<ServicioListadoDTO>> GetSCAll()
         {
 
             List<Servicios> lst = await _repo.GetSCAll();
 
             if (lst != null && lst.Count > 0)
             {
-                return (lst);
+                return lst.Select(s => new ServicioListadoDTO
+                {
+                    IdServicio = s.IdServicio,
+                    Fecha = s.FechaServicio,
+                    Cliente = s.IdClienteNavigation.Nombre,
+                    Empleado = s.IdEmpleadoNavigation.Nombre,
+                    Sucursal = s.IdSucursalNavigation.Sucursal,
+                    Descripcion = s.Descripcion,
+                    TipoServicio = s.IdTipoServicioNavigation.Descripcion,
+                    Estado = s.EstadoServicioNavigation.Estado
+                }).ToList();
             }
             else
             {
@@ -51,7 +62,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
 
         //3. GetServicioContratadoByFecha
-        public async Task<List<Servicios>> GetSCByFecha(DateTime fechaInicio, DateTime? fechaFin)
+        public async Task<List<Servicios>> GetSCByFecha(DateOnly fechaInicio, DateOnly? fechaFin)
         {
             List<Servicios> lst = await _repo.GetSCByFecha(fechaInicio, fechaFin);
 
@@ -131,13 +142,22 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
 
         //8. GetDetalleServicioContratadoByIdServicioContratado
-        public async Task<List<DetallesServicio>> GetDSCByIdSC(int idSC)
+        public async Task<List<DetallesServicioListadoDTO>> GetDSCByIdSC(int idSC)
         {
             List<DetallesServicio> lst = await _repo.GetDSCByIdSC(idSC);
 
             if (lst != null && lst.Count > 0)
             {
-                return lst;
+                return lst.Select(s => new DetallesServicioListadoDTO
+                {
+                    IdDetalleServicio = s.IdDetalleServicio,
+                    IdBateria = s.IdBateria,
+                    TipoBateria = s.IdBateriaNavigation.IdTipoBateriaNavigation.Tipos,
+                    VoltajeBateria = s.IdBateriaNavigation.IdVoltajeNavigation.Voltaje,
+                    IdServicio = s.IdServicioNavigation.IdServicio,
+                    DescVehiculo = s.IdVehiculoNavigation.Descripcion,
+                    TipoVehiculo = s.IdVehiculoNavigation.IdTipoVehiculoNavigation.Vehiculo,
+                }).ToList();
             }
             else
             {
@@ -149,7 +169,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
         //POST
         //9. NuevoServicio(con detalle)
-        public Task<bool> NuevoSC(Servicios nuevSC)
+        public async Task<bool> NuevoSC(Servicios nuevSC)
         {
             throw new NotImplementedException();
         }
@@ -158,17 +178,22 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
         //PUT
         //10. ModificarExistente
-        public Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
+        public async Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
         {
             throw new NotImplementedException();
         }
 
 
         //11. CambioEstado
-        public Task<bool> CambioEstadoSC(int idSC, string nuevEstado)
+        public async Task<bool> CambioEstadoSC(int idSC, int nuevEstado)
         {
             throw new NotImplementedException();
         }
 
+        //12. Modificar DetalleServicio
+        public async Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

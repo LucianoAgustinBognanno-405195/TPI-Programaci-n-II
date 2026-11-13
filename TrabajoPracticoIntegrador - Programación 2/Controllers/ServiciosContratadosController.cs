@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TrabajoPracticoIntegrador___Programación_2.DTOs;
 using TrabajoPracticoIntegrador___Programación_2.Models;
 using TrabajoPracticoIntegrador___Programación_2.Services.Interfaces;
 
@@ -24,7 +25,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         {
             try
             {
-                List<Servicios> lst = await _serv.GetSCAll();
+                List<ServicioListadoDTO> lst = await _serv.GetSCAll();
 
                 return Ok(lst);
             }
@@ -56,7 +57,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         //3. GetServicioContratadoByFecha
         [HttpGet]
         [Route("ByFecha/{fechaInicio}")]
-        public async Task<IActionResult> GetSCByFecha([FromRoute] DateTime fechaInicio, [FromQuery] DateTime? fechaFin)
+        public async Task<IActionResult> GetSCByFecha([FromRoute] DateOnly fechaInicio, [FromQuery] DateOnly? fechaFin)
         {
             try
             {
@@ -153,7 +154,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         {
             try
             {
-                List<DetallesServicio> lst = await _serv.GetDSCByIdSC(idSc);
+                List<DetallesServicioListadoDTO> lst = await _serv.GetDSCByIdSC(idSc);
 
                 return Ok(lst);
             }

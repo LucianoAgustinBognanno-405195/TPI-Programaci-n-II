@@ -9,19 +9,19 @@ public partial class Servicios
 {
     public int IdServicio { get; set; }
 
-    public DateTime? FechaServicio { get; set; }
+    public DateOnly FechaServicio { get; set; }
 
-    public int? IdCliente { get; set; }
+    public int IdCliente { get; set; }
 
-    public int? IdEmpleado { get; set; }
+    public int IdEmpleado { get; set; }
 
-    public int? IdSucursal { get; set; }
+    public int IdSucursal { get; set; }
 
     public string Descripcion { get; set; }
 
-    public int? IdTipoServicio { get; set; }
+    public int IdTipoServicio { get; set; }
 
-    public int? EstadoServicio { get; set; }
+    public int EstadoServicio { get; set; }
 
     public virtual ICollection<DetallesFacturas> DetallesFacturas { get; set; } = new List<DetallesFacturas>();
 

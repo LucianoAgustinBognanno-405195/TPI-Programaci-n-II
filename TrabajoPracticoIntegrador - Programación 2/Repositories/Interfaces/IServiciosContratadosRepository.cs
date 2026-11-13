@@ -1,4 +1,5 @@
-﻿using TrabajoPracticoIntegrador___Programación_2.Models;
+﻿using TrabajoPracticoIntegrador___Programación_2.DTOs;
+using TrabajoPracticoIntegrador___Programación_2.Models;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
 {
@@ -12,7 +13,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
         Task<Servicios?> GetSCById(int id);
 
         //3. GetServicioContratadoByFecha
-        Task<List<Servicios>> GetSCByFecha(DateTime fechaInicio, DateTime? fechFin);
+        Task<List<Servicios>> GetSCByFecha(DateOnly fechaInicio, DateOnly? fechFin);
 
         //4. GetServicioContratadoByCLiente
         Task<List<Servicios>> GetSCByCliente(int docCliente);
@@ -41,6 +42,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
 
         //11. CambioEstado
         Task<bool> CambioEstadoSC(int idSC, string nuevEstado);
+
+        //12. ModificarDetalleServicio
+        Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio);
     }
 
 }

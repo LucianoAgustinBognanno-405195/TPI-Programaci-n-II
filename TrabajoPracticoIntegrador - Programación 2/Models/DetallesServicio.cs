@@ -9,9 +9,9 @@ public partial class DetallesServicio
 {
     public int IdDetalleServicio { get; set; }
 
-    public int? IdBateria { get; set; }
+    public int IdBateria { get; set; }
 
-    public int? IdServicio { get; set; }
+    public int IdServicio { get; set; }
 
     public int? IdVehiculo { get; set; }
 
