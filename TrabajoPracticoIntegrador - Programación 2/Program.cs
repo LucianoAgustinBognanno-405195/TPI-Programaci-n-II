@@ -11,11 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<CecchettoLogicaContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString
-("DefaultConnection"))); // Inyección de dependencia del contexto de Base de datos a la aplicación.
+("DefaultConnection2"))); // Inyección de dependencia del contexto de Base de datos a la aplicación.
 
 builder.Services.AddScoped<IServiciosContratadosRepository, ServiciosContratadosRepository>();
 builder.Services.AddScoped<IServiciosContratadosService, ServiciosContratadosService>();
-
+builder.Services.AddScoped<IEmpleadosRepository, EmpleadoRepository>();
+builder.Services.AddScoped<IEmpleadosService, EmpleadoService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

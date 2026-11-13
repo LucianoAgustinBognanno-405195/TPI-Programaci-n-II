@@ -41,7 +41,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
         Task<Servicios> UpdateSC(int idSC, Servicios updtSC);
 
         //11. CambioEstado
-        Task<bool> CambioEstadoSC(int idSC, string nuevEstado);
+        Task<bool> CambioEstadoSC(int idSC, int nuevEstado);
 
         //12. Modificar DetalleServicio
         Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio);
