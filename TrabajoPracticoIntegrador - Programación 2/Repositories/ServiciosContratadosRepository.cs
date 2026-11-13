@@ -153,28 +153,20 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         {
             Servicios? serv = await _dbContext.Servicios.Include(s => s.EstadoServicioNavigation).FirstOrDefaultAsync(s => s.IdServicio == idSC);
 
-            try
+            if (serv != null)
             {
-                if (serv != null)
-                {
-                    serv.EstadoServicioNavigation.IdEstado = nuevEstado;
+                serv.EstadoServicioNavigation.IdEstado = nuevEstado;
 
-                    int filas = await _dbContext.SaveChangesAsync();
+                int filas = await _dbContext.SaveChangesAsync();
 
-                    if (filas > 0)
-                        return true;
-                    else
-                        return false;
-                }
+                if (filas > 0)
+                    return true;
                 else
-                {
-                    throw new Exception("No existe el servicio indicado con ese Id.");
-                }
+                    return false;
             }
-            catch (Exception)
+            else
             {
-
-                throw new Exception("No se puedo modificar el nuevo estado.");
+                throw new Exception("No existe el servicio indicado con ese Id.");
             }
         }
 
