@@ -191,6 +191,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
 
         //11. CambioEstado
+
         [HttpPut]
         [Route("CambioEstado/{idSC}/{nuevEstado}")]
         public async Task<IActionResult> CambioEstadoSC(
@@ -208,5 +209,27 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+
+        // 12 . MOdificar detalleServicio
+
+        [HttpPut]
+        [Route("UpdateDetalle/{idSC}")]
+
+        public async Task<IActionResult> UpdateDSC([FromRoute] int idSC, [FromBody] DetallesServicio detservicio)
+        {
+            try
+            {
+                DetallesServicio det = await _serv.UpdateDSC(idSC, detservicio);
+                return Ok(det);
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(201, e.Message);
+            }
+        }
+
+
     }
 }

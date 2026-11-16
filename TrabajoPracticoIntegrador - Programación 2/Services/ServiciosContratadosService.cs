@@ -195,7 +195,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
         //12. Modificar DetalleServicio
         public async Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio)
         {
-            throw new NotImplementedException();
+            return await _repo.UpdateDSC(idSC, detServicio);
         }
     }
 }
