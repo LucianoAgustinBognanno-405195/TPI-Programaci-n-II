@@ -89,5 +89,12 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         {
             throw new NotImplementedException();
         }
+        public async Task<Empleados?> GetEmpleadoByUsuario(string usuario)
+        {
+            Empleados? empleado = await _context.Empleados
+                .FirstOrDefaultAsync(e => e.Usuario == usuario);
+
+            return empleado;
+        }
     }
 }

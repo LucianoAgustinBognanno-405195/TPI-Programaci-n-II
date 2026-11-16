@@ -35,5 +35,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
 
         //5. BajaLogica
         Task<bool> BajaLogicaEmpleado(int idEmpl);
+
+
+        //Pedido de usario para login
+        Task<Empleados?> GetEmpleadoByUsuario(string usuario);
     }
 }

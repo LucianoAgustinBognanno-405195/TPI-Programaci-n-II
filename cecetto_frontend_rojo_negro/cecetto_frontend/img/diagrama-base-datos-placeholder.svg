@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500" viewBox="0 0 1100 500">
+<rect width="1100" height="500" rx="22" fill="#f7f9fc"/>
+<g stroke="#9aabc2" stroke-width="3" stroke-dasharray="8 8" fill="none"><path d="M550 170V235M270 235H830M270 235V285M550 235V285M830 235V285"/></g>
+<g font-family="Arial,sans-serif" text-anchor="middle">
+<rect x="390" y="55" width="320" height="115" rx="15" fill="#171717"/><text x="550" y="100" font-size="25" font-weight="bold" fill="#fff">DIAGRAMA DE BASE DE DATOS</text><text x="550" y="135" font-size="16" fill="#dce6f4">Reemplazar por el diagrama real</text>
+<g fill="#fff" stroke="#cbd5e1" stroke-width="2"><rect x="130" y="285" width="280" height="125" rx="13"/><rect x="410" y="285" width="280" height="125" rx="13"/><rect x="690" y="285" width="280" height="125" rx="13"/></g>
+<g fill="#a51f26" font-size="23" font-weight="bold"><text x="270" y="340">Tabla 1</text><text x="550" y="340">Tabla 2</text><text x="830" y="340">Tabla 3</text></g>
+<g fill="#667085" font-size="16"><text x="270" y="375">Campos y relaciones</text><text x="550" y="375">Campos y relaciones</text><text x="830" y="375">Campos y relaciones</text></g>
+<text x="550" y="465" fill="#667085" font-size="16">Imagen provisoria — insertar aquí el DER exportado desde SQL Server</text>
+</g></svg>

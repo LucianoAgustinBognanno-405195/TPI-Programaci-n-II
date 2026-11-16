@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TrabajoPracticoIntegrador___Programación_2.Models;
-using TrabajoPracticoIntegrador___Programación_2.Services.Interfaces;
 using TrabajoPracticoIntegrador___Programación_2.DTOs;
 using TrabajoPracticoIntegrador___Programación_2.DTOs.DTOs_Empleados;
+using TrabajoPracticoIntegrador___Programación_2.Models;
+using TrabajoPracticoIntegrador___Programación_2.Services.Interfaces;
+
 
 namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 {
@@ -18,18 +20,19 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             this._service = service;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("by-EmpleadoALL")]
         public async Task<IActionResult> GetEmpleados()
         {
             try
             {
-                List<Empleados> lst = await _service.GetEmpleadoAll();
+                List<EmpleadoListadoDto> lst = await _service.GetEmpleadoAll();
                 return Ok(lst);
             }
             catch (Exception ex)
             {
-                return StatusCode(201, ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 

@@ -1,0 +1,369 @@
+/* =========================================================
+   CECCETTO - ESTILOS GENERALES
+   Colores principales: blanco, negro y rojo.
+   ========================================================= */
+
+/* Fuente utilizada en todo el sitio */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap');
+
+/* ---------------------------------------------------------
+   1. VARIABLES DE COLOR
+   Se definen una sola vez para poder cambiar el diseño
+   desde este lugar sin tener que buscar cada color.
+   --------------------------------------------------------- */
+:root {
+    --negro: #171717;
+    --negro-secundario: #242424;
+    --rojo: #c62828;
+    --rojo-oscuro: #a51f26;
+    --texto: #172033;
+    --texto-suave: #667085;
+    --borde: #e7ebf1;
+    --fondo-rojo-claro: #fdeaea;
+}
+
+/* ---------------------------------------------------------
+   2. CONFIGURACIÓN GENERAL
+   --------------------------------------------------------- */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', Arial, sans-serif;
+    color: var(--texto);
+    background: #ffffff;
+}
+
+/* ---------------------------------------------------------
+   3. BARRA DE NAVEGACIÓN
+   --------------------------------------------------------- */
+.navbar-cecetto {
+    background: var(--negro);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    letter-spacing: .09em;
+    font-size: 1.25rem;
+}
+
+/* Punto rojo que acompaña al nombre de la marca */
+.brand-dot {
+    color: #e03131;
+}
+
+.navbar .nav-link {
+    color: #d9e1ec;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: #ffffff;
+}
+
+/* Adaptamos el botón de Bootstrap para usar el rojo de la marca */
+.btn-warning {
+    background: var(--rojo);
+    border-color: var(--rojo);
+    color: #ffffff;
+}
+
+.btn-warning:hover {
+    background: var(--rojo-oscuro);
+    border-color: var(--rojo-oscuro);
+    color: #ffffff;
+}
+
+/* ---------------------------------------------------------
+   4. PORTADA PRINCIPAL (HERO)
+   --------------------------------------------------------- */
+.hero {
+    color: #ffffff;
+    background:
+        radial-gradient(circle at 85% 20%, #713034 0, transparent 32%),
+        linear-gradient(120deg, #171717, #303030);
+}
+
+.min-vh-hero {
+    min-height: 570px;
+}
+
+/* Texto pequeño que aparece arriba de algunos títulos */
+.eyebrow {
+    font-size: .73rem;
+    letter-spacing: .16em;
+    font-weight: 800;
+    color: var(--rojo);
+}
+
+.hero h1 {
+    max-width: 720px;
+    line-height: 1.05;
+    letter-spacing: -.04em;
+}
+
+/* Panel destacado que aparece dentro de la portada */
+.hero-panel {
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 24px;
+    padding: 2.5rem;
+    box-shadow: 0 25px 60px #07132655;
+}
+
+.battery-icon {
+    width: 76px;
+    height: 76px;
+    border: 3px solid var(--rojo);
+    border-radius: 16px;
+    color: var(--rojo);
+    font-size: 3rem;
+    display: grid;
+    place-items: center;
+    margin-bottom: 2rem;
+}
+
+/* ---------------------------------------------------------
+   5. SECCIONES Y TÍTULOS
+   --------------------------------------------------------- */
+.section-padding {
+    padding: 5rem 0;
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 2.7rem);
+    font-weight: 800;
+    letter-spacing: -.04em;
+}
+
+/* ---------------------------------------------------------
+   6. TARJETAS
+   Estilos compartidos por tarjetas de servicios, información,
+   integrantes y sucursales.
+   --------------------------------------------------------- */
+.feature-card,
+.info-card,
+.member-card,
+.branch-card {
+    border: 1px solid var(--borde);
+    border-radius: 18px;
+    padding: 1.6rem;
+    background: #ffffff;
+    box-shadow: 0 8px 28px #14213a08;
+}
+
+/* Efecto al pasar el mouse por las tarjetas de servicios */
+.feature-card {
+    transition: transform .2s, box-shadow .2s;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px #14213a12;
+}
+
+.feature-symbol {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--fondo-rojo-claro);
+    color: var(--rojo-oscuro);
+    display: grid;
+    place-items: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ---------------------------------------------------------
+   7. FRANJAS OSCURAS Y PIE DE PÁGINA
+   --------------------------------------------------------- */
+.cta-band {
+    background: var(--negro-secundario);
+    padding: 3.5rem 0;
+}
+
+.site-footer {
+    background: #0c1728;
+    color: #aeb9c9;
+    padding: 1.4rem 0;
+    font-size: .9rem;
+}
+
+.site-footer a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* ---------------------------------------------------------
+   8. ENCABEZADOS DE PÁGINAS INTERNAS
+   --------------------------------------------------------- */
+.page-header {
+    background: linear-gradient(115deg, #171717, #343434);
+}
+
+.domain-chip,
+.branch-tag {
+    display: inline-block;
+    border-radius: 30px;
+    background: var(--fondo-rojo-claro);
+    color: var(--rojo-oscuro);
+    padding: .45rem .8rem;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+/* ---------------------------------------------------------
+   9. PÁGINA "NOSOTROS" E INTEGRANTES
+   --------------------------------------------------------- */
+.member-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem;
+}
+
+.member-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fce8e8;
+    color: var(--rojo-oscuro);
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+}
+
+/* Contenedor de la imagen del diagrama de base de datos */
+.diagram-frame {
+    background: #f7f9fc;
+    border: 1px dashed #aab7c9;
+    border-radius: 18px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.diagram-frame img {
+    width: 100%;
+    max-height: 430px;
+    object-fit: contain;
+}
+
+/* ---------------------------------------------------------
+   10. PÁGINA DE CONTACTO Y SUCURSALES
+   --------------------------------------------------------- */
+.branch-card {
+    padding: 1.5rem;
+}
+
+.branch-contact {
+    border-top: 1px solid var(--borde);
+    padding-top: .8rem;
+    margin-top: .8rem;
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+}
+
+.branch-contact span {
+    font-size: .75rem;
+    color: var(--texto-suave);
+}
+
+.branch-contact a {
+    color: var(--rojo-oscuro);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.branch-contact strong {
+    font-size: .9rem;
+}
+
+.contact-note {
+    border-radius: 18px;
+    background: #f7f7f7;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* ---------------------------------------------------------
+   11. PÁGINA DE INICIO DE SESIÓN
+   --------------------------------------------------------- */
+.login-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f3f6fb, #e9eef6);
+}
+
+.login-wrap {
+    min-height: calc(100vh - 150px);
+    display: grid;
+    place-items: center;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.login-card {
+    background: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 24px;
+    padding: 2.5rem;
+    width: min(100%, 480px);
+    box-shadow: 0 25px 70px #13213a14;
+}
+
+.login-mark {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: var(--negro);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    font-size: 1.7rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+/* Apariencia de los campos de formulario de Bootstrap */
+.form-control {
+    border-color: #d8dee8;
+}
+
+.form-control:focus {
+    border-color: #d66;
+    box-shadow: 0 0 0 .2rem #c6282820;
+}
+
+/* ---------------------------------------------------------
+   12. DISEÑO RESPONSIVE
+   Estas reglas se aplican en pantallas de celular y tablets
+   pequeñas (cuando el ancho es menor a 768 píxeles).
+   --------------------------------------------------------- */
+@media (max-width: 767px) {
+    .min-vh-hero {
+        min-height: auto;
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    .section-padding {
+        padding: 3.5rem 0;
+    }
+
+    .hero-panel {
+        padding: 1.7rem;
+    }
+
+    .contact-note {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .login-card {
+        padding: 1.6rem;
+    }
+}

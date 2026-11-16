@@ -4,18 +4,30 @@ using TrabajoPracticoIntegrador___Programación_2.Services.Interfaces;
 using TrabajoPracticoIntegrador___Programación_2.DTOs.DTOs_Empleados;
 using TrabajoPracticoIntegrador___Programación_2.DTOs;
 
+//jwt 
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+
+
 namespace TrabajoPracticoIntegrador___Programación_2.Services
 {
     public class EmpleadoService : IEmpleadosService
     {
         private readonly IEmpleadosRepository _repo;
-        public EmpleadoService(IEmpleadosRepository repo)
+        private readonly IConfiguration _configuration;
+
+        public EmpleadoService(
+            IEmpleadosRepository repo,
+            IConfiguration configuration)
         {
             this._repo = repo;
+            this._configuration = configuration;
         }
 
 
-        public async Task<List<Empleados>> GetEmpleadoAll() // 1
+        public async Task<List<EmpleadoListadoDto>> GetEmpleadoAll()
         {
             List<Empleados> lst = await _repo.GetEmpleadoAll();
 
@@ -23,7 +35,16 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             {
                 throw new Exception("No hay empleados cargados");
             }
-            return lst;
+
+            return lst.Select(e => new EmpleadoListadoDto
+            {
+                IdEmpleado = e.IdEmpleado,
+                Nombre = e.Nombre,
+                Apellido = e.Apellido,
+                Usuario = e.Usuario,
+                Activo = e.Activo
+
+            }).ToList();
         }
 
         public async Task<Empleados?> GetEmpleadoById(int idEmpl) // 2
@@ -121,5 +142,60 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             throw new NotImplementedException();
         }
 
+        
+       public async Task<LoginRespuestaDto> Login(LoginDto dto)
+        {
+            // 1. Buscamos al empleado por su usuario
+            Empleados? empleado = await _repo.GetEmpleadoByUsuario(dto.Usuario);
+
+            // 2. Verificamos que exista y que esté activo
+            if (empleado == null || !empleado.Activo)
+            {
+                throw new Exception("Usuario o contraseña incorrectos");
+            }
+
+            // 3. Verificamos la contraseña (comparación temporal)
+            if (empleado.Contrasenia != dto.Contrasenia)
+            {
+                throw new Exception("Usuario o contraseña incorrectos");
+            }
+
+            // 4. Creamos los datos que tendrá el token
+            var claims = new[]
+            {
+        new Claim(ClaimTypes.NameIdentifier, empleado.IdEmpleado.ToString()),
+        new Claim(ClaimTypes.Name, empleado.Usuario)
+    };
+
+            // 5. Obtenemos la clave secreta
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)
+            );
+
+            // 6. Creamos la firma
+            var credentials = new SigningCredentials(
+                key,
+                SecurityAlgorithms.HmacSha256
+            );
+
+            // 7. Generamos el token
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(2),
+                signingCredentials: credentials
+            );
+
+            // 8. Devolvemos la respuesta
+            return new LoginRespuestaDto
+            {
+                IdEmpleado = empleado.IdEmpleado,
+                Nombre = empleado.Nombre,
+                Apellido = empleado.Apellido,
+                Usuario = empleado.Usuario,
+                Token = new JwtSecurityTokenHandler().WriteToken(token)
+            };
+        }
     }
 }

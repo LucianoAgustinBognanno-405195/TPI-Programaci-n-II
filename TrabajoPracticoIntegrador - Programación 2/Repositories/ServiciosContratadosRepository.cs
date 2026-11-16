@@ -144,7 +144,28 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //10. ModificarExistente
         public async Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
         {
-            throw new NotImplementedException();
+           
+            Servicios? serv = await _dbContext.Servicios
+                .FirstOrDefaultAsync(s => s.IdServicio == idSC);
+
+            
+            if (serv == null)
+            {
+                throw new Exception("No existe el servicio indicado con ese Id.");
+            }
+
+            
+            serv.FechaServicio = updtSC.FechaServicio;
+            serv.IdCliente = updtSC.IdCliente;
+            serv.IdEmpleado = updtSC.IdEmpleado;
+            serv.IdSucursal = updtSC.IdSucursal;
+            serv.Descripcion = updtSC.Descripcion;
+            serv.IdTipoServicio = updtSC.IdTipoServicio;
+
+           
+            await _dbContext.SaveChangesAsync();
+
+            return serv;
         }
 
 
@@ -172,6 +193,11 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
         //12. Modificar DetalleServicio
         public async Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> CambioEstadoSC(int idSC, string nuevEstado)
         {
             throw new NotImplementedException();
         }

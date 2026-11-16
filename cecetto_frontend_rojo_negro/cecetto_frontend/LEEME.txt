@@ -1,0 +1,24 @@
+CECETTO - FRONTEND ESTATICO
+
+Contenido:
+- index.html: página de inicio
+- nosotros.html: descripción, integrantes, dominio y placeholder del diagrama
+- contacto.html: cuatro sucursales ficticias
+- login.html: formulario visual de acceso
+- gestion-servicios.html: página vacía para gestión de servicios
+- crud-empleados.html: página vacía para CRUD de empleados
+- css/estilos.css: estilos propios
+- img/diagrama-base-datos-placeholder.svg: imagen provisoria para reemplazar
+
+Tecnologías:
+- HTML
+- CSS
+- Bootstrap 5.3.3 por CDN
+- No se agregó JavaScript propio ni frameworks.
+
+IMPORTANTE:
+El login todavía NO autentica ni genera/guarda JWT. Para conectarlo se necesitará el endpoint real de login y JavaScript (fetch) para enviar credenciales, recibir el token y adjuntarlo a las solicitudes protegidas. HTML y CSS por sí solos no pueden hacer esa comunicación dinámica.
+Las direcciones y teléfonos de las sucursales son ficticios. El correo de ejemplo usa el dominio reservado .example.
+Los legajos se dejaron en 421454 según lo solicitado.
+Para reemplazar el diagrama, sustituir img/diagrama-base-datos-placeholder.svg por la imagen real y actualizar la ruta en nosotros.html si cambia el nombre.
+Abrir index.html en el navegador. Se requiere internet para cargar Bootstrap desde CDN.

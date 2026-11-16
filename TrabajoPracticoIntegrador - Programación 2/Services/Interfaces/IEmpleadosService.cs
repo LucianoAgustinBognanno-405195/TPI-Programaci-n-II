@@ -2,13 +2,15 @@
 using TrabajoPracticoIntegrador___Programación_2.DTOs.DTOs_Empleados;
 using TrabajoPracticoIntegrador___Programación_2.DTOs;
 
+
+
 namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
 {
     public interface IEmpleadosService
     {
         //GET
         //1. GetEmpleadosAll
-        Task<List<Empleados>> GetEmpleadoAll();
+        Task<List<EmpleadoListadoDto>> GetEmpleadoAll();
 
         //2. GetEmpleadoByIdDNI
         Task<Empleados> GetEmpleadoById(int idEmpl);
@@ -35,5 +37,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
 
         //5. BajaLogica
         Task<bool> BajaLogicaEmpleado(int idEmpl);
+
+        //login 
+        Task<LoginRespuestaDto> Login(LoginDto dto);
     }
 }
