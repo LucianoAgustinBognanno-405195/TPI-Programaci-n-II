@@ -12,5 +12,7 @@
         public string Usuario { get; set; }
 
         public bool Activo { get; set; }
+
+        public DocumentoDto Documento { get; set; }
     }
 }

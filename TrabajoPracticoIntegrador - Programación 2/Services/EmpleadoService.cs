@@ -35,14 +35,21 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             {
                 throw new Exception("No hay empleados cargados");
             }
+           
 
             return lst.Select(e => new EmpleadoListadoDto
             {
+
                 IdEmpleado = e.IdEmpleado,
                 Nombre = e.Nombre,
                 Apellido = e.Apellido,
                 Usuario = e.Usuario,
-                Activo = e.Activo
+                Activo = e.Activo,
+                Documento = new DocumentoDto
+                {
+                    Documento = e.IdDocumentoNavigation.Documento
+                    
+                }
 
             }).ToList();
         }
@@ -165,7 +172,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             {
         new Claim(ClaimTypes.NameIdentifier, empleado.IdEmpleado.ToString()),
         new Claim(ClaimTypes.Name, empleado.Usuario)
-    };
+            };
 
             // 5. Obtenemos la clave secreta
             var key = new SymmetricSecurityKey(

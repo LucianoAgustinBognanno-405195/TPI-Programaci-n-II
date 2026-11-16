@@ -22,7 +22,7 @@ async function cargarEmpleados() {
 
         // Limpiamos el contenido anterior de la tabla
         tablaEmpleados.innerHTML = "";
-
+       
         // Recorremos la lista de empleados
         empleados.forEach(empleado => {
 
@@ -34,6 +34,7 @@ async function cargarEmpleados() {
                 <td>${empleado.apellido}</td>
                 <td>${empleado.usuario}</td>
                 <td>${empleado.activo ? "Activo" : "Inactivo"}</td>
+                <td>${empleado.documento.documento}</td>
             `;
 
             tablaEmpleados.appendChild(fila);
