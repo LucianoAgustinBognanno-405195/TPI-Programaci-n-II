@@ -180,14 +180,16 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
         //10. ModificarExistente
         public async Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
         {
-            throw new NotImplementedException();
+            Servicios servicioModificado = await _repo.UpdateSC(idSC, updtSC);
+
+            return servicioModificado;
         }
 
 
         //11. CambioEstado
         public async Task<bool> CambioEstadoSC(int idSC, int nuevEstado)
         {
-            throw new NotImplementedException();
+            return await _repo.CambioEstadoSC(idSC, nuevEstado);
         }
 
         //12. Modificar DetalleServicio

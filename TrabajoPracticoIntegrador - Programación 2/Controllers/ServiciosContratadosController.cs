@@ -173,8 +173,40 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
         //PUT
         //10. ModificarExistente
+        [HttpPut]
+        [Route("{idSC}")]
+        public async Task<IActionResult> UpdateSC([FromRoute] int idSC, [FromBody] Servicios updtSC)
+        {
+            try
+            {
+                Servicios servicioModificado = await _serv.UpdateSC(idSC, updtSC);
+
+                return Ok(servicioModificado);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
 
         //11. CambioEstado
+        [HttpPut]
+        [Route("CambioEstado/{idSC}/{nuevEstado}")]
+        public async Task<IActionResult> CambioEstadoSC(
+    [FromRoute] int idSC,
+    [FromRoute] int nuevEstado)
+        {
+            try
+            {
+                bool resultado = await _serv.CambioEstadoSC(idSC, nuevEstado);
+
+                return Ok(resultado);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

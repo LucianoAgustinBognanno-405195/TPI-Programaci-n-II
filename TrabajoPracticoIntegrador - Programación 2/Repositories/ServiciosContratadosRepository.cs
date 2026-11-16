@@ -176,7 +176,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
             if (serv != null)
             {
-                serv.EstadoServicioNavigation.IdEstado = nuevEstado;
+                serv.EstadoServicio = nuevEstado;
 
                 int filas = await _dbContext.SaveChangesAsync();
 
