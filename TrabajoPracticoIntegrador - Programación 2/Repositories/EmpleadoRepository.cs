@@ -15,7 +15,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         }
         public async Task<List<Empleados>> GetEmpleadoAll() // 1
         {
-            List<Empleados> lst = await _context.Empleados.ToListAsync();
+            List<Empleados> lst = await _context.Empleados
+        .Include(e => e.IdDocumentoNavigation)
+        .ToListAsync();
             return lst;
         }
 

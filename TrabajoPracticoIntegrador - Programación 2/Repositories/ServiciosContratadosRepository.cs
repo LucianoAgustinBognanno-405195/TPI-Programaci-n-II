@@ -192,7 +192,16 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //12. Modificar DetalleServicio
         public async Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio)
         {
-            throw new NotImplementedException();
+            DetallesServicio? det = await _dbContext.DetallesServicio.FirstOrDefaultAsync(d => d.IdServicio == idSC
+                                                                                               && d.IdDetalleServicio == detServicio.IdDetalleServicio);
+            if (det == null)
+            {
+                throw new Exception("No existe ese detalle para el servicio indicado.");
+            }
+            det.IdBateria = detServicio.IdBateria;
+            det.IdVehiculo = detServicio.IdVehiculo;
+            await _dbContext.SaveChangesAsync();
+            return det;
         }
 
         public Task<bool> CambioEstadoSC(int idSC, string nuevEstado)

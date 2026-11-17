@@ -174,21 +174,35 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
         //PUT
         //10. ModificarExistente
-
-
-        //11. CambioEstado
-        [HttpPatch]
-        [Route("{idSC}/estado")]
-        public async Task<IActionResult> CambiarEstado([FromRoute] int idSC, [FromBody] CambioEstadoDto dto)    //lo que esta entre llaves tiene que llamarse igual que lo que esta en el parametro
+        [HttpPut]
+        [Route("{idSC}")]
+        public async Task<IActionResult> UpdateSC([FromRoute] int idSC, [FromBody] Servicios updtSC)
         {
             try
             {
-                await _serv.CambioEstadoSC(idSC, dto.NuevoEstado);
-                return NoContent(); // 204: Listo, todo bien
+                Servicios servicioModificado = await _serv.UpdateSC(idSC, updtSC);
+
+                return Ok(servicioModificado);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        //11. CambioEstado
+        [HttpPatch("{idSc}/estado")]
+        public async Task<IActionResult> CambiarEstado(int idSc, CambioEstadoDto dto)
+        {
+            try
+            {
+                await _serv.CambioEstadoSC(idSc, dto.NuevoEstado);
+                return NoContent();                          // 204: "Listo, todo bien"
             }
             catch (KeyNotFoundException ex)
             {
-                return NotFound(new { mensaje = ex.Message});   // 404: "Esa ficha no existe"
+                return NotFound(new { mensaje = ex.Message });   // 404: "Ese servicio no existe"
             }
             catch (ArgumentException ex)
             {

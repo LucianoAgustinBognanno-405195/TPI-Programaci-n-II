@@ -181,7 +181,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
         //10. ModificarExistente
         public async Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
         {
-            throw new NotImplementedException();
+            Servicios servicioModificado = await _repo.UpdateSC(idSC, updtSC);
+
+            return servicioModificado;
         }
 
 
@@ -204,7 +206,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
         //12. Modificar DetalleServicio
         public async Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio)
         {
-            throw new NotImplementedException();
+            return await _repo.UpdateDSC(idSC, detServicio);
         }
     }
 }
