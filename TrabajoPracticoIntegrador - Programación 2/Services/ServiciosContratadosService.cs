@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Endpoints.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using TrabajoPracticoIntegrador___Programación_2.DTOs;
 using TrabajoPracticoIntegrador___Programación_2.Models;
 using TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces;
@@ -180,20 +181,32 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
         //10. ModificarExistente
         public async Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
         {
-            throw new NotImplementedException();
+            Servicios servicioModificado = await _repo.UpdateSC(idSC, updtSC);
+
+            return servicioModificado;
         }
 
 
         //11. CambioEstado
-        public async Task<bool> CambioEstadoSC(int idSC, int nuevEstado)
+        public async Task CambioEstadoSC(int idSC, int nuevEstado)
         {
-            throw new NotImplementedException();
+            try
+            {
+                bool seCambio = await _repo.CambioEstadoSC(idSC, nuevEstado);
+
+                if (!seCambio)
+                    throw new KeyNotFoundException("Ese servicio no existe.");
+            }
+            catch (DbUpdateException)
+            {
+                throw new ArgumentException("Ese estado no existe.");
+            }
         }
 
         //12. Modificar DetalleServicio
         public async Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio)
         {
-            throw new NotImplementedException();
+            return await _repo.UpdateDSC(idSC, detServicio);
         }
     }
 }

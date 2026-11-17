@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrabajoPracticoIntegrador___Programación_2.DTOs;
+using TrabajoPracticoIntegrador___Programación_2.DTOs.DTOs_Servicio;
 using TrabajoPracticoIntegrador___Programación_2.Models;
 using TrabajoPracticoIntegrador___Programación_2.Services.Interfaces;
 
@@ -173,8 +174,40 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
         //PUT
         //10. ModificarExistente
+        [HttpPut]
+        [Route("{idSC}")]
+        public async Task<IActionResult> UpdateSC([FromRoute] int idSC, [FromBody] Servicios updtSC)
+        {
+            try
+            {
+                Servicios servicioModificado = await _serv.UpdateSC(idSC, updtSC);
+
+                return Ok(servicioModificado);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
 
 
         //11. CambioEstado
+        [HttpPatch("{idSc}/estado")]
+        public async Task<IActionResult> CambiarEstado(int idSc, CambioEstadoDto dto)
+        {
+            try
+            {
+                await _serv.CambioEstadoSC(idSc, dto.NuevoEstado);
+                return NoContent();                          // 204: "Listo, todo bien"
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { mensaje = ex.Message });   // 404: "Ese servicio no existe"
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message }); // 400: "Tu pedido está mal"
+            }
+        }
     }
 }
