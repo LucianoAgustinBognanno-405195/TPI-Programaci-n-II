@@ -170,6 +170,19 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
         //POST
         //9. NuevoServicio(con detalle)
+        [HttpPost]
+        public async Task<IActionResult> InsertarServicio([FromBody] ServicioCreateDTO dto)
+        {
+            try
+            {
+                int nuevoId = await _serv.NuevoSC(dto); //nuevo id porq voy a mostrar el id del nuevo servicio
+                return StatusCode(201, new { idServicio = nuevoId });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message });
+            }
+        }
 
 
         //PUT

@@ -120,23 +120,16 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
         //POST
         //9. NuevoServicio(con detalle)
-        public async Task<bool> NuevoSC(Servicios nuevSC)
+        public async Task<int> NuevoSC(Servicios servicio)
         {
-            try
-            {
-                await _dbContext.Servicios.AddAsync(nuevSC);
-
-                await _dbContext.SaveChangesAsync();
-
-                return true;
-            }
-            catch (Exception e)
-            {
-
-                return false;
-            }
-            
+            await _dbContext.Servicios.AddAsync(servicio);
+            await _dbContext.SaveChangesAsync();    // todo o nada (el servicio y sus detalles)
+            return servicio.IdServicio;
         }
+        // Porque cuando le pasamos una ficha que trae sus hojas adjuntas pegadas, EF las detecta y hace todo junto:
+        // Guarda la ficha principal y la base le da un Id(por ejemplo, el 25).
+        // Copia ese 25 en el casillero Id_Servicio de cada hoja.
+        // Guarda las hojas.
 
 
 

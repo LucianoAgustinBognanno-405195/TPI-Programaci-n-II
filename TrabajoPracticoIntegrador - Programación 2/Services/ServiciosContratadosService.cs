@@ -16,7 +16,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             _repo = repo;
         }
 
-        
+        private const int ESTADO_PENDIENTE = 1; // el Id de "Pendiente" en tu tabla Estados_Servicio
 
         //GET
         //1. GetServicioContratadoAll
@@ -170,9 +170,41 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
         //POST
         //9. NuevoServicio(con detalle)
-        public async Task<bool> NuevoSC(Servicios nuevSC)
+        public async Task<int> NuevoSC(ServicioCreateDTO dtoSC)
         {
-            throw new NotImplementedException();
+            // 1. Armo la ficha principal
+            var servicio = new Servicios
+            {
+                FechaServicio = dtoSC.FechaServicio ?? DateOnly.FromDateTime(DateTime.Today),
+                IdCliente = dtoSC.IdCliente,
+                IdEmpleado = dtoSC.IdEmpleado,
+                IdSucursal = dtoSC.IdSucursal,
+                Descripcion = dtoSC.Descripcion,
+                IdTipoServicio = dtoSC.IdTipoServicio,
+                EstadoServicio = ESTADO_PENDIENTE
+            };
+
+            // 2. Por cada hoja de la notita, armo una hoja real y se la pego a la ficha
+            foreach (var detalleDto in dtoSC.Detalles)
+            {
+                servicio.DetallesServicio.Add(new DetallesServicio
+                {
+                    IdBateria = detalleDto.IdBateria,
+                    IdVehiculo = detalleDto.IdVehiculo
+                    // IdServicio NO se completa: EF lo hace solo
+                });
+            }
+
+            // 3. Guardo todo junto
+            try
+            {
+                return await _repo.NuevoSC(servicio);
+            }
+            catch (DbUpdateException)
+            {
+                throw new ArgumentException(
+                    "El cliente, empleado, sucursal, tipo de servicio, batería o vehículo indicado no existe.");
+            }
         }
 
 

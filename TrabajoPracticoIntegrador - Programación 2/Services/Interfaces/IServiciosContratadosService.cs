@@ -33,7 +33,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
 
         //POST
         //9. NuevoServicio(con detalle)
-        Task<bool> NuevoSC(Servicios nuevSC);
+        Task<int> NuevoSC(ServicioCreateDTO nuevSC);
 
 
         //PUT
