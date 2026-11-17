@@ -212,5 +212,20 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
 
         //12. Modificar DetalleServicio
+        [HttpPut]
+        [Route("UpdateDetalle/{idSC}")]
+        public async Task<IActionResult> UpdateDSC([FromRoute] int idSC, [FromBody] DetallesServicio detServicio)
+        {
+            try
+            {
+                DetallesServicio det = await _serv.UpdateDSC(idSC, detServicio);
+                return Ok(det);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(201, e.Message);
+            }
+        }
+
     }
 }
