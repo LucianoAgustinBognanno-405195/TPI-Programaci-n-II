@@ -170,26 +170,24 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
 
         //11. CambioEstado
+        // Devuelve true si encontro el servicio y lo actualizo, false si no existe
         public async Task<bool> CambioEstadoSC(int idSC, int nuevEstado)
         {
-            Servicios? serv = await _dbContext.Servicios.Include(s => s.EstadoServicioNavigation).FirstOrDefaultAsync(s => s.IdServicio == idSC);
+            Servicios? serv = await _dbContext.Servicios.FirstOrDefaultAsync(s => s.IdServicio == idSC);
 
-            if (serv != null)
+            if (serv == null)
             {
-                serv.EstadoServicioNavigation.IdEstado = nuevEstado;
-
-                int filas = await _dbContext.SaveChangesAsync();
-
-                if (filas > 0)
-                    return true;
-                else
-                    return false;
+                return false;
             }
-            else
-            {
-                throw new Exception("No existe el servicio indicado con ese Id.");
-            }
+
+
+            serv.EstadoServicio = nuevEstado;   // cambiamos la fk, no la navegacion
+
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
+
 
         //12. Modificar DetalleServicio
         public async Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio)

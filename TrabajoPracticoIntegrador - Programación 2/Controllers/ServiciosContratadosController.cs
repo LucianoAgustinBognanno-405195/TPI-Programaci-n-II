@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrabajoPracticoIntegrador___Programación_2.DTOs;
+using TrabajoPracticoIntegrador___Programación_2.DTOs.DTOs_Servicio;
 using TrabajoPracticoIntegrador___Programación_2.Models;
 using TrabajoPracticoIntegrador___Programación_2.Services.Interfaces;
 
@@ -176,5 +177,23 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
 
         //11. CambioEstado
+        [HttpPatch]
+        [Route("{idSC}/estado")]
+        public async Task<IActionResult> CambiarEstado([FromRoute] int idSC, [FromBody] CambioEstadoDto dto)    //lo que esta entre llaves tiene que llamarse igual que lo que esta en el parametro
+        {
+            try
+            {
+                await _serv.CambioEstadoSC(idSC, dto.NuevoEstado);
+                return NoContent(); // 204: Listo, todo bien
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { mensaje = ex.Message});   // 404: "Esa ficha no existe"
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message }); // 400: "Tu pedido está mal"
+            }
+        }
     }
 }

@@ -38,7 +38,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddDbContext<CecchettoLogicaContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString
-("DefaultConnection2"))); // Inyección de dependencia del contexto de Base de datos a la aplicación.
+("DefaultConnection1"))); // Inyección de dependencia del contexto de Base de datos a la aplicación.
 
 builder.Services.AddScoped<IServiciosContratadosRepository, ServiciosContratadosRepository>();
 builder.Services.AddScoped<IServiciosContratadosService, ServiciosContratadosService>();
