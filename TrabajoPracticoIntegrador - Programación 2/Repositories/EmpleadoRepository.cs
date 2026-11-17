@@ -27,7 +27,13 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             {
                 throw new Exception("El Id debe de ser mayor a 0");
             }
-            Empleados? empleado = await _context.Empleados.FirstOrDefaultAsync(e => e.IdEmpleado == idEmpl);
+            //NUEVOCAMIO: traemos tambien documento y direccion (con barrio y ciudad) para poder editarlo
+            Empleados? empleado = await _context.Empleados
+                .Include(e => e.IdDocumentoNavigation)
+                .Include(e => e.IdDireccionNavigation)
+                    .ThenInclude(d => d.IdBarrioNavigation)
+                        .ThenInclude(b => b.IdCiudadNavigation)
+                .FirstOrDefaultAsync(e => e.IdEmpleado == idEmpl);
 
             if (empleado == null)
             {
@@ -97,6 +103,12 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         public async Task<bool> UpdtEmpleadoDyT(int idEmpl, Empleados nuevEmpl) // 5
         {
             Empleados? empleados = await _context.Empleados.FirstOrDefaultAsync(e => e.IdEmpleado == idEmpl);
+
+            //NUEVOCAMIO: si el empleado no existe avisamos, en vez de romper con un error de null
+            if (empleados == null)
+            {
+                throw new Exception("No existe ese empleado");
+            }
 
             Direcciones direcciones = nuevEmpl.IdDireccionNavigation;
             _context.Direcciones.Add(direcciones);

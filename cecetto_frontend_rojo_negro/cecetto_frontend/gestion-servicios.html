@@ -12,6 +12,10 @@
         rel="stylesheet"
     >
 
+    <!-- NUEVOCAMIO: iconos de Bootstrap (lupa) -->
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 
@@ -86,14 +90,177 @@
             Gestión de servicios
         </h1>
 
-        <p class="text-secondary">
-            Página reservada para implementar la gestión de servicios.
-        </p>
+        <!-- NUEVOCAMIO: listado de servicios, con la misma barra de busqueda que empleados -->
+        <h2 class="h4 mt-4 mb-3">Listado de servicios</h2>
+
+        <form id="formBuscarServicio" class="d-flex flex-wrap align-items-center gap-2 mb-3">
+            <select id="tipoBusquedaServicio" class="form-select" style="width: 220px; height: 38px;">
+                <option value="cliente">Cliente</option>
+                <option value="empleado">Empleado</option>
+                <option value="sucursal">Sucursal</option>
+                <option value="estado">Estado</option>
+                <option value="tipo">Tipo de servicio</option>
+            </select>
+
+            <input type="text" id="txtBuscarServicio" class="form-control flex-grow-1" style="width: auto; min-width: 200px; height: 38px;" placeholder="Ingresá el cliente">
+
+            <!-- Lupa: con el cuadro vacio trae todos los servicios -->
+            <button class="btn btn-danger d-flex align-items-center justify-content-center" type="submit" title="Buscar" aria-label="Buscar" style="height: 38px; width: 46px;">
+                <i class="bi bi-search"></i>
+            </button>
+
+            <!-- NUEVOCAMIO: nuevo servicio, igual que el + de empleados. Abre el modal -->
+            <button class="btn btn-success d-flex align-items-center justify-content-center"
+                    type="button"
+                    title="Nuevo servicio"
+                    aria-label="Nuevo servicio"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalNuevoServicio"
+                    style="height: 38px; width: 46px;">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </form>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                        <th>Empleado</th>
+                        <th>Sucursal</th>
+                        <th>Tipo de servicio</th>
+                        <th>Descripción</th>
+                        <th>Estado</th>
+                        <!-- NUEVOCAMIO: columna de acciones, igual que en empleados -->
+                        <th class="text-center pe-0" style="width: 100px;">Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tablaServicios">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- NUEVOCAMIO: modal para cargar un nuevo servicio -->
+        <div class="modal fade" id="modalNuevoServicio" tabindex="-1" aria-labelledby="tituloNuevoServicio" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tituloNuevoServicio">Nuevo servicio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="formNuevoServicio">
+
+                            <h6 class="text-danger mb-3">Datos del servicio</h6>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="fechaServicio" class="form-label">Fecha</label>
+                                    <input type="date" class="form-control" id="fechaServicio" required>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="tipoServicio" class="form-label">Tipo de servicio</label>
+                                    <select class="form-select" id="tipoServicio" required>
+                                        <option value="">Seleccionar tipo</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label for="descripcionServicio" class="form-label">Descripción</label>
+                                    <input type="text" class="form-control" id="descripcionServicio" maxlength="50" required
+                                           placeholder="Ej: cambio de batería 12V">
+                                    <div class="form-text">Hasta 50 caracteres.</div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <h6 class="text-danger mb-3">Quién y dónde</h6>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="clienteServicio" class="form-label">Cliente</label>
+                                    <select class="form-select" id="clienteServicio" required>
+                                        <option value="">Seleccionar cliente</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="empleadoServicio" class="form-label">Empleado</label>
+                                    <select class="form-select" id="empleadoServicio" required>
+                                        <option value="">Seleccionar empleado</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="sucursalServicio" class="form-label">Sucursal</label>
+                                    <select class="form-select" id="sucursalServicio" required>
+                                        <option value="">Seleccionar sucursal</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" form="formNuevoServicio" class="btn btn-danger" id="btnGuardarServicio">Guardar servicio</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- NUEVOCAMIO: ventana para dar de baja un servicio (pasa a estado cancelado).
+             La misma ventana pregunta, espera y muestra el resultado, igual que en empleados -->
+        <div class="modal fade" id="modalBajaServicio" tabindex="-1" aria-labelledby="tituloBajaServicio" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow">
+
+                    <div class="modal-body text-center p-4">
+                        <div id="iconoBajaServicio" class="d-inline-flex align-items-center justify-content-center rounded-circle bg-danger bg-opacity-10 text-danger mb-3"
+                             style="width: 64px; height: 64px;">
+                            <i class="bi bi-trash3 fs-3"></i>
+                        </div>
+
+                        <h5 class="fw-bold mb-2" id="tituloBajaServicio">¿Dar de baja este servicio?</h5>
+
+                        <p class="mb-1 fw-semibold" id="datosServicioBaja"></p>
+
+                        <p class="text-secondary small mb-0" id="textoBajaServicio"></p>
+                    </div>
+
+                    <div class="modal-footer border-0 justify-content-center pb-4 pt-0 gap-2">
+                        <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal" id="btnCancelarBajaServicio">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-danger px-4" id="btnConfirmarBajaServicio">
+                            Sí, dar de baja
+                        </button>
+                        <button type="button" class="btn btn-success px-4 d-none" data-bs-dismiss="modal" id="btnAceptarBajaServicio">
+                            Aceptar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
 
     </main>
     
 <script src="JS/navbar.js"></script>
 <script src="JS/config.js"></script>
+<!-- NUEVOCAMIO: logica de la tabla de servicios (va despues de config.js porque usa API_URL) -->
+<!-- NUEVOCAMIO: ventanas de aviso prolijas (va antes de servicios.js) -->
+<script src="JS/avisos.js"></script>
+<script src="JS/servicios.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

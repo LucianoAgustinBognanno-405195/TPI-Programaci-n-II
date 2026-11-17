@@ -14,5 +14,10 @@
         public bool Activo { get; set; }
 
         public DocumentoDto Documento { get; set; }
+
+        //NUEVOCAMIO: datos que usa el formulario de edicion (solo se completan al pedir un empleado por id)
+        public int? IdTipoEmpleado { get; set; }
+        public string? Ciudad { get; set; }
+        public DireccionDto? Direccion { get; set; }
     }
 }

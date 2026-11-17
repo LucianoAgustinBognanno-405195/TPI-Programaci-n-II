@@ -240,5 +240,29 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
         {
             return await _repo.UpdateDSC(idSC, detServicio);
         }
+    
+        //NUEVOCAMIO: clientes para el desplegable (id + "Nombre Apellido")
+        public async Task<List<ClienteComboDTO>> GetClientes()
+        {
+            List<Clientes> lst = await _repo.GetClientes();
+
+            return lst.Select(c => new ClienteComboDTO
+            {
+                IdCliente = c.IdCliente,
+                Cliente = $"{c.Nombre} {c.Apellido}".Trim()
+            }).ToList();
+        }
+
+        //NUEVOCAMIO: tipos de servicio para el desplegable
+        public async Task<List<TipoServicioComboDTO>> GetTiposServicio()
+        {
+            List<TiposServicios> lst = await _repo.GetTiposServicio();
+
+            return lst.Select(t => new TipoServicioComboDTO
+            {
+                IdTipoServicio = t.IdTipoServicio,
+                Descripcion = t.Descripcion
+            }).ToList();
+        }
     }
 }

@@ -45,9 +45,10 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 Apellido = e.Apellido,
                 Usuario = e.Usuario,
                 Activo = e.Activo,
+                //NUEVOCAMIO: si el empleado no tiene documento, queda en 0 en vez de romper el listado
                 Documento = new DocumentoDto
                 {
-                    Documento = e.IdDocumentoNavigation.Documento
+                    Documento = e.IdDocumentoNavigation?.Documento ?? 0
                     
                 }
 
@@ -62,6 +63,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 throw new Exception("No existe ese empleado");
             }
 
+            //NUEVOCAMIO: agregamos tipo de empleado, ciudad y direccion para precargar el formulario de edicion
+            Direcciones? direccion = empleados.IdDireccionNavigation;
+
             return new EmpleadoListadoDto
             {
                 IdEmpleado = empleados.IdEmpleado,
@@ -71,9 +75,16 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 Activo = empleados.Activo,
                 Documento = new DocumentoDto
                 {
-                    Documento = empleados.IdDocumentoNavigation.Documento
+                    Documento = empleados.IdDocumentoNavigation?.Documento ?? 0
+                },
+                IdTipoEmpleado = empleados.IdTipoEmpleado,
+                Ciudad = direccion?.IdBarrioNavigation?.IdCiudadNavigation?.Ciudad,
+                Direccion = direccion == null ? null : new DireccionDto
+                {
+                    Calle = direccion.Calle,
+                    Altura = direccion.Altura,
+                    IdBarrio = direccion.IdBarrio ?? 0
                 }
-
             };
         }
         public async Task<EmpleadoListadoDto?> GetEmpleadoByDni(int dni) // 2

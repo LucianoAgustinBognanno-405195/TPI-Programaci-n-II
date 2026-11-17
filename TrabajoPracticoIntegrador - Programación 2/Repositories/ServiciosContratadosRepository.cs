@@ -196,5 +196,22 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             await _dbContext.SaveChangesAsync();
             return det;
         }
+    
+        //NUEVOCAMBIO: todos los clientes, ordenados por apellido y nombre
+        public async Task<List<Clientes>> GetClientes()
+        {
+            return await _dbContext.Clientes
+                .OrderBy(c => c.Apellido)
+                .ThenBy(c => c.Nombre)
+                .ToListAsync();
+        }
+
+        //NUEVOCAMbIO: todos los tipos de servicio
+        public async Task<List<TiposServicios>> GetTiposServicio()
+        {
+            return await _dbContext.TiposServicios
+                .OrderBy(t => t.Descripcion)
+                .ToListAsync();
+        }
     }
 }
