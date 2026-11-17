@@ -159,5 +159,20 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return NotFound();
             }
         }
+        [Authorize]
+        [HttpPut("Baja-Logica/{id}")]
+        public async Task<IActionResult> BajaLogicaEmpleado(int id)
+        {
+            try
+            {
+                bool resultado = await _service.BajaLogicaEmpleado(id);
+
+                return Ok("El empleado fue dado de baja correctamente");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
