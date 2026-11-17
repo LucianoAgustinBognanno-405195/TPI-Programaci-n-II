@@ -209,5 +209,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return BadRequest(new { mensaje = ex.Message }); // 400: "Tu pedido está mal"
             }
         }
+
+
+        //12. Modificar DetalleServicio
     }
 }
