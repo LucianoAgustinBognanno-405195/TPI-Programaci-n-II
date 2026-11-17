@@ -196,10 +196,5 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             await _dbContext.SaveChangesAsync();
             return det;
         }
-
-        public Task<bool> CambioEstadoSC(int idSC, string nuevEstado)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
