@@ -36,6 +36,21 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
             return empleado;
         }
+        public async Task<Empleados?> GetEmpleadoByDni(int dni) //2
+        {
+            if (dni <= 0)
+            {
+                throw new Exception("El Id debe de ser mayor a 0");
+            }
+            Empleados? empleado = await _context.Empleados.FirstOrDefaultAsync(e => e.IdDocumentoNavigation.Documento == dni);
+
+            if (empleado == null)
+            {
+                throw new Exception("No existe ese empleado");
+            }
+
+            return empleado;
+        }
         public async Task<List<Sucursales>> GetSucursales() //3
         {
             List<Sucursales> lst = await _context.Sucursales.ToListAsync();
@@ -55,6 +70,17 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         {
             List<Barrios> lst = await _context.Barrios.Where(b => Ciudad == b.IdCiudadNavigation.Ciudad).ToListAsync();
             return lst;
+        }
+        public async Task<List<TiposDocumentos>> GetTiposDocuments()
+        {
+            List<TiposDocumentos> tDocumentos = await _context.TiposDocumentos.ToListAsync();
+            return tDocumentos;
+        }
+
+        public async Task<List<TiposEmpleados>> GetTiposEmpleados()
+        {
+            List<TiposEmpleados> tEmpleado = await _context.TiposEmpleados.ToListAsync();
+            return tEmpleado;
         }
         public async Task<bool> NuevEmpleado(Empleados nuevEmpl) //4
         {
@@ -87,9 +113,32 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return true;
         }
 
-        public Task<bool> BajaLogicaEmpleado(int idEmpl) // 6
+        public async Task<bool> BajaLogicaEmpleado(int idEmpl) // 6
         {
-            throw new NotImplementedException();
+            Empleados? empleado = await _context.Empleados
+             .FirstOrDefaultAsync(e => e.IdEmpleado == idEmpl);
+
+            if (empleado == null)
+            {
+                throw new Exception("No existe ese empleado");
+            }
+
+            if (empleado.Activo == false)
+            {
+                throw new Exception("Ese empleado ya se dio de baja");
+            }
+
+            empleado.Activo = false;
+
+            int filas = await _context.SaveChangesAsync();
+
+            if (filas == 0)
+            {
+                throw new Exception("No se pudo actualizar");
+            }
+
+            return true;
+        
         }
         public async Task<Empleados?> GetEmpleadoByUsuario(string usuario)
         {
@@ -98,5 +147,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
             return empleado;
         }
+
+      
     }
 }

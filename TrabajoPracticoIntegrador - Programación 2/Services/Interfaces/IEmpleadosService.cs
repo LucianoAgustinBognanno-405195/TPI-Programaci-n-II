@@ -12,8 +12,11 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
         //1. GetEmpleadosAll
         Task<List<EmpleadoListadoDto>> GetEmpleadoAll();
 
-        //2. GetEmpleadoByIdDNI
-        Task<Empleados> GetEmpleadoById(int idEmpl);
+        //2. GetEmpleadoById
+        Task<EmpleadoListadoDto?> GetEmpleadoById(int idEmpl);
+
+        //3. GetEmpleadosDni
+        Task<EmpleadoListadoDto?> GetEmpleadoByDni(int dni);
 
         //3. GetSucursales
         Task<List<SucursalDto>> GetSucursal();
@@ -26,6 +29,10 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
 
         //6. Get Barrios
         Task<List<BarrioDto>> GetBarrios(string Ciudad);
+
+        Task<List<TiposDocumentos>> GetTiposDocuments();
+
+        Task<List<TiposEmpleados>> GetTiposEmpleados();
 
         //POST
         //3. NuevoEmpleado

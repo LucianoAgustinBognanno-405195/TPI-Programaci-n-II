@@ -11,8 +11,14 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
         //2. GetEmpleadoByIdDNI
         Task<Empleados?> GetEmpleadoById(int idEmpl);
 
+        //3.GetEmpleadoDni
+        Task<Empleados> GetEmpleadoByDni(int dni);
+
         //3. Get Sucursales
         Task<List<Sucursales>> GetSucursales();
+        Task<List<TiposDocumentos>> GetTiposDocuments();
+
+        Task<List<TiposEmpleados>> GetTiposEmpleados();
 
         //4. Get Documento
         Task<List<Documentos>> GetDocumentos();

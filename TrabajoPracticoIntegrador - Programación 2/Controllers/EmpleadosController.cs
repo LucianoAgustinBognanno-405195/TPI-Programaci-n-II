@@ -41,7 +41,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         {
             try
             {
-                Empleados? empleados = await _service.GetEmpleadoById(idEmp);
+                EmpleadoListadoDto? empleados = await _service.GetEmpleadoById(idEmp);
                 return Ok(empleados);
             }
             catch (Exception ex)
@@ -104,6 +104,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return NotFound();
             }
         }
+        
 
 
         [HttpPost("Nuevo-Empleado")]
@@ -131,6 +132,31 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("By-TipoDocumento")]
+        public async Task<IActionResult> getTiposDocumentos()
+        {
+            try
+            {
+                List<TiposDocumentos> tDocumento = await _service.GetTiposDocuments();
+                return Ok(tDocumento);
+            }
+            catch { return NotFound(); }
+        }
+
+        [HttpGet("By-TipoEmpleado")]
+        public async Task<IActionResult> GetTiposEmpleados()
+        {
+            try
+            {
+                List<TiposEmpleados> tiposEmpleados = await _service.GetTiposEmpleados();
+                return Ok(tiposEmpleados);
+            }
+            catch
+            {
+                return NotFound();
             }
         }
     }

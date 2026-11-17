@@ -54,10 +54,49 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             }).ToList();
         }
 
-        public async Task<Empleados?> GetEmpleadoById(int idEmpl) // 2
+        public async Task<EmpleadoListadoDto?> GetEmpleadoById(int idEmpl) // 2
         {
             Empleados? empleados = await _repo.GetEmpleadoById(idEmpl);
-            return empleados;
+            if (empleados == null)
+            {
+                throw new Exception("No existe ese empleado");
+            }
+
+            return new EmpleadoListadoDto
+            {
+                IdEmpleado = empleados.IdEmpleado,
+                Nombre = empleados.Nombre,
+                Apellido = empleados.Apellido,
+                Usuario = empleados.Usuario,
+                Activo = empleados.Activo,
+                Documento = new DocumentoDto
+                {
+                    Documento = empleados.IdDocumentoNavigation.Documento
+                }
+
+            };
+        }
+        public async Task<EmpleadoListadoDto?> GetEmpleadoByDni(int dni) // 2
+        {
+            Empleados? empleados = await _repo.GetEmpleadoById(dni);
+            if (empleados == null)
+            {
+                throw new Exception("No existe ese empleado");
+            }
+
+            return new EmpleadoListadoDto
+            {
+                IdEmpleado = empleados.IdEmpleado,
+                Nombre = empleados.Nombre,
+                Apellido = empleados.Apellido,
+                Usuario = empleados.Usuario,
+                Activo = empleados.Activo,
+                Documento = new DocumentoDto
+                {
+                    Documento = empleados.IdDocumentoNavigation.Documento
+                }
+
+            };
         }
         public async Task<List<SucursalDto>> GetSucursal() //3
         {
@@ -89,6 +128,17 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 IdCiudad = c.IdCiudad,
             }).ToList();
 
+        }
+        public async Task<List<TiposDocumentos>> GetTiposDocuments()
+        {
+            List<TiposDocumentos> tDocumentos = await _repo.GetTiposDocuments();
+            return tDocumentos;
+        }
+
+        public async Task<List<TiposEmpleados>> GetTiposEmpleados()
+        {
+            List<TiposEmpleados> tEmpleado = await _repo.GetTiposEmpleados();
+            return tEmpleado;
         }
         public async Task<List<BarrioDto>> GetBarrios(string Ciudad)
         {
@@ -146,7 +196,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
         }
         public Task<bool> BajaLogicaEmpleado(int idEmpl) // 7
         {
-            throw new NotImplementedException();
+            
+            return _repo.BajaLogicaEmpleado(idEmpl);
         }
 
         
@@ -204,5 +255,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 Token = new JwtSecurityTokenHandler().WriteToken(token)
             };
         }
+
+      
     }
 }
