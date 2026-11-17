@@ -89,20 +89,35 @@
             Gestión de empleados
         </h1>
 
-       -- aca vamos a mostrar todos los empoleados
+       <!-- NUEVOCAMIO: el titulo queda solo, los botones estan en la barra de busqueda -->
+       <h2 class="h4 mt-4 mb-3">Listado de empleados</h2>
 
-       <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
-    <h2 class="h4">Listado de empleados</h2>
-        <button class="btn btn-danger"
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#modalNuevoEmpleado">
-            Nuevo empleado
-        </button>
-    <button class="btn btn-danger" type="button" id="btnEmpleados">
-    Empleados
-</button>
-</div>
+<!-- NUEVOCAMIO: barra de busqueda en una sola fila y a la misma altura (38px):
+     desplegable, cuadro de texto, lupa y +. Se saco el boton Empleados. -->
+<form id="formBuscar" class="d-flex flex-wrap align-items-center gap-2 mb-3">
+    <select id="tipoBusqueda" class="form-select" style="width: 220px; height: 38px;">
+        <option value="documento">Documento</option>
+        <option value="nombre">Nombre y apellido</option>
+    </select>
+
+    <input type="text" id="txtBuscar" class="form-control flex-grow-1" style="width: auto; min-width: 200px; height: 38px;" placeholder="Ingresá el documento">
+
+    <!-- NUEVOCAMIO: lupa (con el cuadro vacio trae todos los empleados) -->
+    <button class="btn btn-danger d-flex align-items-center justify-content-center" type="submit" title="Buscar" aria-label="Buscar" style="height: 38px; width: 46px;">
+        <i class="bi bi-search"></i>
+    </button>
+
+    <!-- NUEVOCAMIO: nuevo empleado, verde y solo con un +. Sigue abriendo el modal -->
+    <button class="btn btn-success d-flex align-items-center justify-content-center"
+            type="button"
+            title="Nuevo empleado"
+            aria-label="Nuevo empleado"
+            data-bs-toggle="modal"
+            data-bs-target="#modalNuevoEmpleado"
+            style="height: 38px; width: 46px;">
+        <i class="bi bi-plus-lg"></i>
+    </button>
+</form>
 
 <div class="table-responsive">
     <table class="table table-hover align-middle">
@@ -114,7 +129,8 @@
                 <th>Usuario</th>
                 <th>Estado</th>
                 <th>DNI</th>
-                <th>Acciones</th>
+                <!-- NUEVOCAMIO: centrado sobre los dos botones (100px = 46 + 8 + 46), separado del borde -->
+                <th class="text-center pe-0" style="width: 100px;">Acciones</th>
 
             </tr>
         </thead>
@@ -337,8 +353,118 @@
 
 </div>
 
+<!-- NUEVOCAMIO: ventana para editar la direccion y el tipo de un empleado -->
+<div class="modal fade" id="modalEditarEmpleado" tabindex="-1" aria-labelledby="tituloEditarEmpleado" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <div>
+                    <h5 class="modal-title" id="tituloEditarEmpleado">Editar empleado</h5>
+                    <small class="text-secondary" id="nombreEmpleadoEditar"></small>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formEditarEmpleado">
+
+                    <input type="hidden" id="editIdEmpleado">
+
+                    <h6 class="text-danger mb-3">Datos laborales</h6>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editTipoEmpleado" class="form-label">Tipo de empleado</label>
+                            <select class="form-select" id="editTipoEmpleado" required>
+                                <option value="">Seleccionar tipo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h6 class="text-danger mb-3">Dirección</h6>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="editCiudad" class="form-label">Ciudad</label>
+                            <select class="form-select" id="editCiudad" required>
+                                <option value="">Seleccionar ciudad</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="editBarrio" class="form-label">Barrio</label>
+                            <select class="form-select" id="editBarrio" required disabled>
+                                <option value="">Seleccionar barrio</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-8 mb-3">
+                            <label for="editCalle" class="form-label">Calle</label>
+                            <input type="text" class="form-control" id="editCalle" required>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="editAltura" class="form-label">Altura</label>
+                            <input type="number" class="form-control" id="editAltura" min="1" required>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" form="formEditarEmpleado" class="btn btn-primary">Guardar cambios</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- NUEVOCAMIO: ventana de confirmacion para dar de baja (reemplaza el confirm del navegador).
+     La misma ventana muestra despues el resultado (dado de baja o error), sin carteles del navegador -->
+<div class="modal fade" id="modalConfirmarBaja" tabindex="-1" aria-labelledby="tituloConfirmarBaja" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+
+            <div class="modal-body text-center p-4">
+                <div id="iconoBaja" class="d-inline-flex align-items-center justify-content-center rounded-circle bg-danger bg-opacity-10 text-danger mb-3"
+                     style="width: 64px; height: 64px;">
+                    <i class="bi bi-trash3 fs-3"></i>
+                </div>
+
+                <h5 class="fw-bold mb-2" id="tituloConfirmarBaja">¿Dar de baja a este empleado?</h5>
+
+                <p class="mb-1 fw-semibold" id="nombreEmpleadoBaja"></p>
+
+                <p class="text-secondary small mb-0" id="textoBaja">
+                    El empleado va a quedar inactivo y no va a poder ingresar al sistema.
+                </p>
+            </div>
+
+            <div class="modal-footer border-0 justify-content-center pb-4 pt-0 gap-2">
+                <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal" id="btnCancelarBaja">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-danger px-4" id="btnConfirmarBaja">
+                    Sí, dar de baja
+                </button>
+                <button type="button" class="btn btn-success px-4 d-none" data-bs-dismiss="modal" id="btnAceptarBaja">
+                    Aceptar
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
     </main>
 <script src="JS/navbar.js"></script>
+<!-- NUEVOCAMIO: ventanas de aviso prolijas (va antes de empleado.js) -->
+<script src="JS/avisos.js"></script>
 <script src="JS/empleado.js"></script>
 <script src="JS/config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

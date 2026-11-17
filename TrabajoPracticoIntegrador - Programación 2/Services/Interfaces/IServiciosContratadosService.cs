@@ -45,5 +45,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
 
         //12. Modificar DetalleServicio
         Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio);
+    
+        //NUEVOCAMIO: listas para los desplegables del formulario de nuevo servicio
+        Task<List<ClienteComboDTO>> GetClientes();
+        Task<List<TipoServicioComboDTO>> GetTiposServicio();
     }
 }

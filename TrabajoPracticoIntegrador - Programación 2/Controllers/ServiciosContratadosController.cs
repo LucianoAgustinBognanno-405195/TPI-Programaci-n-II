@@ -240,5 +240,35 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
         }
 
+    
+        //NUEVOCAMIO: clientes para el desplegable del formulario de nuevo servicio
+        [HttpGet("Clientes")]
+        public async Task<IActionResult> GetClientes()
+        {
+            try
+            {
+                List<ClienteComboDTO> lst = await _serv.GetClientes();
+                return Ok(lst);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        //NUEVOCAMIO: tipos de servicio para el desplegable del formulario de nuevo servicio
+        [HttpGet("TiposServicio")]
+        public async Task<IActionResult> GetTiposServicio()
+        {
+            try
+            {
+                List<TipoServicioComboDTO> lst = await _serv.GetTiposServicio();
+                return Ok(lst);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
     }
 }
