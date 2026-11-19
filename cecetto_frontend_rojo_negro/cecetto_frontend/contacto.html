@@ -7,11 +7,12 @@
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark navbar-cecchetto sticky-top"><div class="container">
-  <a class="navbar-brand fw-bold" href="index.html">CECCHETTO<span class="brand-dot">.</span></a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
-  <div class="collapse navbar-collapse" id="navMain"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-cecchetto sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">CECCHETTO<span class="brand-dot">.</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navMain">
+  <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
     <li class="nav-item">
         <a class="nav-link active" href="index.html">Inicio</a>
     </li>
@@ -21,9 +22,10 @@
     <li class="nav-item">
         <a class="nav-link" href="contacto.html">Contacto</a>
     </li>
-    <li class="nav-item d-none" data-auth="employee">
-        <a class="nav-link" href="crud-empleados.html">Empleados</a>
-    </li>
+    <!-- Opciones exclusivas para empleados -->
+   <li class="nav-item d-none" data-auth="employee-admin">
+    <a class="nav-link" href="crud-empleados.html">Empleados</a>
+</li>
     <li class="nav-item d-none" data-auth="employee">
         <a class="nav-link" href="gestion-servicios.html">Servicios</a>
     </li>
@@ -38,7 +40,9 @@
         </a>
     </li>
 </ul>
-  </ul></div></div></nav>
+    </div>
+  </div>
+</nav>
 <header class="page-header"><div class="container py-5"><span class="eyebrow text-warning">DÓNDE ESTAMOS</span><h1 class="display-4 fw-bold text-white mt-2">Contacto y sucursales</h1><p class="lead text-white-50 mb-0">Elegí la sucursal que te quede más cómoda.</p></div></header>
 <main class="section-padding"><div class="container"><div class="row g-4">
   <div class="col-md-6 col-lg-3"><article class="branch-card h-100"><span class="branch-tag">CENTRO</span><h2 class="h4 fw-bold mt-3">Córdoba</h2><p class="text-secondary">Av. Colón 850, Córdoba Capital</p><div class="branch-contact"><span>Teléfono</span><a> +54 351 421-0101</a></div><div class="branch-contact"><span>Horario</span><strong>Lun. a vie. · 8 a 18 h</strong></div></article></div>

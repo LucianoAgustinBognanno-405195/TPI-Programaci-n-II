@@ -7,10 +7,11 @@
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark navbar-cecchetto sticky-top"><div class="container">
-  <a class="navbar-brand fw-bold" href="index.html">CECCHETTO<span class="brand-dot">.</span></a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
-  <div class="collapse navbar-collapse" id="navMain"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-cecchetto sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="index.html">CECCHETTO<span class="brand-dot">.</span></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navMain">
   <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
     <li class="nav-item">
         <a class="nav-link active" href="index.html">Inicio</a>
@@ -21,9 +22,10 @@
     <li class="nav-item">
         <a class="nav-link" href="contacto.html">Contacto</a>
     </li>
-    <li class="nav-item d-none" data-auth="employee">
-        <a class="nav-link" href="crud-empleados.html">Empleados</a>
-    </li>
+    <!-- Opciones exclusivas para empleados -->
+   <li class="nav-item d-none" data-auth="employee-admin">
+    <a class="nav-link" href="crud-empleados.html">Empleados</a>
+</li>
     <li class="nav-item d-none" data-auth="employee">
         <a class="nav-link" href="gestion-servicios.html">Servicios</a>
     </li>
@@ -38,7 +40,9 @@
         </a>
     </li>
 </ul>
-  </ul></div></div></nav>
+    </div>
+  </div>
+</nav>
 <header class="page-header"><div class="container py-5"><span class="eyebrow text-warning">EL PROYECTO</span><h1 class="display-4 fw-bold text-white mt-2">Nosotros</h1><p class="lead text-white-50 mb-0">Conocé al equipo y el trabajo realizado.</p></div></header>
 <main class="section-padding"><div class="container">
   <section class="mb-5"><div class="row g-4"><div class="col-lg-8"><span class="eyebrow text-primary">DESCRIPCIÓN DEL TRABAJO</span><h2 class="section-title mt-2">Sistema de gestión para Cecchetto</h2><p class="text-secondary">Aca tenemos queponer una expliaciòn/descripcion de tp</p><p class="text-secondary">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div><div class="col-lg-4"><div class="info-card h-100"><h3 class="h5 fw-bold">Dominio del proyecto</h3><p class="text-secondary mb-2">Venta y servicios de cambio de baterías para vehículos de transporte.</p><span class="domain-chip">Comercialización · Servicios · Gestión</span></div></div></div></section>

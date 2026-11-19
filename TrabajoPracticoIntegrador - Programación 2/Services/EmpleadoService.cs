@@ -233,8 +233,12 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             var claims = new[]
             {
         new Claim(ClaimTypes.NameIdentifier, empleado.IdEmpleado.ToString()),
-        new Claim(ClaimTypes.Name, empleado.Usuario)
-            };
+        new Claim(ClaimTypes.Name, empleado.Usuario),
+
+            new Claim(ClaimTypes.Role, empleado.IdTipoEmpleadoNavigation.TipoEmpleado
+    )
+        
+            }; 
 
             // 5. Obtenemos la clave secreta
             var key = new SymmetricSecurityKey(
