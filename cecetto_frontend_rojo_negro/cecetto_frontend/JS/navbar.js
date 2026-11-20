@@ -115,5 +115,13 @@ if (paginaProtegida === "true" && !empleadoAutenticado) {
 
     // Si no hay sesión, volvemos al login
     window.location.href = "login.html";
+}
+// Comprobamos si la página requiere permisos administrativos
+const paginaSoloAdmin = document.body.dataset.requiresAdmin;
+
+if (paginaSoloAdmin === "true" && empleadoAutenticado && !puedeGestionarEmpleados) {
+
+    // Si el empleado no tiene permisos, volvemos a servicios
+    window.location.href = "gestion-servicios.html";
 
 }

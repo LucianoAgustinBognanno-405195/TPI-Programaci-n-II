@@ -7,7 +7,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "administrativo,gerente,supervisor")]
     public class DashboardController : ControllerBase
     {
         private readonly IDashboardService _serv;
