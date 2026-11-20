@@ -16,7 +16,10 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         public async Task<List<Empleados>> GetEmpleadoAll() // 1
         {
             List<Empleados> lst = await _context.Empleados
-        .Include(e => e.IdDocumentoNavigation)
+        .Include(e => e.IdDocumentoNavigation).Include(e => e.IdDocumentoNavigation)
+                .Include(e => e.IdDireccionNavigation)
+                    .ThenInclude(d => d.IdBarrioNavigation)
+                        .ThenInclude(b => b.IdCiudadNavigation)
         .ToListAsync();
             return lst;
         }
@@ -27,7 +30,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             {
                 throw new Exception("El Id debe de ser mayor a 0");
             }
-            //NUEVOCAMIO: traemos tambien documento y direccion (con barrio y ciudad) para poder editarlo
+            // traemos tambien documento y direccion (con barrio y ciudad) para poder editarlo
             Empleados? empleado = await _context.Empleados
                 .Include(e => e.IdDocumentoNavigation)
                 .Include(e => e.IdDireccionNavigation)
@@ -35,57 +38,43 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
                         .ThenInclude(b => b.IdCiudadNavigation)
                 .FirstOrDefaultAsync(e => e.IdEmpleado == idEmpl);
 
-            if (empleado == null)
-            {
-                throw new Exception("No existe ese empleado");
-            }
-
             return empleado;
         }
         public async Task<Empleados?> GetEmpleadoByDni(int dni) //2
         {
-            if (dni <= 0)
-            {
-                throw new Exception("El Id debe de ser mayor a 0");
-            }
+          
             Empleados? empleado = await _context.Empleados.FirstOrDefaultAsync(e => e.IdDocumentoNavigation.Documento == dni);
-
-            if (empleado == null)
-            {
-                throw new Exception("No existe ese empleado");
-            }
-
             return empleado;
         }
-        public async Task<List<Sucursales>> GetSucursales() //3
+        public async Task<List<Sucursales?>> GetSucursales() //3
         {
-            List<Sucursales> lst = await _context.Sucursales.ToListAsync();
+            List<Sucursales?> lst = await _context.Sucursales.ToListAsync();
             return lst;
         }
-        public async Task<List<Documentos>> GetDocumentos()
+        public async Task<List<Documentos?>> GetDocumentos()
         {
-            List<Documentos> lst = await _context.Documentos.ToListAsync();
+            List<Documentos?> lst = await _context.Documentos.ToListAsync();
             return lst;
         }
-        public async Task<List<Ciudades>> GetCiudades()
+        public async Task<List<Ciudades?>> GetCiudades()
         {
-            List<Ciudades> lst = await _context.Ciudades.ToListAsync();
+            List<Ciudades?> lst = await _context.Ciudades.ToListAsync();
             return lst;
         }
-        public async Task<List<Barrios>> GetBarrios(string Ciudad)
+        public async Task<List<Barrios?>> GetBarrios(string Ciudad)
         {
-            List<Barrios> lst = await _context.Barrios.Where(b => Ciudad == b.IdCiudadNavigation.Ciudad).ToListAsync();
+            List<Barrios?> lst = await _context.Barrios.Where(b => Ciudad == b.IdCiudadNavigation.Ciudad).ToListAsync();
             return lst;
         }
-        public async Task<List<TiposDocumentos>> GetTiposDocuments()
+        public async Task<List<TiposDocumentos?>> GetTiposDocuments()
         {
-            List<TiposDocumentos> tDocumentos = await _context.TiposDocumentos.ToListAsync();
+            List<TiposDocumentos?> tDocumentos = await _context.TiposDocumentos.ToListAsync();
             return tDocumentos;
         }
 
-        public async Task<List<TiposEmpleados>> GetTiposEmpleados()
+        public async Task<List<TiposEmpleados?>> GetTiposEmpleados()
         {
-            List<TiposEmpleados> tEmpleado = await _context.TiposEmpleados.ToListAsync();
+            List<TiposEmpleados?> tEmpleado = await _context.TiposEmpleados.ToListAsync();
             return tEmpleado;
         }
         public async Task<bool> NuevEmpleado(Empleados nuevEmpl) //4
@@ -107,7 +96,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             //NUEVOCAMIO: si el empleado no existe avisamos, en vez de romper con un error de null
             if (empleados == null)
             {
-                throw new Exception("No existe ese empleado");
+                throw new Exception("No existe ese empleado (repo updateempleado)");
             }
 
             Direcciones direcciones = nuevEmpl.IdDireccionNavigation;
@@ -132,7 +121,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
             if (empleado == null)
             {
-                throw new Exception("No existe ese empleado");
+                throw new Exception("No existe ese empleado (bajalogica repo)");
             }
 
             if (empleado.Activo == false)
@@ -152,14 +141,40 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return true;
         
         }
+        public async Task<bool> AltaLogicaEmpleado(int idEmpl)
+        {
+            Empleados? empleado = _context.Empleados.FirstOrDefault(e => e.IdEmpleado == idEmpl);
+            if (empleado == null)
+            {
+                throw new Exception("No existe ese empleado");
+            }
+
+            if (empleado.Activo == true)
+            {
+                throw new Exception("Ese empleado no se dió de baja");
+            }
+            empleado.Activo = true;
+
+            int filas = await _context.SaveChangesAsync();
+
+            if (filas == 0)
+            {
+                throw new Exception("No se pudo actualizar");
+            }
+
+            return true;
+        }
+
+        //aca traemos para el login no solo el usuario si no tambien su tipo para la autorizaciòn
         public async Task<Empleados?> GetEmpleadoByUsuario(string usuario)
         {
             Empleados? empleado = await _context.Empleados
+                .Include(e => e.IdTipoEmpleadoNavigation)
                 .FirstOrDefaultAsync(e => e.Usuario == usuario);
 
             return empleado;
         }
 
-      
+       
     }
 }

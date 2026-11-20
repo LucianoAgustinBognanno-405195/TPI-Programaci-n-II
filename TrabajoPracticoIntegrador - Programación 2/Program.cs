@@ -32,7 +32,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 Encoding.UTF8.GetBytes(
                     builder.Configuration["Jwt:Key"]!
                 )
-            )
+            ),
+            RoleClaimType = System.Security.Claims.ClaimTypes.Role
         };
     });
 

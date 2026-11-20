@@ -12,23 +12,23 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
         Task<Empleados?> GetEmpleadoById(int idEmpl);
 
         //3.GetEmpleadoDni
-        Task<Empleados> GetEmpleadoByDni(int dni);
+        Task<Empleados?> GetEmpleadoByDni(int dni);
 
         //3. Get Sucursales
-        Task<List<Sucursales>> GetSucursales();
-        Task<List<TiposDocumentos>> GetTiposDocuments();
+        Task<List<Sucursales?>> GetSucursales();
+        Task<List<TiposDocumentos?>> GetTiposDocuments();
 
-        Task<List<TiposEmpleados>> GetTiposEmpleados();
+        Task<List<TiposEmpleados?>> GetTiposEmpleados();
 
         //4. Get Documento
-        Task<List<Documentos>> GetDocumentos();
+        Task<List<Documentos?>> GetDocumentos();
 
         // 5. Get Ciudades
-        Task<List<Ciudades>> GetCiudades();
+        Task<List<Ciudades?>> GetCiudades();
 
         //6. Get Barrios
 
-        Task<List<Barrios>> GetBarrios(string Ciudad);
+        Task<List<Barrios?>> GetBarrios(string Ciudad);
 
 
         //POST
@@ -41,6 +41,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
 
         //5. BajaLogica
         Task<bool> BajaLogicaEmpleado(int idEmpl);
+
+        //6. Dar de alta a un empleado
+        Task<bool> AltaLogicaEmpleado(int idEmpl);
 
 
         //Pedido de usario para login

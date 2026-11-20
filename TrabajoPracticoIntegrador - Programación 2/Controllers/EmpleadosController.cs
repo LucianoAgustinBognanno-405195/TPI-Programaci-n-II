@@ -20,10 +20,23 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             this._service = service;
         }
 
-        [Authorize]
+        [Authorize(Roles = "administrativo,gerente,supervisor")]
         [HttpGet]
-        [Route("by-EmpleadoALL")]
-        public async Task<IActionResult> GetEmpleados()
+        [Route("by-EmpleadoNav")]
+        public async Task<IActionResult> GetEmpleadosNav()
+        {
+            try
+            {
+                List<EmpleadoListadoDto> lst = await _service.GetEmpleadoNav();
+                return Ok(lst);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetEmpleadosAll()
         {
             try
             {
@@ -32,10 +45,10 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return BadRequest(ex.Message);
             }
         }
-
+        [Authorize(Roles = "administrativo,gerente,supervisor")]
         [HttpGet("By-EmpleadoById{idEmp}")]
         public async Task<IActionResult> GetEmpleadosId(int idEmp)
         {
@@ -49,6 +62,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        
         [HttpGet("By-Sucursal")]
         public async Task<IActionResult> GetSucursal()
         {
@@ -64,6 +78,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         }
 
         [HttpGet("By-Documentos")]
+        
         public async Task<IActionResult> GetSucursales()
         {
             try
@@ -104,9 +119,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return NotFound();
             }
         }
-        
 
 
+        [Authorize(Roles = "administrativo,gerente,supervisor")]
         [HttpPost("Nuevo-Empleado")]
         public async Task<IActionResult> NuevoEmpleado(EmpleadoDto dto)
         {
@@ -117,7 +132,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(201, e.Message);
+                return BadRequest(e.Message);
             }
         }
 
@@ -159,7 +174,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return NotFound();
             }
         }
-        [Authorize]
+        [Authorize(Roles = "administrativo,gerente,supervisor")]
         [HttpPut("Baja-Logica/{id}")]
         public async Task<IActionResult> BajaLogicaEmpleado(int id)
         {
@@ -168,6 +183,22 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 bool resultado = await _service.BajaLogicaEmpleado(id);
 
                 return Ok("El empleado fue dado de baja correctamente");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [Authorize(Roles = "administrativo,gerente,supervisor")]
+        [HttpPut("Alta-Logica/{id}")]
+        public async Task<IActionResult> AltaLogicaEmpleado(int id)
+        {
+            try
+            {
+                bool resultado = await _service.AltaLogicaEmpleado(id);
+
+                return Ok("El empleado fue dado de alta correctamente");
             }
             catch (Exception e)
             {

@@ -11,6 +11,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
         //GET
         //1. GetEmpleadosAll
         Task<List<EmpleadoListadoDto>> GetEmpleadoAll();
+        Task<List<EmpleadoListadoDto>> GetEmpleadoNav();
 
         //2. GetEmpleadoById
         Task<EmpleadoListadoDto?> GetEmpleadoById(int idEmpl);
@@ -30,8 +31,10 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
         //6. Get Barrios
         Task<List<BarrioDto>> GetBarrios(string Ciudad);
 
+        //7. Get Tipos de documentos
         Task<List<TiposDocumentos>> GetTiposDocuments();
 
+        //8. Get Tipos de Empleados
         Task<List<TiposEmpleados>> GetTiposEmpleados();
 
         //POST
@@ -44,6 +47,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
 
         //5. BajaLogica
         Task<bool> BajaLogicaEmpleado(int idEmpl);
+
+        //6. Alta Logica
+        Task<bool> AltaLogicaEmpleado(int idEmpl);
 
         //login 
         Task<LoginRespuestaDto> Login(LoginDto dto);
