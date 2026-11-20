@@ -469,6 +469,78 @@ document.getElementById("modalNuevoServicio").addEventListener("show.bs.modal", 
     prepararFormularioServicio();
 });
 
+function editarDetalleActual(idServicio, detalle, item) {
+
+    if (listaBaterias.length === 0 || listaVehiculos.length === 0) {
+        mostrarAviso("error", "No se puede editar el detalle",
+            "No se pudieron cargar las baterías o los vehículos.");
+        return;
+    }
+
+    item.innerHTML = `
+        <div class="row g-2 align-items-center w-100">
+            <div class="col-md-5">
+                <select class="form-select form-select-sm editar-bateria"></select>
+            </div>
+            <div class="col">
+                <select class="form-select form-select-sm editar-vehiculo"></select>
+            </div>
+            <div class="col-auto d-flex gap-1">
+                <button type="button" class="btn btn-sm btn-success btn-guardar-detalle" title="Guardar">
+                    <i class="bi bi-check-lg"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary btn-cancelar-detalle" title="Cancelar">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        </div>
+    `;
+
+    const comboBateria = item.querySelector(".editar-bateria");
+    const comboVehiculo = item.querySelector(".editar-vehiculo");
+
+    llenarCombo(comboBateria, listaBaterias, "idBateria", "descripcion", "Seleccionar batería");
+    llenarCombo(comboVehiculo, listaVehiculos, "idVehiculo", "descripcion", "Seleccionar vehículo");
+
+    comboBateria.value = detalle.idBateria;
+    elegirPorTexto(comboVehiculo, `${detalle.descVehiculo} (${detalle.tipoVehiculo})`);
+
+    item.querySelector(".btn-cancelar-detalle").addEventListener("click", () => cargarDetallesActuales(idServicio));
+
+    item.querySelector(".btn-guardar-detalle").addEventListener("click", async () => {
+
+        if (comboBateria.value === "" || comboVehiculo.value === "") {
+            mostrarAviso("error", "Faltan datos", "Elegí una batería y un vehículo.");
+            return;
+        }
+
+        try {
+            const respuesta = await fetch(
+                `${API_URL}/ServiciosContratados/${idServicio}/detalles/${detalle.idDetalleServicio}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    idBateria: Number(comboBateria.value),
+                    idVehiculo: Number(comboVehiculo.value)
+                })
+            });
+
+            if (!respuesta.ok) {
+                throw new Error(await leerError(respuesta, "No se pudo modificar el detalle"));
+            }
+
+            await cargarDetallesActuales(idServicio);
+        }
+        catch (error) {
+            console.error("Error al modificar el detalle:", error);
+            mostrarAviso("error", "No se pudo modificar el detalle", error.message);
+        }
+    });
+}
+
 async function cargarDetallesActuales(id) {
 
     const lista = document.getElementById("listaDetallesActuales");
@@ -488,14 +560,25 @@ async function cargarDetallesActuales(id) {
 
         lista.innerHTML = detalles.length === 0
             ? `<li class="list-group-item px-0 text-secondary">Este servicio todavía no tiene detalles.</li>`
-            : detalles.map(det => `
-                <li class="list-group-item px-0">
-                    <i class="bi bi-battery-half text-secondary me-1"></i>
-                    ${det.tipoBateria ?? "-"} ${det.voltajeBateria ?? ""}
-                    <span class="text-secondary mx-1">·</span>
-                    <i class="bi bi-car-front text-secondary me-1"></i>
-                    ${det.descVehiculo ?? "-"}${det.tipoVehiculo ? ` (${det.tipoVehiculo})` : ""}
+            : detalles.map((det, i) => `
+                <li class="list-group-item px-0 d-flex align-items-center gap-2">
+                    <span class="flex-grow-1">
+                        <i class="bi bi-battery-half text-secondary me-1"></i>
+                        ${det.tipoBateria ?? "-"} ${det.voltajeBateria ?? ""}
+                        <span class="text-secondary mx-1">·</span>
+                        <i class="bi bi-car-front text-secondary me-1"></i>
+                        ${det.descVehiculo ?? "-"}${det.tipoVehiculo ? ` (${det.tipoVehiculo})` : ""}
+                    </span>
+                    <button type="button" class="btn btn-sm btn-outline-primary btn-editar-detalle" data-indice="${i}"
+                            title="Editar detalle" aria-label="Editar detalle">
+                        <i class="bi bi-pencil"></i>
+                    </button>
                 </li>`).join("");
+
+        lista.querySelectorAll(".btn-editar-detalle").forEach(boton => {
+            boton.addEventListener("click", () =>
+                editarDetalleActual(id, detalles[boton.dataset.indice], boton.closest("li")));
+        });
     }
     catch (error) {
         console.error("Error al cargar los detalles actuales:", error);
