@@ -17,8 +17,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             this._serv = _serv;
         }
 
-
-
         //GET
         //1. GetServicioContratadoAll
         [HttpGet]
@@ -28,7 +26,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
             return Ok(lst);
         }
-
 
         //2. GetServicioContratadoById
         [HttpGet]
@@ -47,7 +44,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
             // Cualquier otro error (la base caída, por ejemplo) no lo atrapamos a propósito: .NET responde 500 por su cuenta, sin mostrarle detalles internos al usuario.
         }
-
 
         //3. GetServicioContratadoByFecha
         [HttpGet]
@@ -68,7 +64,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             //Los errores inesperados no los atrapamos a propósito: .NET responde 500 sin mostrarle detalles internos a nadie.
         }
 
-
         //4. GetServicioContratadoByCLiente
         [HttpGet]
         [Route("ByDocCliente/{docCliente}")]
@@ -85,7 +80,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return BadRequest(new { mensaje = e.Message });
             }
         }
-
 
         //5. GetServicioContratadoByDNIEmpleado
         [HttpGet]
@@ -104,7 +98,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
         }
 
-
         //6. GetServicioContratadoBySucursal
         [HttpGet]
         [Route("BySucursal/{nombreSucursal}")]
@@ -121,7 +114,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return BadRequest(new { mensaje = e.Message });
             }
         }
-
 
         //7. GetServicioContratadoByEstado
         [HttpGet]
@@ -140,7 +132,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
         }
 
-
         //8. GetDetalleServicioContratadoByIdServicioContratado
         [HttpGet]
         [Route("ByIdWithDetalles/{idSc}")]
@@ -158,8 +149,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
         }
 
-
-
         //POST
         //9. NuevoServicio(con detalle)
         [HttpPost]
@@ -175,7 +164,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return BadRequest(new { mensaje = ex.Message });
             }
         }
-
 
         //PUT
         //10. ModificarExistente
@@ -203,7 +191,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
         }
 
-
         //11. CambioEstado
         [HttpPatch("{idSc}/estado")]
         public async Task<IActionResult> CambiarEstado(int idSc, CambioEstadoDto dto)
@@ -226,7 +213,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return BadRequest(new { mensaje = ex.Message }); // 400: ese estado no existe
             }
         }
-
 
         //12. Modificar DetalleServicio
         [HttpPut]
@@ -253,7 +239,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
         }
 
-
         //clientes para el desplegable del formulario de nuevo servicio
         [HttpGet("Clientes")]
         public async Task<IActionResult> GetClientes()
@@ -269,6 +254,20 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         {
             List<TipoServicioComboDTO> lst = await _serv.GetTiposServicio();
 
+            return Ok(lst);
+        }
+    
+        [HttpGet("Baterias")]
+        public async Task<IActionResult> GetBaterias()
+        {
+            List<BateriaComboDTO> lst = await _serv.GetBaterias();
+            return Ok(lst);
+        }
+
+        [HttpGet("Vehiculos")]
+        public async Task<IActionResult> GetVehiculos()
+        {
+            List<VehiculoComboDTO> lst = await _serv.GetVehiculos();
             return Ok(lst);
         }
     }

@@ -1,9 +1,4 @@
-//NUEVOCAMIO: archivo nuevo. Ventana de aviso prolija (exito o error) para reemplazar los alert() del navegador.
-// Tiene el mismo estilo que la ventana de baja. Se usa en empleados y en servicios:
-//     mostrarAviso("ok", "Empleado modificado", "Los cambios se guardaron correctamente.");
-//     mostrarAviso("error", "No se pudo guardar", error.message);
 
-// Agregamos el HTML de la ventana a la pagina (asi no hay que copiarlo en cada .html)
 document.body.insertAdjacentHTML("beforeend", `
 <div class="modal fade" id="modalAviso" tabindex="-1" aria-labelledby="tituloAviso" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -21,7 +16,6 @@ document.body.insertAdjacentHTML("beforeend", `
     </div>
 </div>`);
 
-// Muestra el aviso. Devuelve una promesa que se cumple cuando el usuario lo cierra.
 function mostrarAviso(tipo, titulo, mensaje = "") {
 
     return new Promise(resolve => {
@@ -40,7 +34,6 @@ function mostrarAviso(tipo, titulo, mensaje = "") {
             `btn btn-${exito ? "success" : "secondary"} px-4`;
 
         const abrir = () => {
-            // Si hay otra ventana abierta (por ejemplo un formulario con error), el aviso va encima
             const hayOtraAbierta = document.querySelector(".modal.show") !== null;
             elemento.style.zIndex = hayOtraAbierta ? 1065 : "";
 
@@ -52,7 +45,6 @@ function mostrarAviso(tipo, titulo, mensaje = "") {
             }, { once: true });
 
             elemento.addEventListener("hidden.bs.modal", () => {
-                // Si quedo otra ventana abierta debajo, la dejamos funcionando bien
                 if (document.querySelector(".modal.show")) {
                     document.body.classList.add("modal-open");
                 }
@@ -62,7 +54,6 @@ function mostrarAviso(tipo, titulo, mensaje = "") {
             bootstrap.Modal.getOrCreateInstance(elemento).show();
         };
 
-        // Si otra ventana se esta cerrando en este momento, esperamos a que termine
         const otraCerrandose = document.body.classList.contains("modal-open")
             && document.querySelector(".modal.show") === null;
 

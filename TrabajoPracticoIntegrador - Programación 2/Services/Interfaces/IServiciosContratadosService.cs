@@ -31,11 +31,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
         //8. GetDetalleServicioContratadoByIdServicioContratado
         Task<List<DetallesServicioListadoDTO>> GetDSCByIdSC(int idSC);
 
-
         //POST
         //9. NuevoServicio(con detalle)
         Task<int> NuevoSC(ServicioCreateDTO nuevSC);
-
 
         //PUT
         //10. ModificarExistente
@@ -47,8 +45,10 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
         //12. Modificar DetalleServicio
         Task UpdateDSC(int idSC, int idDetalle, DetalleUpdateDto dto);
 
-        //NUEVOCAMIO: listas para los desplegables del formulario de nuevo servicio
         Task<List<ClienteComboDTO>> GetClientes();
         Task<List<TipoServicioComboDTO>> GetTiposServicio();
+    
+        Task<List<BateriaComboDTO>> GetBaterias();
+        Task<List<VehiculoComboDTO>> GetVehiculos();
     }
 }

@@ -29,7 +29,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //Un IQueryable es una consulta armada que todavía no se ejecutó, y se ejecuta recién con el ToListAsync().
         //El AsNoTracking() le dice a EF “esto es solo para leer, no hace falta que vigiles los cambios”, lo que lo hace un poco más rápido.
 
-
         //GET
         //1. GetServicioContratadoAll
         public async Task<List<Servicios>> GetSCAll()
@@ -45,7 +44,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
             return lst;
         }
-
 
         //2. GetServicioContratadoById
         public async Task<Servicios?> GetSCById(int id)
@@ -63,7 +61,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             //Si hacés Include de una tabla, nunca devuelvas la entidad al cliente: devolvé un DTO.
             //Los Include son para que el Service pueda armar el DTO. Sin DTO, no uses Include.
         }
-
 
         //3. GetServicioContratadoByFecha
         public async Task<List<Servicios>> GetSCByFecha(DateOnly fechaInicio, DateOnly? fechaFin)
@@ -86,7 +83,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             }
         }
 
-
         //4. GetServicioContratadoByCLiente
         public async Task<List<Servicios>> GetSCByCliente(int docCliente)
         {
@@ -98,7 +94,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return lst;
         }
 
-
         //5. GetServicioContratadoByDNIEmpleado
         public async Task<List<Servicios>> GetSCByEmpleado(int docEmpleado)
         {
@@ -109,7 +104,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             //no conviene filtrar por Activo, e consulta el historial, y un empleado que ya no trabaja sigue teniendo servicios pasados que alguien puede querer ver.
         }
 
-
         //6. GetServicioContratadoBySucursal
         public async Task<List<Servicios>> GetSCBySucursal(string nombreSucursal)
         {
@@ -119,7 +113,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return lst;
         }
 
-
         //7. GetServicioContratadoByEstado
         public async Task<List<Servicios>> GetSCByEstado(string estado)
         {
@@ -127,7 +120,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
             return lst;
         }
-
 
         //8. GetDetalleServicioContratadoByIdServicioContratado
         public async Task<List<DetallesServicio>> GetDSCByIdSC(int idSC)
@@ -140,8 +132,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
 
             return lst;
         }
-
-
 
         //POST
         //9. NuevoServicio(con detalle)
@@ -162,8 +152,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return await _dbContext.Empleados.AnyAsync(e => e.IdEmpleado == idEmpleado && e.Activo);    //AnyAsync pregunta “¿hay al menos uno que cumpla esto?
         }
 
-
-
         //PUT
         //10. ModificarExistente
         public async Task<bool> UpdateSC(int idSC, Servicios updtSC)
@@ -172,13 +160,11 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             Servicios? serv = await _dbContext.Servicios
                 .FirstOrDefaultAsync(s => s.IdServicio == idSC);
 
-            
             if (serv == null)
             {
                 return false;
             }
 
-            
             serv.FechaServicio = updtSC.FechaServicio;
             serv.IdCliente = updtSC.IdCliente;
             serv.IdEmpleado = updtSC.IdEmpleado;
@@ -186,12 +172,19 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             serv.Descripcion = updtSC.Descripcion;
             serv.IdTipoServicio = updtSC.IdTipoServicio;
 
-           
+            foreach (DetallesServicio detalle in updtSC.DetallesServicio)
+            {
+                serv.DetallesServicio.Add(new DetallesServicio
+                {
+                    IdBateria = detalle.IdBateria,
+                    IdVehiculo = detalle.IdVehiculo
+                });
+            }
+
             await _dbContext.SaveChangesAsync();
 
             return true;
         }
-
 
         //11. CambioEstado
         // Devuelve true si encontro el servicio y lo actualizo, false si no existe
@@ -215,7 +208,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return 2;
         }
 
-
         //12. Modificar DetalleServicio
         public async Task<bool> UpdateDSC(int idSC, DetallesServicio detServicio)
         {
@@ -226,13 +218,11 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
                 return false;
             }
 
-
             det.IdBateria = detServicio.IdBateria;
             det.IdVehiculo = detServicio.IdVehiculo;
             await _dbContext.SaveChangesAsync();
             return true;
         }
-
 
         // Devuelve el estado del servicio, o null si el servicio no existe
         public async Task<int?> GetEstadoServicioAsync(int idSC)
@@ -243,21 +233,38 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
                 .FirstOrDefaultAsync();
         }
 
-
-        //NUEVOCAMBIO: todos los clientes, ordenados por apellido y nombre
         public async Task<List<Clientes>> GetClientes()
         {
             return await _dbContext.Clientes
+                .Include(c => c.IdDocumentoNavigation)
                 .OrderBy(c => c.Apellido)
                 .ThenBy(c => c.Nombre)
                 .ToListAsync();
         }
 
-        //NUEVOCAMbIO: todos los tipos de servicio
         public async Task<List<TiposServicios>> GetTiposServicio()
         {
             return await _dbContext.TiposServicios
                 .OrderBy(t => t.Descripcion)
+                .ToListAsync();
+        }
+    
+        public async Task<List<Baterias>> GetBaterias()
+        {
+            return await _dbContext.Baterias
+                .Include(b => b.IdMarcaNavigation)
+                .Include(b => b.IdTipoBateriaNavigation)
+                .Include(b => b.IdVoltajeNavigation)
+                .Include(b => b.IdTamanioBateriaNavigation)
+                .OrderBy(b => b.IdBateria)
+                .ToListAsync();
+        }
+
+        public async Task<List<Vehiculos>> GetVehiculos()
+        {
+            return await _dbContext.Vehiculos
+                .Include(v => v.IdTipoVehiculoNavigation)
+                .OrderBy(v => v.Descripcion)
                 .ToListAsync();
         }
     }

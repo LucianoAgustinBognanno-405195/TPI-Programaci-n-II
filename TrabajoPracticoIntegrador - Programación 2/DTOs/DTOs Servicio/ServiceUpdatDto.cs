@@ -22,5 +22,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.DTOs
 
         [Range(1, int.MaxValue, ErrorMessage = "El tipo de servicio no es válido.")]
         public int IdTipoServicio { get; set; }
+
+        [MaxLength(20, ErrorMessage = "Se pueden agregar hasta 20 detalles.")]
+        public List<CrearDetalleServicioDto> Detalles { get; set; } = new();
     }
 }

@@ -93,7 +93,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         {
             Empleados? empleados = await _context.Empleados.FirstOrDefaultAsync(e => e.IdEmpleado == idEmpl);
 
-            //NUEVOCAMIO: si el empleado no existe avisamos, en vez de romper con un error de null
             if (empleados == null)
             {
                 throw new Exception("No existe ese empleado (repo updateempleado)");
@@ -175,6 +174,5 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return empleado;
         }
 
-       
     }
 }

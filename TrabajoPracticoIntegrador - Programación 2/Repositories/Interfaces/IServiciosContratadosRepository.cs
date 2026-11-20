@@ -30,14 +30,12 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
         //8. GetDetalleServicioContratadoByIdServicioContratado
         Task<List<DetallesServicio>> GetDSCByIdSC(int idSC);
 
-
         //POST
         //9. NuevoServicio(con detalle)
         Task<int> NuevoSC(Servicios nuevSC);
 
         //VerificoEstadoDeEmpleado
         Task<bool> EmpleadoActivoAsync(int idEmpleado);
-
 
         //PUT
         //10. ModificarExistente
@@ -51,9 +49,11 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
 
         Task<int?> GetEstadoServicioAsync(int idSC);
 
-        //NUEVOCAMIO: listas para los desplegables del formulario de nuevo servicio
         Task<List<Clientes>> GetClientes();
         Task<List<TiposServicios>> GetTiposServicio();
+    
+        Task<List<Baterias>> GetBaterias();
+        Task<List<Vehiculos>> GetVehiculos();
     }
 
 }

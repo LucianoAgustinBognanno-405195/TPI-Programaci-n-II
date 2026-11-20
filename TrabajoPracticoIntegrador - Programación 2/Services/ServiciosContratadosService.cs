@@ -42,7 +42,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
         }
         //Es la “máquina de pasar de ficha completa a ficha resumida”. La escribimos una vez y la reutilizamos.
 
-
         // Controla que el servicio exista y que todavía se pueda editar
         private async Task VerificarServicioEditableAsync(int idSC)
         {
@@ -55,8 +54,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 throw new InvalidOperationException("No se puede modificar un servicio Cancelado o Finalizado.");
         }
 
-
-
         //GET
         //1. GetServicioContratadoAll
         public async Task<List<ServicioListadoDTO>> GetSCAll()
@@ -66,7 +63,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
             return lst.Select(AListadoDto).ToList();
         }
-
 
         //2. GetServicioContratadoById
         public async Task<ServicioListadoDTO> GetSCById(int id)
@@ -82,7 +78,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             //no lleva Select ni ToList. Esos son para listas.
         }
 
-
         //3. GetServicioContratadoByFecha
         public async Task<List<ServicioListadoDTO>> GetSCByFecha(DateOnly fechaInicio, DateOnly? fechaFin)
         {
@@ -92,11 +87,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
             List<Servicios> lst = await _repo.GetSCByFecha(fechaInicio, fechaFin);
 
-
             return lst.Select(AListadoDto).ToList();
             //Select recorre la lista y le aplica AListadoDto a cada ficha, y ToList() arma la lista nueva con las fichas resumidas.
         }
-
 
         //4. GetServicioContratadoByCLiente
         public async Task<List<ServicioListadoDTO>> GetSCByCliente(int docCliente)
@@ -110,7 +103,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             return lst.Select(AListadoDto).ToList();
         }
 
-
         //5. GetServicioContratadoByDNIEmpleado
         public async Task<List<ServicioListadoDTO>> GetSCByEmpleado(int docEmpleado)
         {
@@ -121,7 +113,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
             return lst.Select(AListadoDto).ToList();
         }
-
 
         //6. GetServicioContratadoBySucursal
         public async Task<List<ServicioListadoDTO>> GetSCBySucursal(string nombreSucursal)
@@ -140,7 +131,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             return lst.Select(AListadoDto).ToList();
         }
 
-
         //7. GetServicioContratadoByEstado
         public async Task<List<ServicioListadoDTO>> GetSCByEstado(string estado)
         {
@@ -151,7 +141,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
             return lst.Select(AListadoDto).ToList();
         }
-
 
         //8. GetDetalleServicioContratadoByIdServicioContratado
         public async Task<List<DetallesServicioListadoDTO>> GetDSCByIdSC(int idSC)
@@ -175,8 +164,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 TipoVehiculo = d.IdVehiculoNavigation?.IdTipoVehiculoNavigation?.Vehiculo ?? "Sin tipo de vehículo"
             }).ToList();
         }
-
-
 
         //POST
         //9. NuevoServicio(con detalle)
@@ -220,8 +207,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             }
         }
 
-
-
         //PUT
         //10. ModificarExistente
         public async Task UpdateSC(int idSC, ServiceUpdatDto dto)
@@ -239,6 +224,15 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 IdTipoServicio = dto.IdTipoServicio
             };
 
+            foreach (var detalleDto in dto.Detalles)
+            {
+                serv.DetallesServicio.Add(new DetallesServicio
+                {
+                    IdBateria = detalleDto.IdBateria,
+                    IdVehiculo = detalleDto.IdVehiculo
+                });
+            }
+
             try
             {
                 bool seCambio = await _repo.UpdateSC(idSC, serv);
@@ -251,7 +245,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 throw new ArgumentException("El cliente, empleado, sucursal o tipo de servicio indicado no existe.");
             }
         }
-
 
         //11. CambioEstado
         public async Task CambioEstadoSC(int idSC, int nuevEstado)
@@ -302,7 +295,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             }
         }
 
-        //NUEVOCAMIO: clientes para el desplegable (id + "Nombre Apellido")
         public async Task<List<ClienteComboDTO>> GetClientes()
         {
             List<Clientes> lst = await _repo.GetClientes();
@@ -310,11 +302,11 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             return lst.Select(c => new ClienteComboDTO
             {
                 IdCliente = c.IdCliente,
-                Cliente = $"{c.Nombre} {c.Apellido}".Trim()
+                Cliente = $"{c.Nombre} {c.Apellido}".Trim(),
+                Documento = c.IdDocumentoNavigation?.Documento
             }).ToList();
         }
 
-        //NUEVOCAMIO: tipos de servicio para el desplegable
         public async Task<List<TipoServicioComboDTO>> GetTiposServicio()
         {
             List<TiposServicios> lst = await _repo.GetTiposServicio();
@@ -323,6 +315,36 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             {
                 IdTipoServicio = t.IdTipoServicio,
                 Descripcion = t.Descripcion
+            }).ToList();
+        }
+    
+        public async Task<List<BateriaComboDTO>> GetBaterias()
+        {
+            List<Baterias> lst = await _repo.GetBaterias();
+
+            return lst.Select(b => new BateriaComboDTO
+            {
+                IdBateria = b.IdBateria,
+                Descripcion = string.Join(" · ", new[]
+                {
+                    b.IdMarcaNavigation?.Descripcion,
+                    b.IdTipoBateriaNavigation?.Tipos,
+                    b.IdVoltajeNavigation?.Voltaje,
+                    b.IdTamanioBateriaNavigation?.Grupo
+                }.Where(x => !string.IsNullOrWhiteSpace(x)))
+            }).ToList();
+        }
+
+        public async Task<List<VehiculoComboDTO>> GetVehiculos()
+        {
+            List<Vehiculos> lst = await _repo.GetVehiculos();
+
+            return lst.Select(v => new VehiculoComboDTO
+            {
+                IdVehiculo = v.IdVehiculo,
+                Descripcion = v.IdTipoVehiculoNavigation == null
+                    ? v.Descripcion
+                    : $"{v.Descripcion} ({v.IdTipoVehiculoNavigation.Vehiculo})"
             }).ToList();
         }
     }

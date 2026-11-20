@@ -10,7 +10,6 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-
 namespace TrabajoPracticoIntegrador___Programación_2.Services
 {
     public class EmpleadoService : IEmpleadosService
@@ -65,7 +64,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             }).ToList();
         }
         
-
         public async Task<List<EmpleadoListadoDto>> GetEmpleadoNav()
         {
             List<Empleados> lst = await _repo.GetEmpleadoAll();
@@ -75,7 +73,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 throw new Exception("No hay empleados cargados");
             }
            
-
             return lst.Select(e => new EmpleadoListadoDto
             {
 
@@ -84,7 +81,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 Apellido = e.Apellido,
                 Usuario = e.Usuario,
                 Activo = e.Activo,
-                //NUEVOCAMIO: si el empleado no tiene documento, queda en 0 en vez de romper el listado
                 Documento = new DocumentoDto
                 {
                     Documento = e.IdDocumentoNavigation?.Documento ?? 0
@@ -106,8 +102,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 throw new Exception("No existe ese empleado (getEmpleadoId service)");
             }
             
-
-            //NUEVOCAMIO: agregamos tipo de empleado, ciudad y direccion para precargar el formulario de edicion
             Direcciones? direccion = empleados.IdDireccionNavigation;
 
             return new EmpleadoListadoDto
@@ -353,7 +347,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 IdTipoDocumento = dto.Documento.IdTipoDocumento
             };
 
-           
             Direcciones direcciones = new Direcciones()
             {
                 Calle = dto.Direccion.Calle,
@@ -361,7 +354,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 IdBarrio = dto.Direccion.IdBarrio
             };
 
-           
             Empleados nuevoEmpleado = new Empleados()
             {
                 Nombre = dto.Nombre,
@@ -467,7 +459,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             return await _repo.AltaLogicaEmpleado(idEmpl);
         }
 
-
         public async Task<LoginRespuestaDto> Login(LoginDto dto)
         {
             // 1. Buscamos al empleado por su usuario
@@ -527,6 +518,5 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             };
         }
 
-      
     }
 }
