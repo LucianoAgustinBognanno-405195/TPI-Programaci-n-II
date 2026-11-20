@@ -27,7 +27,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             {
                 throw new Exception("El Id debe de ser mayor a 0");
             }
-            //NUEVOCAMIO: traemos tambien documento y direccion (con barrio y ciudad) para poder editarlo
+            // traemos tambien documento y direccion (con barrio y ciudad) para poder editarlo
             Empleados? empleado = await _context.Empleados
                 .Include(e => e.IdDocumentoNavigation)
                 .Include(e => e.IdDireccionNavigation)
@@ -138,9 +138,12 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return true;
         
         }
+
+        //aca traemos para el login no solo el usuarui si no tambien su tipo para la autorizaciòn
         public async Task<Empleados?> GetEmpleadoByUsuario(string usuario)
         {
             Empleados? empleado = await _context.Empleados
+                .Include(e => e.IdTipoEmpleadoNavigation)
                 .FirstOrDefaultAsync(e => e.Usuario == usuario);
 
             return empleado;
