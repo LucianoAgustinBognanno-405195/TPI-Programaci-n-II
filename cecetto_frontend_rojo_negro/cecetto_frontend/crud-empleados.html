@@ -39,7 +39,7 @@
             aria-expanded="false"
             aria-label="Abrir menú"
         >
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon">holaa</span>
         </button>
 
         <!-- Enlaces -->
@@ -59,18 +59,23 @@
                     <a class="nav-link" href="contacto.html">Contacto</a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item d-none" data-auth="employee-admin">
                     <a class="nav-link" href="crud-empleados.html">Empleados</a>
                 </li>
-
-                <li class="nav-item">
+                </li</li>
+                <li class="nav-item d-none" data-auth="employee">
                     <a class="nav-link" href="gestion-servicios.html">Servicios</a>
                 </li>
 
-                <li class="nav-item ms-lg-2">
-                    <a class="btn btn-outline-light btn btn-danger fw-semibold px-3" href="#" id="btnCerrarSesion">Cerrar sesión</a>
+                
+                <li class="nav-item ms-lg-2" data-auth="employee">
+                    <a class="btn btn-outline-light btn-danger fw-semibold px-3"
+                    href="#" id="btnCerrarSesion">
+                        Cerrar sesión
+                    </a>
                 </li>
 
+            
             </ul>
 
         </div>
@@ -463,7 +468,6 @@
 
     </main>
 <script src="JS/navbar.js"></script>
-<!-- NUEVOCAMIO: ventanas de aviso prolijas (va antes de empleado.js) -->
 <script src="JS/avisos.js"></script>
 <script src="JS/empleado.js"></script>
 <script src="JS/config.js"></script>

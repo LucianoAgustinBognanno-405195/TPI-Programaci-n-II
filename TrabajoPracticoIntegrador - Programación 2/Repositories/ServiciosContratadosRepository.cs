@@ -196,13 +196,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             await _dbContext.SaveChangesAsync();
             return det;
         }
-
-        public Task<bool> CambioEstadoSC(int idSC, string nuevEstado)
-        {
-            throw new NotImplementedException();
-        }
     
-        //NUEVOCAMIO: todos los clientes, ordenados por apellido y nombre
+        //NUEVOCAMBIO: todos los clientes, ordenados por apellido y nombre
         public async Task<List<Clientes>> GetClientes()
         {
             return await _dbContext.Clientes
@@ -211,7 +206,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
                 .ToListAsync();
         }
 
-        //NUEVOCAMIO: todos los tipos de servicio
+        //NUEVOCAMbIO: todos los tipos de servicio
         public async Task<List<TiposServicios>> GetTiposServicio()
         {
             return await _dbContext.TiposServicios

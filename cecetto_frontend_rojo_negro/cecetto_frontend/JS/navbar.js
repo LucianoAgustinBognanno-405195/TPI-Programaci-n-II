@@ -1,42 +1,93 @@
+
 // Comprobamos si existe un token de sesión
 const token = sessionStorage.getItem("token");
 
-// Buscamos los elementos del navbar para empleados
+// Buscamos los elementos del navbar
 const opcionesEmpleado = document.querySelectorAll(
     '[data-auth="employee"]'
 );
 
-// Buscamos los elementos del navbar para visitantes
 const opcionesVisitante = document.querySelectorAll(
     '[data-auth="guest"]'
 );
 
-// Si existe un token, el empleado inició sesión
+// Buscamos las opciones exclusivas de administrativo, gerente y supervisor
+const opcionesAdmin = document.querySelectorAll(
+    '[data-auth="employee-admin"]'
+);
+
+// Variable para almacenar el rol
+let rol = "";
+
+// Comprobamos si existe un token
 if (token) {
 
-    // Mostramos las opciones de empleados
-    opcionesEmpleado.forEach(opcion => {
-        opcion.classList.remove("d-none");
-    });
+    try {
 
-    // Ocultamos la opción de iniciar sesión
-    opcionesVisitante.forEach(opcion => {
-        opcion.classList.add("d-none");
-    });
+        // Separamos las partes del JWT
+        const partesToken = token.split(".");
 
-} else {
+        // Recuperamos el payload
+        let payload = partesToken[1];
 
-    // Ocultamos las opciones de empleados
-    opcionesEmpleado.forEach(opcion => {
-        opcion.classList.add("d-none");
-    });
+        // Adaptamos Base64 URL a Base64
+        payload = payload.replace(/-/g, "+").replace(/_/g, "/");
 
-    // Mostramos la opción de iniciar sesión
-    opcionesVisitante.forEach(opcion => {
-        opcion.classList.remove("d-none");
-    });
+        // Agregamos el padding necesario
+        while (payload.length % 4) {
+            payload += "=";
+        }
 
+        // Convertimos el payload a un objeto JavaScript
+        const datosToken = JSON.parse(atob(payload));
+
+        // Comprobamos que el token no esté vencido
+        if (datosToken.exp > Date.now() / 1000) {
+
+            // Recuperamos el rol del empleado
+            rol = datosToken.role ||
+                  datosToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"] ||
+                  "";
+
+            rol = rol.toLowerCase();
+
+        } else {
+
+            // Si el token venció, eliminamos la sesión
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("empleado");
+        }
+
+    } catch (error) {
+
+        // Si el token no es válido, eliminamos la sesión
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("empleado");
+    }
 }
+
+// Comprobamos si hay un empleado autenticado
+const empleadoAutenticado = rol !== "";
+
+// Comprobamos si el empleado puede gestionar empleados
+const puedeGestionarEmpleados = [
+    "administrativo",
+    "gerente",
+    "supervisor"
+].includes(rol);
+
+// Mostramos u ocultamos las opciones del navbar
+opcionesEmpleado.forEach(opcion => {
+    opcion.classList.toggle("d-none", !empleadoAutenticado);
+});
+
+opcionesVisitante.forEach(opcion => {
+    opcion.classList.toggle("d-none", empleadoAutenticado);
+});
+
+opcionesAdmin.forEach(opcion => {
+    opcion.classList.toggle("d-none", !puedeGestionarEmpleados);
+});
 
 // Configuramos el botón de cerrar sesión
 const botonCerrarSesion = document.getElementById("btnCerrarSesion");
@@ -55,11 +106,12 @@ if (botonCerrarSesion) {
         window.location.href = "index.html";
 
     });
+}
 
-}// Comprobamos si la página requiere autenticación
+// Comprobamos si la página requiere autenticación
 const paginaProtegida = document.body.dataset.requiresAuth;
 
-if (paginaProtegida === "true" && !token) {
+if (paginaProtegida === "true" && !empleadoAutenticado) {
 
     // Si no hay sesión, volvemos al login
     window.location.href = "login.html";
