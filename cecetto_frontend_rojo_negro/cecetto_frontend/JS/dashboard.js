@@ -59,7 +59,7 @@ async function cargarCombos() {
 
     try {
 
-        const respuesta = await fetch(`${API_URL}/Empleados/by-EmpleadoALL`, {
+        const respuesta = await fetch(`${API_URL}/Empleados/GetAll`, {
             headers: {
                 "Authorization": `Bearer ${token}`
             }
