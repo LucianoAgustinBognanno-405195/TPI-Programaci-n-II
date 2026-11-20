@@ -16,7 +16,10 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         public async Task<List<Empleados>> GetEmpleadoAll() // 1
         {
             List<Empleados> lst = await _context.Empleados
-        .Include(e => e.IdDocumentoNavigation)
+        .Include(e => e.IdDocumentoNavigation).Include(e => e.IdDocumentoNavigation)
+                .Include(e => e.IdDireccionNavigation)
+                    .ThenInclude(d => d.IdBarrioNavigation)
+                        .ThenInclude(b => b.IdCiudadNavigation)
         .ToListAsync();
             return lst;
         }

@@ -26,8 +26,47 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             this._configuration = configuration;
         }
 
-
         public async Task<List<EmpleadoListadoDto>> GetEmpleadoAll()
+        {
+            List<Empleados> lst = await _repo.GetEmpleadoAll();
+
+            if (lst == null || lst.Count == 0)
+            {
+                throw new Exception("No hay empleados cargados");
+            }
+
+            return lst.Select(e => new EmpleadoListadoDto
+            {
+                IdEmpleado = e.IdEmpleado,
+                Nombre = e.Nombre,
+                Apellido = e.Apellido,
+                Usuario = e.Usuario,
+                Activo = e.Activo,
+
+                Documento = new DocumentoDto
+                {
+                    Documento = e.IdDocumentoNavigation?.Documento ?? 0,
+                    IdTipoDocumento = e.IdDocumentoNavigation.IdTipoDocumento ?? 0,
+                },
+
+                IdTipoEmpleado = e.IdTipoEmpleado,
+
+                Ciudad = e.IdDireccionNavigation?
+                            .IdBarrioNavigation?
+                            .IdCiudadNavigation?.Ciudad,
+
+                Direccion = e.IdDireccionNavigation == null ? null : new DireccionDto
+                {
+                    Calle = e.IdDireccionNavigation.Calle,
+                    Altura = e.IdDireccionNavigation.Altura,
+                    IdBarrio = e.IdDireccionNavigation.IdBarrio ?? 0
+                }
+
+            }).ToList();
+        }
+        
+
+        public async Task<List<EmpleadoListadoDto>> GetEmpleadoNav()
         {
             List<Empleados> lst = await _repo.GetEmpleadoAll();
 
@@ -80,7 +119,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
                 Activo = empleados.Activo,
                 Documento = new DocumentoDto
                 {
-                    Documento = empleados.IdDocumentoNavigation?.Documento ?? 0
+                    Documento = empleados.IdDocumentoNavigation?.Documento ?? 0,
+                    IdTipoDocumento = empleados.IdDocumentoNavigation.IdTipoDocumento ?? 0,
                 },
                 IdTipoEmpleado = empleados.IdTipoEmpleado,
                 Ciudad = direccion?.IdBarrioNavigation?.IdCiudadNavigation?.Ciudad,
@@ -487,6 +527,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             };
         }
 
-       
+      
     }
 }

@@ -11,6 +11,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
         //GET
         //1. GetEmpleadosAll
         Task<List<EmpleadoListadoDto>> GetEmpleadoAll();
+        Task<List<EmpleadoListadoDto>> GetEmpleadoNav();
 
         //2. GetEmpleadoById
         Task<EmpleadoListadoDto?> GetEmpleadoById(int idEmpl);

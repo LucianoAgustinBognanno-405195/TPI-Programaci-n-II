@@ -15,7 +15,7 @@
 
         public DocumentoDto Documento { get; set; }
 
-        //NUEVOCAMIO: datos que usa el formulario de edicion (solo se completan al pedir un empleado por id)
+        //NUEVOCAMBIO: datos que usa el formulario de edicion (solo se completan al pedir un empleado por id)
         public int? IdTipoEmpleado { get; set; }
         public string? Ciudad { get; set; }
         public DireccionDto? Direccion { get; set; }

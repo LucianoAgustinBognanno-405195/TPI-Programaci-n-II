@@ -35,6 +35,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.DTOs
         public int IdTipoServicio { get; set; }
 
         // La lista de hojas adjuntas. Puede venir vacía (tus "posibles detalles")
+
+        [MaxLength(20, ErrorMessage = "Un servicio puede tener hasta 20 detalles.")]
         public List<CrearDetalleServicioDto> Detalles { get; set; } = new();
     }
 }

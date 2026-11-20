@@ -22,8 +22,21 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
         [Authorize(Roles = "administrativo,gerente,supervisor")]
         [HttpGet]
-        [Route("by-EmpleadoALL")]
-        public async Task<IActionResult> GetEmpleados()
+        [Route("by-EmpleadoNav")]
+        public async Task<IActionResult> GetEmpleadosNav()
+        {
+            try
+            {
+                List<EmpleadoListadoDto> lst = await _service.GetEmpleadoNav();
+                return Ok(lst);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetEmpleadosAll()
         {
             try
             {
@@ -32,7 +45,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return BadRequest(ex.Message);
             }
         }
         [Authorize(Roles = "administrativo,gerente,supervisor")]
