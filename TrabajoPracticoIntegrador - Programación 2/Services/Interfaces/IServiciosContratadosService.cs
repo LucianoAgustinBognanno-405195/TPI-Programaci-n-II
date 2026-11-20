@@ -1,4 +1,5 @@
 ﻿using TrabajoPracticoIntegrador___Programación_2.DTOs;
+using TrabajoPracticoIntegrador___Programación_2.DTOs.DTOs_Servicio;
 using TrabajoPracticoIntegrador___Programación_2.Models;
 
 namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
@@ -10,22 +11,22 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
         Task<List<ServicioListadoDTO>> GetSCAll();
 
         //2. GetServicioContratadoById
-        Task<Servicios?> GetSCById(int id);
+        Task<ServicioListadoDTO> GetSCById(int id);
 
         //3. GetServicioContratadoByFecha
-        Task<List<Servicios>> GetSCByFecha(DateOnly fechaInicio, DateOnly? fechaFin);
+        Task<List<ServicioListadoDTO>> GetSCByFecha(DateOnly fechaInicio, DateOnly? fechaFin);
 
         //4. GetServicioContratadoByCLiente
-        Task<List<Servicios>> GetSCByCliente(int docCliente);
+        Task<List<ServicioListadoDTO>> GetSCByCliente(int docCliente);
 
         //5. GetServicioContratadoByDNIEmpleado
-        Task<List<Servicios>> GetSCByEmpleado(int dniEmpleado);
+        Task<List<ServicioListadoDTO>> GetSCByEmpleado(int dniEmpleado);
 
         //6. GetServicioContratadoBySucursal
-        Task<List<Servicios>> GetSCBySucursal(string nombreSucursal);
+        Task<List<ServicioListadoDTO>> GetSCBySucursal(string nombreSucursal);
 
         //7. GetServicioContratadoByEstado
-        Task<List<Servicios>> GetSCByEstado(string estado);
+        Task<List<ServicioListadoDTO>> GetSCByEstado(string estado);
 
         //8. GetDetalleServicioContratadoByIdServicioContratado
         Task<List<DetallesServicioListadoDTO>> GetDSCByIdSC(int idSC);
@@ -38,14 +39,14 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services.Interfaces
 
         //PUT
         //10. ModificarExistente
-        Task<Servicios> UpdateSC(int idSC, Servicios updtSC);
+        Task UpdateSC(int idSC, ServiceUpdatDto updtSC);
 
         //11. CambioEstado
         Task CambioEstadoSC(int idSC, int nuevEstado);
 
         //12. Modificar DetalleServicio
-        Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio);
-    
+        Task UpdateDSC(int idSC, int idDetalle, DetalleUpdateDto dto);
+
         //NUEVOCAMIO: listas para los desplegables del formulario de nuevo servicio
         Task<List<ClienteComboDTO>> GetClientes();
         Task<List<TipoServicioComboDTO>> GetTiposServicio();

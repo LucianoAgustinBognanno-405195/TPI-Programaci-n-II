@@ -35,17 +35,22 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories.Interfaces
         //9. NuevoServicio(con detalle)
         Task<int> NuevoSC(Servicios nuevSC);
 
+        //VerificoEstadoDeEmpleado
+        Task<bool> EmpleadoActivoAsync(int idEmpleado);
+
 
         //PUT
         //10. ModificarExistente
-        Task<Servicios> UpdateSC(int idSC, Servicios updtSC);
+        Task<bool> UpdateSC(int idSC, Servicios updtSC);
 
         //11. CambioEstado
-        Task<bool> CambioEstadoSC(int idSC, int nuevEstado);
+        Task<int> CambioEstadoSC(int idSC, int nuevEstado);
 
         //12. ModificarDetalleServicio
-        Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio);
-    
+        Task<bool> UpdateDSC(int idSC, DetallesServicio detServicio);
+
+        Task<int?> GetEstadoServicioAsync(int idSC);
+
         //NUEVOCAMIO: listas para los desplegables del formulario de nuevo servicio
         Task<List<Clientes>> GetClientes();
         Task<List<TiposServicios>> GetTiposServicio();

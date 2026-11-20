@@ -15,6 +15,19 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             _dbContext = dbContext;
         }
 
+        private IQueryable<Servicios> ServiciosConDatos()
+        {
+            return _dbContext.Servicios
+                .Include(s => s.IdClienteNavigation)
+                .Include(s => s.IdEmpleadoNavigation)
+                .Include(s => s.IdSucursalNavigation)
+                .Include(s => s.IdTipoServicioNavigation)
+                .Include(s => s.EstadoServicioNavigation)
+                .AsNoTracking();
+        }
+        //Es como una “plantilla de consulta” que ya trae los datos de las otras tablas.
+        //Un IQueryable es una consulta armada que todavía no se ejecutó, y se ejecuta recién con el ToListAsync().
+        //El AsNoTracking() le dice a EF “esto es solo para leer, no hace falta que vigiles los cambios”, lo que lo hace un poco más rápido.
 
 
         //GET
@@ -22,11 +35,11 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         public async Task<List<Servicios>> GetSCAll()
         {
             List<Servicios> lst = await _dbContext.Servicios.Include(s => s.IdClienteNavigation)
-                                                      .Include(s => s.IdEmpleadoNavigation)
-                                                      .Include(s =>s.IdSucursalNavigation)
-                                                      .Include(s => s.IdTipoServicioNavigation)
-                                                      .Include(s => s.EstadoServicioNavigation)
-                                                      .ToListAsync();
+                                                              .Include(s => s.IdEmpleadoNavigation)
+                                                              .Include(s =>s.IdSucursalNavigation)
+                                                              .Include(s => s.IdTipoServicioNavigation)
+                                                              .Include(s => s.EstadoServicioNavigation)
+                                                              .ToListAsync();
 
             //List<Servicio> lst = null;
 
@@ -37,9 +50,18 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //2. GetServicioContratadoById
         public async Task<Servicios?> GetSCById(int id)
         {
-            Servicios? serv = await _dbContext.Servicios.FirstOrDefaultAsync(s => s.IdServicio == id);
+            Servicios? serv = await _dbContext.Servicios
+                .Include(s => s.IdClienteNavigation)
+                .Include(s => s.IdEmpleadoNavigation)
+                .Include(s => s.IdSucursalNavigation)
+                .Include(s => s.IdTipoServicioNavigation)
+                .Include(s => s.EstadoServicioNavigation)
+                .FirstOrDefaultAsync(s => s.IdServicio == id);
 
             return serv;
+
+            //Si hacés Include de una tabla, nunca devuelvas la entidad al cliente: devolvé un DTO.
+            //Los Include son para que el Service pueda armar el DTO. Sin DTO, no uses Include.
         }
 
 
@@ -48,15 +70,15 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         {
             if (fechaFin == null)
             {
-                List<Servicios> lst = await _dbContext.Servicios.Where(s => s.FechaServicio >= fechaInicio &&
-                                                                        s.FechaServicio <= DateOnly.FromDateTime(DateTime.UtcNow)).
+                List<Servicios> lst = await ServiciosConDatos().Where(s => s.FechaServicio >= fechaInicio &&
+                                                                        s.FechaServicio <= DateOnly.FromDateTime(DateTime.Today)).  //Today es la fecha de tu computadora (Argentina)
                                                                         ToListAsync();
 
                 return lst;
             }
             else
             {
-                List<Servicios> lst = await _dbContext.Servicios.Where(s => s.FechaServicio >= fechaInicio &&
+                List<Servicios> lst = await ServiciosConDatos().Where(s => s.FechaServicio >= fechaInicio &&
                                                         s.FechaServicio <= fechaFin).
                                                         ToListAsync();
 
@@ -68,7 +90,8 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //4. GetServicioContratadoByCLiente
         public async Task<List<Servicios>> GetSCByCliente(int docCliente)
         {
-            List<Servicios> lst = await _dbContext.Servicios.Where(s => s.IdClienteNavigation.IdDocumentoNavigation.Documento == docCliente).ToListAsync();
+            List<Servicios> lst = await ServiciosConDatos().Where(s => s.IdClienteNavigation.IdDocumentoNavigation.Documento == docCliente).ToListAsync();
+            //Con esto la lista viene con cliente, empleado, sucursal, etc. cargados, listos para armar el DTO.
 
             //List<Servicio> lst = null;
 
@@ -79,16 +102,19 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //5. GetServicioContratadoByDNIEmpleado
         public async Task<List<Servicios>> GetSCByEmpleado(int docEmpleado)
         {
-            List<Servicios> lst = await _dbContext.Servicios.Where(s => s.IdEmpleadoNavigation.IdDocumentoNavigation.Documento == docEmpleado).ToListAsync();
+            List<Servicios> lst = await ServiciosConDatos().Where(s => s.IdEmpleadoNavigation.IdDocumentoNavigation.Documento == docEmpleado).ToListAsync();
 
             return lst;
+
+            //no conviene filtrar por Activo, e consulta el historial, y un empleado que ya no trabaja sigue teniendo servicios pasados que alguien puede querer ver.
         }
 
 
         //6. GetServicioContratadoBySucursal
         public async Task<List<Servicios>> GetSCBySucursal(string nombreSucursal)
         {
-            List<Servicios> lst = await _dbContext.Servicios.Where(s => s.IdSucursalNavigation.Sucursal == nombreSucursal).ToListAsync();
+            List<Servicios> lst = await ServiciosConDatos().Where(s => s.IdSucursalNavigation.Sucursal.StartsWith(nombreSucursal)).ToListAsync();
+            // SQL Server, con su configuración habitual, no distingue mayúsculas al comparar texto,    //StartsWith busca solo por el comienzo del nombre no lo que contiene
 
             return lst;
         }
@@ -97,7 +123,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //7. GetServicioContratadoByEstado
         public async Task<List<Servicios>> GetSCByEstado(string estado)
         {
-            List<Servicios> lst = await _dbContext.Servicios.Where(s => s.EstadoServicioNavigation.Estado == estado).ToListAsync();
+            List<Servicios> lst = await ServiciosConDatos().Where(s => s.EstadoServicioNavigation.Estado == estado).ToListAsync();
 
             return lst;
         }
@@ -106,10 +132,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         //8. GetDetalleServicioContratadoByIdServicioContratado
         public async Task<List<DetallesServicio>> GetDSCByIdSC(int idSC)
         {
-            List<DetallesServicio> lst = await _dbContext.DetallesServicio.Where(ds => ds.IdServicioNavigation.IdServicio == idSC).
+            List<DetallesServicio> lst = await _dbContext.DetallesServicio.Where(ds => ds.IdServicio == idSC).
                                                                            Include(s => s.IdBateriaNavigation).ThenInclude(d => d.IdTipoBateriaNavigation).
                                                                            Include(s => s.IdBateriaNavigation).ThenInclude(v => v.IdVoltajeNavigation).                                
-                                                                           Include(s => s.IdServicioNavigation).
                                                                            Include(s => s.IdVehiculoNavigation).ThenInclude(d => d.IdTipoVehiculoNavigation).
                                                                            ToListAsync();
 
@@ -131,11 +156,17 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
         // Copia ese 25 en el casillero Id_Servicio de cada hoja.
         // Guarda las hojas.
 
+        // ¿Existe el empleado y está activo?
+        public async Task<bool> EmpleadoActivoAsync(int idEmpleado)
+        {
+            return await _dbContext.Empleados.AnyAsync(e => e.IdEmpleado == idEmpleado && e.Activo);    //AnyAsync pregunta “¿hay al menos uno que cumpla esto?
+        }
+
 
 
         //PUT
         //10. ModificarExistente
-        public async Task<Servicios> UpdateSC(int idSC, Servicios updtSC)
+        public async Task<bool> UpdateSC(int idSC, Servicios updtSC)
         {
            
             Servicios? serv = await _dbContext.Servicios
@@ -144,7 +175,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             
             if (serv == null)
             {
-                throw new Exception("No existe el servicio indicado con ese Id.");
+                return false;
             }
 
             
@@ -158,45 +189,61 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
            
             await _dbContext.SaveChangesAsync();
 
-            return serv;
+            return true;
         }
 
 
         //11. CambioEstado
         // Devuelve true si encontro el servicio y lo actualizo, false si no existe
-        public async Task<bool> CambioEstadoSC(int idSC, int nuevEstado)
+        public async Task<int> CambioEstadoSC(int idSC, int nuevEstado)
         {
             Servicios? serv = await _dbContext.Servicios.FirstOrDefaultAsync(s => s.IdServicio == idSC);
 
             if (serv == null)
             {
-                return false;
+                return 0;
             }
 
+            if (serv.EstadoServicio == 3 || serv.EstadoServicio == 4)
+            {
+                return 1;
+            }
 
             serv.EstadoServicio = nuevEstado;   // cambiamos la fk, no la navegacion
-
             await _dbContext.SaveChangesAsync();
 
-            return true;
+            return 2;
         }
 
 
         //12. Modificar DetalleServicio
-        public async Task<DetallesServicio> UpdateDSC(int idSC, DetallesServicio detServicio)
+        public async Task<bool> UpdateDSC(int idSC, DetallesServicio detServicio)
         {
             DetallesServicio? det = await _dbContext.DetallesServicio.FirstOrDefaultAsync(d => d.IdServicio == idSC
                                                                                                && d.IdDetalleServicio == detServicio.IdDetalleServicio);
             if (det == null)
             {
-                throw new Exception("No existe ese detalle para el servicio indicado.");
+                return false;
             }
+
+
             det.IdBateria = detServicio.IdBateria;
             det.IdVehiculo = detServicio.IdVehiculo;
             await _dbContext.SaveChangesAsync();
-            return det;
+            return true;
         }
-    
+
+
+        // Devuelve el estado del servicio, o null si el servicio no existe
+        public async Task<int?> GetEstadoServicioAsync(int idSC)
+        {
+            return await _dbContext.Servicios
+                .Where(s => s.IdServicio == idSC)
+                .Select(s => (int?)s.EstadoServicio)
+                .FirstOrDefaultAsync();
+        }
+
+
         //NUEVOCAMBIO: todos los clientes, ordenados por apellido y nombre
         public async Task<List<Clientes>> GetClientes()
         {

@@ -24,34 +24,28 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSCAll()
         {
-            try
-            {
-                List<ServicioListadoDTO> lst = await _serv.GetSCAll();
+            List<ServicioListadoDTO> lst = await _serv.GetSCAll();
 
-                return Ok(lst);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(201, e.Message);
-            }
+            return Ok(lst);
         }
 
 
         //2. GetServicioContratadoById
         [HttpGet]
-        [Route("{id}")]
+        [Route("{id:int}")]
         public async Task<IActionResult> GetSCById([FromRoute] int id)
         {
             try
             {
-                Servicios? serv = await _serv.GetSCById(id);
+                ServicioListadoDTO serv = await _serv.GetSCById(id);
 
                 return Ok(serv);
             }
-            catch (Exception e)
+            catch (KeyNotFoundException e)
             {
-                return StatusCode(201, e.Message);
+                return NotFound(new { mensaje = e.Message });
             }
+            // Cualquier otro error (la base caída, por ejemplo) no lo atrapamos a propósito: .NET responde 500 por su cuenta, sin mostrarle detalles internos al usuario.
         }
 
 
@@ -62,14 +56,16 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         {
             try
             {
-                List<Servicios> lst = await _serv.GetSCByFecha(fechaInicio, fechaFin);
+                List<ServicioListadoDTO> lst = await _serv.GetSCByFecha(fechaInicio, fechaFin);
 
                 return Ok(lst);
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
-                return StatusCode(201, e.Message);
+                return BadRequest(new { mensaje = e.Message });
             }
+
+            //Los errores inesperados no los atrapamos a propósito: .NET responde 500 sin mostrarle detalles internos a nadie.
         }
 
 
@@ -80,13 +76,13 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         {
             try
             {
-                List<Servicios> lst = await _serv.GetSCByCliente(docCliente);
+                List<ServicioListadoDTO> lst = await _serv.GetSCByCliente(docCliente);
 
                 return Ok(lst);
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
-                return StatusCode(201, e.Message);
+                return BadRequest(new { mensaje = e.Message });
             }
         }
 
@@ -98,14 +94,13 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         {
             try
             {
-                List<Servicios> lst = await _serv.GetSCByEmpleado(docEmpleado);
+                List<ServicioListadoDTO> lst = await _serv.GetSCByEmpleado(docEmpleado);
 
                 return Ok(lst);
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
-
-                return StatusCode(201, e.Message);
+                return BadRequest(new { mensaje = e.Message });
             }
         }
 
@@ -117,14 +112,13 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         {
             try
             {
-                List<Servicios> lst = await _serv.GetSCBySucursal(nombreSucursal);
+                List<ServicioListadoDTO> lst = await _serv.GetSCBySucursal(nombreSucursal);
 
                 return Ok(lst);
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
-
-                return StatusCode(201, e.Message);
+                return BadRequest(new { mensaje = e.Message });
             }
         }
 
@@ -136,21 +130,20 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         {
             try
             {
-                List<Servicios> lst = await _serv.GetSCByEstado(estado);
+                List<ServicioListadoDTO> lst = await _serv.GetSCByEstado(estado);
 
                 return Ok(lst);
             }
-            catch (Exception e)
+            catch (ArgumentException e)
             {
-
-                return StatusCode(201, e.Message);
+                return BadRequest(new { mensaje = e.Message });
             }
         }
 
 
         //8. GetDetalleServicioContratadoByIdServicioContratado
         [HttpGet]
-        [Route("ByIdServicio/{idSc}")]
+        [Route("ByIdWithDetalles/{idSc}")]
         public async Task<IActionResult> GetDSCByIdSC([FromRoute] int idSc)
         {
             try
@@ -159,10 +152,9 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
 
                 return Ok(lst);
             }
-            catch (Exception e)
+            catch (KeyNotFoundException e)
             {
-
-                return StatusCode(201, e.Message);
+                return NotFound(new { mensaje = e.Message });
             }
         }
 
@@ -189,17 +181,25 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
         //10. ModificarExistente
         [HttpPut]
         [Route("{idSC}")]
-        public async Task<IActionResult> UpdateSC([FromRoute] int idSC, [FromBody] Servicios updtSC)
+        public async Task<IActionResult> UpdateSC([FromRoute] int idSC, [FromBody] ServiceUpdatDto dto)
         {
             try
             {
-                Servicios servicioModificado = await _serv.UpdateSC(idSC, updtSC);
+                await _serv.UpdateSC(idSC, dto);
 
-                return Ok(servicioModificado);
+                return NoContent();   // 204: "Listo, todo bien"
             }
-            catch (Exception e)
+            catch (KeyNotFoundException e)
             {
-                return BadRequest(e.Message);
+                return NotFound(new { mensaje = e.Message });     // 404: ese servicio no existe
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(new { mensaje = e.Message });   // 400: algún Id no existe
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(new { mensaje = e.Message });   // 400: el servicio ya está cerrado
             }
         }
 
@@ -217,58 +217,59 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             {
                 return NotFound(new { mensaje = ex.Message });   // 404: "Ese servicio no existe"
             }
-            catch (ArgumentException ex)
+            catch (InvalidOperationException ex)
             {
                 return BadRequest(new { mensaje = ex.Message }); // 400: "Tu pedido está mal"
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { mensaje = ex.Message }); // 400: ese estado no existe
             }
         }
 
 
         //12. Modificar DetalleServicio
         [HttpPut]
-        [Route("UpdateDetalle/{idSC}")]
-        public async Task<IActionResult> UpdateDSC([FromRoute] int idSC, [FromBody] DetallesServicio detServicio)
+        [Route("{idSC:int}/detalles/{idDetalle:int}")]
+        public async Task<IActionResult> UpdateDSC([FromRoute] int idSC, [FromRoute] int idDetalle, [FromBody] DetalleUpdateDto dto)
         {
             try
             {
-                DetallesServicio det = await _serv.UpdateDSC(idSC, detServicio);
-                return Ok(det);
+                await _serv.UpdateDSC(idSC, idDetalle, dto);
+
+                return NoContent();   // 204: "Listo, todo bien"
             }
-            catch (Exception e)
+            catch (KeyNotFoundException e)
             {
-                return StatusCode(201, e.Message);
+                return NotFound(new { mensaje = e.Message });     // 404: no existe ese detalle
+            }
+            catch (ArgumentException e)
+            {
+                return BadRequest(new { mensaje = e.Message });   // 400: batería o vehículo inexistente
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(new { mensaje = e.Message });   // 400: el servicio ya está cerrado
             }
         }
 
-    
-        //NUEVOCAMIO: clientes para el desplegable del formulario de nuevo servicio
+
+        //clientes para el desplegable del formulario de nuevo servicio
         [HttpGet("Clientes")]
         public async Task<IActionResult> GetClientes()
         {
-            try
-            {
-                List<ClienteComboDTO> lst = await _serv.GetClientes();
-                return Ok(lst);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+            List<ClienteComboDTO> lst = await _serv.GetClientes();
+
+            return Ok(lst);
         }
 
-        //NUEVOCAMIO: tipos de servicio para el desplegable del formulario de nuevo servicio
+        //tipos de servicio para el desplegable del formulario de nuevo servicio
         [HttpGet("TiposServicio")]
         public async Task<IActionResult> GetTiposServicio()
         {
-            try
-            {
-                List<TipoServicioComboDTO> lst = await _serv.GetTiposServicio();
-                return Ok(lst);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+            List<TipoServicioComboDTO> lst = await _serv.GetTiposServicio();
+
+            return Ok(lst);
         }
     }
 }
