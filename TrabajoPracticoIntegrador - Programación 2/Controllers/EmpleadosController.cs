@@ -176,5 +176,21 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [Authorize(Roles = "administrativo,gerente,supervisor")]
+        [HttpPut("Alta-Logica/{id}")]
+        public async Task<IActionResult> AltaLogicaEmpleado(int id)
+        {
+            try
+            {
+                bool resultado = await _service.AltaLogicaEmpleado(id);
+
+                return Ok("El empleado fue dado de alta correctamente");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
