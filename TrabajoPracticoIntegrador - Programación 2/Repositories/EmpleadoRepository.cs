@@ -138,8 +138,31 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return true;
         
         }
+        public async Task<bool> AltaLogicaEmpleado(int idEmpl)
+        {
+            Empleados? empleado = _context.Empleados.FirstOrDefault(e => e.IdEmpleado == idEmpl);
+            if (empleado == null)
+            {
+                throw new Exception("No existe ese empleado");
+            }
 
-        //aca traemos para el login no solo el usuarui si no tambien su tipo para la autorizaciòn
+            if (empleado.Activo == true)
+            {
+                throw new Exception("Ese empleado no se dió de baja");
+            }
+            empleado.Activo = true;
+
+            int filas = await _context.SaveChangesAsync();
+
+            if (filas == 0)
+            {
+                throw new Exception("No se pudo actualizar");
+            }
+
+            return true;
+        }
+
+        //aca traemos para el login no solo el usuario si no tambien su tipo para la autorizaciòn
         public async Task<Empleados?> GetEmpleadoByUsuario(string usuario)
         {
             Empleados? empleado = await _context.Empleados
@@ -149,6 +172,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Repositories
             return empleado;
         }
 
-      
+       
     }
 }

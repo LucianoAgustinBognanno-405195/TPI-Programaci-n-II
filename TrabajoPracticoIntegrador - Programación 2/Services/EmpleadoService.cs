@@ -405,9 +405,30 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
 
             return await _repo.BajaLogicaEmpleado(idEmpl);
         }
+        public async Task<bool> AltaLogicaEmpleado(int idEmpl)
+        {
+            if (idEmpl <= 0)
+            {
+                throw new Exception("El ID debe ser mayor a cero");
+            }
 
-        
-       public async Task<LoginRespuestaDto> Login(LoginDto dto)
+            Empleados? empleado = await _repo.GetEmpleadoById(idEmpl);
+
+            if (empleado == null)
+            {
+                throw new Exception("No existe ese empleado");
+            }
+
+            if (empleado.Activo == true)
+            {
+                throw new Exception("Ese empleado no se dio de baja");
+            }
+
+            return await _repo.AltaLogicaEmpleado(idEmpl);
+        }
+
+
+        public async Task<LoginRespuestaDto> Login(LoginDto dto)
         {
             // 1. Buscamos al empleado por su usuario
             Empleados? empleado = await _repo.GetEmpleadoByUsuario(dto.Usuario);
@@ -466,6 +487,6 @@ namespace TrabajoPracticoIntegrador___Programación_2.Services
             };
         }
 
-      
+       
     }
 }
