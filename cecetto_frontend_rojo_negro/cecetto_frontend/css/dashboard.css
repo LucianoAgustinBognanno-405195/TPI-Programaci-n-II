@@ -1,0 +1,155 @@
+.fondo-dashboard {
+    background: #f6f7f9;
+}
+
+.titulo-dashboard {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -.03em;
+    margin-bottom: .2rem;
+}
+
+.texto-suave {
+    color: var(--texto-suave);
+    font-size: .9rem;
+}
+
+.etiqueta {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+}
+
+.tarjeta-dash {
+    border: 1px solid var(--borde);
+    border-radius: 18px;
+    padding: 1.4rem;
+    background: #ffffff;
+    box-shadow: 0 8px 28px #14213a08;
+}
+
+.kpi {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 100%;
+}
+
+.icono-kpi {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.icono-rojo {
+    background: var(--fondo-rojo-claro);
+    color: var(--rojo-oscuro);
+}
+
+.icono-negro {
+    background: #ececec;
+    color: var(--negro);
+}
+
+.numero-kpi {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.texto-kpi {
+    font-size: 1.2rem;
+    text-transform: capitalize;
+}
+
+.titulo-grafico {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: .3rem;
+}
+
+.contenedor-grafico {
+    position: relative;
+    height: 260px;
+}
+
+.contenedor-grafico.grande {
+    height: 320px;
+}
+
+.contenedor-dona {
+    height: 280px;
+}
+
+.centro-dona {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.numero-centro {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1;
+}
+
+.lista-dona {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.item-dona {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .6rem .8rem;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.item-dona:hover {
+    background: #f6f7f9;
+}
+
+.item-dona.seleccionado {
+    background: var(--fondo-rojo-claro);
+    border-color: var(--rojo);
+}
+
+.punto-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.nombre-item {
+    flex: 1;
+    text-transform: capitalize;
+}
+
+.cantidad-item {
+    font-weight: 700;
+}
+
+.porcentaje-item {
+    width: 48px;
+    text-align: right;
+    font-size: .85rem;
+    color: var(--texto-suave);
+}
