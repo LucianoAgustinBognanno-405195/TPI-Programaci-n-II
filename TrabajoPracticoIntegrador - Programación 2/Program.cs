@@ -45,6 +45,8 @@ builder.Services.AddScoped<IServiciosContratadosRepository, ServiciosContratados
 builder.Services.AddScoped<IServiciosContratadosService, ServiciosContratadosService>();
 builder.Services.AddScoped<IEmpleadosRepository, EmpleadoRepository>();
 builder.Services.AddScoped<IEmpleadosService, EmpleadoService>();
+builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
