@@ -117,7 +117,7 @@ namespace TrabajoPracticoIntegrador___Programación_2.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(201, e.Message);
+                return BadRequest(e.Message);
             }
         }
 
